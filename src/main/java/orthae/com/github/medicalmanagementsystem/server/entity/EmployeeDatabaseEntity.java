@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "employees")
-public class EmployeeDatabase implements Employee {
+public class EmployeeDatabaseEntity implements Employee {
 
     @Id
     @Column(name = "id")
@@ -32,7 +32,7 @@ public class EmployeeDatabase implements Employee {
     @Column (name = "password")
     private String password;
 
-    public EmployeeDatabase(String name, String surname, String username, String password){
+    public EmployeeDatabaseEntity(String name, String surname, String username, String password){
         this.name = name;
         this.surname = surname;
         this.username = username;
