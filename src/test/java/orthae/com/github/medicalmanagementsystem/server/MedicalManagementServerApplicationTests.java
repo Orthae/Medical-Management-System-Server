@@ -8,6 +8,7 @@ class MedicalManagementServerApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
