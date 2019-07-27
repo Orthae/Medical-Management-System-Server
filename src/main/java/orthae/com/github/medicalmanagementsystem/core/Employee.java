@@ -7,4 +7,10 @@ public interface Employee  {
     String getSurname();
     String getUsername();
     String getPassword();
+    void setId(int id);
+    void setName(String name);
+    void setSurname(String surname);
+    void setUsername(String username);
+    void setPassword(String password);
+
 }

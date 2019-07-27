@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.core.Employee;
 import orthae.com.github.medicalmanagementsystem.core.EmployeeDAO;
 import orthae.com.github.medicalmanagementsystem.core.EmployeeService;
-import orthae.com.github.medicalmanagementsystem.server.entity.EmployeeDatabaseEntity;
 
 import java.util.List;
 
@@ -37,8 +36,22 @@ public class EmployeeServerService implements EmployeeService {
         return employeeDAO.getEmployee(id);
     }
 
+    @Transactional
     @Override
-    public void createEmployee(EmployeeDatabaseEntity employee) {
+    public void createEmployee(Employee employee) {
+        employee.setId(0);
+        employeeDAO.saveEmployee(employee);
+    }
+
+    @Transactional
+    @Override
+    public void deleteEmployee(int id) {
+        employeeDAO.deleteEmployee(id);
+    }
+
+    @Transactional
+    @Override
+    public void updateEmployee(Employee employee) {
         employeeDAO.saveEmployee(employee);
     }
 }

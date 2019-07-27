@@ -43,7 +43,7 @@ public class EmployeeDatabaseEntity implements Employee {
     private String password;
 
     @SuppressWarnings("unused")
-    private void setPassword(String password){
+    public void setPassword(String password){
     // TODO BCrypt
         this.password = password;
     }

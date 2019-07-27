@@ -38,4 +38,15 @@ public class EmployeeRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @DeleteMapping("employee/{id}")
+    public ResponseEntity deleteEmployee(@PathVariable int id){
+        employeeService.deleteEmployee(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("employee")
+    public ResponseEntity updateEmployee(@Valid @RequestBody EmployeeDatabaseEntity employee){
+        employeeService.updateEmployee(employee);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

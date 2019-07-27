@@ -1,5 +1,6 @@
 package orthae.com.github.medicalmanagementsystem.server.aop;
 
+import org.hibernate.StaleObjectStateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -21,6 +22,13 @@ public class RestExceptionHandler {
         }
         response.setMessage(builder.toString());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<BadRequestResponse> handleException(StaleObjectStateException exc){
+        BadRequestResponse response = new BadRequestResponse();
+        response.setMessage(exc.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
 }

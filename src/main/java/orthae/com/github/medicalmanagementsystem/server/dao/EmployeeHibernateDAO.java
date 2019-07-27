@@ -56,9 +56,17 @@ public class EmployeeHibernateDAO implements EmployeeDAO {
     }
 
     @Override
-    public void saveEmployee(EmployeeDatabaseEntity employee){
+    public void saveEmployee(Employee employee){
     Session session = entityManager.unwrap(Session.class);
     session.saveOrUpdate(employee);
+    }
+
+    @Override
+    public void deleteEmployee(int id){
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("DELETE EmployeeDatabaseEntity where id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
     }
 
 }
