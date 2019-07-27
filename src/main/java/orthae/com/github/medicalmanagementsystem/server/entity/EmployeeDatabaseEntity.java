@@ -6,6 +6,8 @@ import lombok.Setter;
 import orthae.com.github.medicalmanagementsystem.core.Employee;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -20,22 +22,29 @@ public class EmployeeDatabaseEntity implements Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
+    @NotBlank
     @Column(name = "name")
     private String name;
 
+    @NotBlank
+    @NotNull
     @Column (name = "surname")
     private String surname;
 
+    @NotBlank
+    @NotNull
     @Column (name = "username")
     private String username;
 
+    @NotBlank
+    @NotNull
     @Column (name = "password")
     private String password;
 
-    public EmployeeDatabaseEntity(String name, String surname, String username, String password){
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
+    @SuppressWarnings("unused")
+    private void setPassword(String password){
+    // TODO BCrypt
         this.password = password;
     }
 

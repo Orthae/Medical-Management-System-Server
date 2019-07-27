@@ -1,11 +1,14 @@
 package orthae.com.github.medicalmanagementsystem.server.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.core.Employee;
-import orthae.com.github.medicalmanagementsystem.core.EmployeeDAO;
 import orthae.com.github.medicalmanagementsystem.core.EmployeeService;
+import orthae.com.github.medicalmanagementsystem.server.entity.EmployeeDatabaseEntity;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,13 +22,8 @@ public class EmployeeRestController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("employee/")
-    public List<Employee> getEmployee(){
-        return employeeService.getEmployee();
-    }
-
     @GetMapping("employee")
-    public List<Employee> getEmployeesQuery(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
+    public List<Employee> getEmployees(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
         return employeeService.getEmployee(name, surname);
     }
 
@@ -34,5 +32,10 @@ public class EmployeeRestController {
         return employeeService.getEmployee(id);
     }
 
+    @PostMapping("employee")
+    public ResponseEntity createEmployee(@Valid @RequestBody EmployeeDatabaseEntity employee){
+        employeeService.createEmployee(employee);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 
 }
