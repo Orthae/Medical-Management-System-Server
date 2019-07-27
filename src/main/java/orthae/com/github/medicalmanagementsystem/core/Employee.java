@@ -1,9 +1,10 @@
 package orthae.com.github.medicalmanagementsystem.core;
 
+@SuppressWarnings("unused")
 public interface Employee  {
-    public int getId();
-    public String getName();
-    public String getSurname();
-    public String getUsername();
-    public String getPassword();
+    int getId();
+    String getName();
+    String getSurname();
+    String getUsername();
+    String getPassword();
 }
