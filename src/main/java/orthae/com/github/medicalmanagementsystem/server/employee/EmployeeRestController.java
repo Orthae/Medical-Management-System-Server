@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.rest;
+package orthae.com.github.medicalmanagementsystem.server.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.core.Employee;
 import orthae.com.github.medicalmanagementsystem.core.EmployeeService;
-import orthae.com.github.medicalmanagementsystem.server.entity.EmployeeDatabaseEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
 
 import javax.validation.Valid;
 import java.util.List;

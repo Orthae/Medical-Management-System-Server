@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.entity;
+package orthae.com.github.medicalmanagementsystem.server.employee.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,8 +18,8 @@ import javax.validation.constraints.NotNull;
 public class EmployeeDatabaseEntity implements Employee {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @NotNull

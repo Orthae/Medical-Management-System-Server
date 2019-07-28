@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.security;
+package orthae.com.github.medicalmanagementsystem.server.aop.security;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.dao;
+package orthae.com.github.medicalmanagementsystem.server.employee.dao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import orthae.com.github.medicalmanagementsystem.core.Employee;
 import orthae.com.github.medicalmanagementsystem.core.EmployeeDAO;
-import orthae.com.github.medicalmanagementsystem.server.entity.EmployeeDatabaseEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
 
 import javax.persistence.EntityManager;
 import java.util.List;
