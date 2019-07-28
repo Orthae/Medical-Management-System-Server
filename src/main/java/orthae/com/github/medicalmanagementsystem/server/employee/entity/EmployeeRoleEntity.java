@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @Table(name = "employee_roles")
-public class EmployeeRoleDatabaseEntity {
+public class EmployeeRoleEntity {
 
     @Id
     @Column(name = "id")

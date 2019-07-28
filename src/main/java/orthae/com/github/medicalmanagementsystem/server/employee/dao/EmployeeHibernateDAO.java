@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeEntity;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -18,16 +18,16 @@ public class EmployeeHibernateDAO {
         this.entityManager = entityManager;
     }
 
-    public List<EmployeeDatabaseEntity> getEmployee() {
+    public List<EmployeeEntity> getEmployee() {
         Session session = entityManager.unwrap(Session.class);
-        Query<EmployeeDatabaseEntity> query = session.createQuery("from EmployeeDatabaseEntity", EmployeeDatabaseEntity.class);
+        Query<EmployeeEntity> query = session.createQuery("from EmployeeEntity", EmployeeEntity.class);
         return query.getResultList();
     }
 
-    public List<EmployeeDatabaseEntity> getEmployee(String name, String surname) {
+    public List<EmployeeEntity> getEmployee(String name, String surname) {
 //  Building a HQL query
         StringBuilder hql = new StringBuilder(50);
-        hql.append("FROM EmployeeDatabaseEntity WHERE ");
+        hql.append("FROM EmployeeEntity WHERE ");
         if (name != null) {
             hql.append("name = :name");
             if (surname != null)
@@ -37,7 +37,7 @@ public class EmployeeHibernateDAO {
         }
 //  Creating query and executing
         Session session = entityManager.unwrap(Session.class);
-        Query<EmployeeDatabaseEntity> query = session.createQuery(hql.toString(), EmployeeDatabaseEntity.class);
+        Query<EmployeeEntity> query = session.createQuery(hql.toString(), EmployeeEntity.class);
         if (name != null)
             query.setParameter("name", name);
         if (surname != null)
@@ -45,26 +45,26 @@ public class EmployeeHibernateDAO {
         return query.getResultList();
     }
 
-    public EmployeeDatabaseEntity getEmployee(int id) {
+    public EmployeeEntity getEmployee(int id) {
         Session session = entityManager.unwrap(Session.class);
-        return session.get(EmployeeDatabaseEntity.class, id);
+        return session.get(EmployeeEntity.class, id);
     }
 
-    public void saveEmployee(EmployeeDatabaseEntity employee){
+    public void saveEmployee(EmployeeEntity employee){
     Session session = entityManager.unwrap(Session.class);
     session.saveOrUpdate(employee);
     }
 
     public void deleteEmployee(int id){
         Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("DELETE EmployeeDatabaseEntity where id = :id");
+        Query query = session.createQuery("DELETE EmployeeEntity where id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
     }
 
-    public EmployeeDatabaseEntity getEmployeeByUserName(String username) {
+    public EmployeeEntity getEmployeeByUserName(String username) {
         Session session = entityManager.unwrap(Session.class);
-        Query<EmployeeDatabaseEntity> employeeQuery = session.createQuery("FROM EmployeeDatabaseEntity WHERE username = :username", EmployeeDatabaseEntity.class);
+        Query<EmployeeEntity> employeeQuery = session.createQuery("FROM EmployeeEntity WHERE username = :username", EmployeeEntity.class);
         employeeQuery.setParameter("username", username);
         return employeeQuery.uniqueResult();
     }

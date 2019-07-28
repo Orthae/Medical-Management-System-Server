@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.employee.dao.EmployeeHibernateDAO;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
-import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeEntity;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class EmployeeServerService {
     }
 
     @Transactional
-    public List<EmployeeDatabaseEntity> getEmployee(String name, String surname) {
+    public List<EmployeeEntity> getEmployee(String name, String surname) {
         if (name == null && surname == null)
             return employeeDAO.getEmployee();
         else
@@ -30,14 +30,14 @@ public class EmployeeServerService {
     }
 
     @Transactional
-    public EmployeeDatabaseEntity getEmployee(int id) {
+    public EmployeeEntity getEmployee(int id) {
         return employeeDAO.getEmployee(id);
     }
 
     @Transactional
     public void createEmployee(CreateEmployeeDTO employeeDTO) {
         ModelMapper mapper = new ModelMapper();
-        EmployeeDatabaseEntity employeeEntity = mapper.map(employeeDTO, EmployeeDatabaseEntity.class);
+        EmployeeEntity employeeEntity = mapper.map(employeeDTO, EmployeeEntity.class);
         employeeDAO.saveEmployee(employeeEntity);
     }
 
@@ -49,7 +49,7 @@ public class EmployeeServerService {
     @Transactional
     public void updateEmployee(UpdateEmployeeDTO employeeDTO) {
         ModelMapper mapper = new ModelMapper();
-        EmployeeDatabaseEntity employeeEntity = mapper.map(employeeDTO, EmployeeDatabaseEntity.class);
+        EmployeeEntity employeeEntity = mapper.map(employeeDTO, EmployeeEntity.class);
         employeeDAO.saveEmployee(employeeEntity);
     }
 }

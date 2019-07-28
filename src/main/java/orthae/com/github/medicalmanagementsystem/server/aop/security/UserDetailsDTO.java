@@ -5,8 +5,8 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
-import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeRoleDatabaseEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeRoleEntity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +24,7 @@ public class UserDetailsDTO implements UserDetails {
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
 
-    UserDetailsDTO(EmployeeDatabaseEntity employee){
+    UserDetailsDTO(EmployeeEntity employee){
         this.username = employee.getUsername();
         this.password = employee.getPassword();
         this.isAccountNotExpired = true;
@@ -32,7 +32,7 @@ public class UserDetailsDTO implements UserDetails {
         this.isCredentialsNonExpired = true;
         this.isEnabled = true;
         this.employeeRoles = new ArrayList<>();
-         for(EmployeeRoleDatabaseEntity e : employee.getEmployeeRoles()){
+         for(EmployeeRoleEntity e : employee.getEmployeeRoles()){
             employeeRoles.add(new SimpleGrantedAuthority( "ROLE_" + e.getRole()));
         }
 

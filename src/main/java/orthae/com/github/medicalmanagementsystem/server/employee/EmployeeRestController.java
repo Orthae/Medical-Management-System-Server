@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
-import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeEntity;
 import orthae.com.github.medicalmanagementsystem.server.employee.service.EmployeeServerService;
 
 import javax.validation.Valid;
@@ -24,12 +24,12 @@ public class EmployeeRestController {
     }
 
     @GetMapping("employee")
-    public List<EmployeeDatabaseEntity> getEmployees(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
+    public List<EmployeeEntity> getEmployees(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
         return employeeService.getEmployee(name, surname);
     }
 
     @GetMapping("employee/{id}")
-    public EmployeeDatabaseEntity getEmployee(@PathVariable int id){
+    public EmployeeEntity getEmployee(@PathVariable int id){
         return employeeService.getEmployee(id);
     }
 

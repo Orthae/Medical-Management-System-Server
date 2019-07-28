@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Table(name = "employees")
-public class EmployeeDatabaseEntity {
+public class EmployeeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,9 +44,9 @@ public class EmployeeDatabaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
-    private List<EmployeeRoleDatabaseEntity> employeeRoles;
+    private List<EmployeeRoleEntity> employeeRoles;
 
-    public List<EmployeeRoleDatabaseEntity> getEmployeeRoles(){
+    public List<EmployeeRoleEntity> getEmployeeRoles(){
           return employeeRoles;
     }
 
