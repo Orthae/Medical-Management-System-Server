@@ -1,11 +1,14 @@
 package orthae.com.github.medicalmanagementsystem.core;
 
+import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
+
 import java.util.List;
 
 public interface EmployeeService {
     List<Employee> getEmployee(String name, String surname);
     Employee getEmployee(int id);
-    void createEmployee(Employee employee);
+    void createEmployee(CreateEmployeeDTO employee);
     void deleteEmployee(int id);
-    void updateEmployee(Employee employee);
+    void updateEmployee(UpdateEmployeeDTO employee);
 }

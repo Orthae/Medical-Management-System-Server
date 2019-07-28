@@ -8,21 +8,24 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.ArrayList;
+
 @ControllerAdvice
 public class GenericRestExceptionHandler {
 
-//  TODO Make good looking message
     @ExceptionHandler
-    public ResponseEntity<BadRequestResponse> handleException(MethodArgumentNotValidException exc){
+    public ResponseEntity<BadRequestResponse> handleException(MethodArgumentNotValidException exc) {
         BadRequestResponse response = new BadRequestResponse();
-        StringBuilder builder = new StringBuilder(50);
-        for(FieldError error : exc.getBindingResult().getFieldErrors()){
-            builder.append(error.getField());
-            builder.append(" is not valid");
+        response.setMessage("Request is not valid");
+        ArrayList<String> errorList = new ArrayList<>();
+        for (FieldError error : exc.getBindingResult().getFieldErrors()) {
+            errorList.add(error.getField() + " " + error.getDefaultMessage());
         }
-        response.setMessage(builder.toString());
+        String[] errorArray = errorList.toArray(new String[0]);
+        response.setErrors(errorArray);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
 
     @ExceptionHandler
     public ResponseEntity<BadRequestResponse> handleException(StaleObjectStateException exc){

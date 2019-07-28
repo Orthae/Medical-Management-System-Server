@@ -7,4 +7,5 @@ import lombok.Setter;
 @Setter
 class BadRequestResponse {
     String message;
+    String[] errors;
 }

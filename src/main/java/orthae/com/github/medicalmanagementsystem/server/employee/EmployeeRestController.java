@@ -6,7 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.core.Employee;
 import orthae.com.github.medicalmanagementsystem.core.EmployeeService;
-import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -33,7 +34,7 @@ public class EmployeeRestController {
     }
 
     @PostMapping("employee")
-    public ResponseEntity createEmployee(@Valid @RequestBody EmployeeDatabaseEntity employee){
+    public ResponseEntity createEmployee(@Valid @RequestBody CreateEmployeeDTO employee){
         employeeService.createEmployee(employee);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -45,7 +46,7 @@ public class EmployeeRestController {
     }
 
     @PutMapping("employee")
-    public ResponseEntity updateEmployee(@Valid @RequestBody EmployeeDatabaseEntity employee){
+    public ResponseEntity updateEmployee(@Valid @RequestBody UpdateEmployeeDTO employee){
         employeeService.updateEmployee(employee);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

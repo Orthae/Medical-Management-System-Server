@@ -1,11 +1,15 @@
 package orthae.com.github.medicalmanagementsystem.server.employee.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.core.Employee;
 import orthae.com.github.medicalmanagementsystem.core.EmployeeDAO;
 import orthae.com.github.medicalmanagementsystem.core.EmployeeService;
+import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
 
 import java.util.List;
 
@@ -38,9 +42,10 @@ public class EmployeeServerService implements EmployeeService {
 
     @Transactional
     @Override
-    public void createEmployee(Employee employee) {
-        employee.setId(0);
-        employeeDAO.saveEmployee(employee);
+    public void createEmployee(CreateEmployeeDTO employeeDTO) {
+        ModelMapper mapper = new ModelMapper();
+        EmployeeDatabaseEntity employeeEntity = mapper.map(employeeDTO, EmployeeDatabaseEntity.class);
+        employeeDAO.saveEmployee(employeeEntity);
     }
 
     @Transactional
@@ -51,7 +56,9 @@ public class EmployeeServerService implements EmployeeService {
 
     @Transactional
     @Override
-    public void updateEmployee(Employee employee) {
-        employeeDAO.saveEmployee(employee);
+    public void updateEmployee(UpdateEmployeeDTO employeeDTO) {
+        ModelMapper mapper = new ModelMapper();
+        EmployeeDatabaseEntity employeeEntity = mapper.map(employeeDTO, EmployeeDatabaseEntity.class);
+        employeeDAO.saveEmployee(employeeEntity);
     }
 }
