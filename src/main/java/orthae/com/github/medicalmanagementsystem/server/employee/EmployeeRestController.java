@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import orthae.com.github.medicalmanagementsystem.core.Employee;
-import orthae.com.github.medicalmanagementsystem.core.EmployeeService;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.service.EmployeeServerService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -16,20 +16,20 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class EmployeeRestController {
 
-    private EmployeeService employeeService;
+    private EmployeeServerService employeeService;
 
     @Autowired
-    public EmployeeRestController(EmployeeService employeeService){
+    public EmployeeRestController(EmployeeServerService employeeService){
         this.employeeService = employeeService;
     }
 
     @GetMapping("employee")
-    public List<Employee> getEmployees(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
+    public List<EmployeeDatabaseEntity> getEmployees(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
         return employeeService.getEmployee(name, surname);
     }
 
     @GetMapping("employee/{id}")
-    public Employee getEmployee(@PathVariable int id){
+    public EmployeeDatabaseEntity getEmployee(@PathVariable int id){
         return employeeService.getEmployee(id);
     }
 

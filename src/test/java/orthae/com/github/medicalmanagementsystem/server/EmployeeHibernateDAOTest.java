@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import orthae.com.github.medicalmanagementsystem.core.Employee;
-import orthae.com.github.medicalmanagementsystem.core.EmployeeDAO;
+import orthae.com.github.medicalmanagementsystem.server.employee.dao.EmployeeHibernateDAO;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmployeeHibernateDAOTest {
 
     @Autowired
-    EmployeeDAO employeeDAO;
+    EmployeeHibernateDAO employeeDAO;
 
     @Test
     void getAllEmployeesTest() {
-        List<Employee> list = employeeDAO.getEmployee();
+        List<EmployeeDatabaseEntity> list = employeeDAO.getEmployee();
         assertNotNull(list);
         assertEquals(list.get(0).getName(), "Daniel");
         assertEquals(list.get(0).getSurname(), "Bayne");
@@ -34,7 +34,7 @@ class EmployeeHibernateDAOTest {
 
     @Test
     void getEmployeeByIdOne() {
-        Employee employee = employeeDAO.getEmployee(1);
+        EmployeeDatabaseEntity employee = employeeDAO.getEmployee(1);
         assertEquals(employee.getName(), "Daniel");
         assertEquals(employee.getSurname(), "Bayne");
         assertEquals(employee.getUsername(), "baydan");
@@ -43,7 +43,7 @@ class EmployeeHibernateDAOTest {
 
     @Test
     void getEmployeeByIdTwo() {
-        Employee employee = employeeDAO.getEmployee(2);
+        EmployeeDatabaseEntity employee = employeeDAO.getEmployee(2);
         assertEquals(employee.getName(), "Richard");
         assertEquals(employee.getSurname(), "Morris");
         assertEquals(employee.getUsername(), "morric");
@@ -52,7 +52,8 @@ class EmployeeHibernateDAOTest {
 
     @Test
     void getEmployeeByIdZero() {
-        Employee employee = employeeDAO.getEmployee(0);
+        EmployeeDatabaseEntity employee = employeeDAO.getEmployee(0);
         assertNull(employee);
     }
+
 }

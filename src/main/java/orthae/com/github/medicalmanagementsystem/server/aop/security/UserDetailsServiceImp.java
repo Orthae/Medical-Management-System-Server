@@ -1,0 +1,32 @@
+package orthae.com.github.medicalmanagementsystem.server.aop.security;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import orthae.com.github.medicalmanagementsystem.server.employee.dao.EmployeeHibernateDAO;
+import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeDatabaseEntity;
+
+@Service
+public class UserDetailsServiceImp implements UserDetailsService {
+
+    private EmployeeHibernateDAO employeeDAO;
+
+    @Autowired
+    UserDetailsServiceImp(EmployeeHibernateDAO employeeDAO){
+        this.employeeDAO = employeeDAO;
+    }
+
+    @Transactional
+    @Override
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        EmployeeDatabaseEntity employee = employeeDAO.getEmployeeByUserName(name);
+        if(employee == null){
+            System.out.println("is null");
+            throw new UsernameNotFoundException(name);
+        }
+        return new UserDetailsDTO(employee);
+    }
+}

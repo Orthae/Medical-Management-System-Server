@@ -3,11 +3,11 @@ package orthae.com.github.medicalmanagementsystem.server.employee.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import orthae.com.github.medicalmanagementsystem.core.Employee;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @Entity
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @Table(name = "employees")
-public class EmployeeDatabaseEntity implements Employee {
+public class EmployeeDatabaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,9 +42,16 @@ public class EmployeeDatabaseEntity implements Employee {
     @Column (name = "password")
     private String password;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_id")
+    private List<EmployeeRoleDatabaseEntity> employeeRoles;
+
+    public List<EmployeeRoleDatabaseEntity> getEmployeeRoles(){
+          return employeeRoles;
+    }
+
     @SuppressWarnings("unused")
     public void setPassword(String password){
-    // TODO BCrypt
         this.password = password;
     }
 
