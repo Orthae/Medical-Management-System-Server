@@ -2,7 +2,6 @@ package orthae.com.github.medicalmanagementsystem.server.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
@@ -34,20 +33,20 @@ public class EmployeeRestController {
     }
 
     @PostMapping("employee")
-    public ResponseEntity createEmployee(@Valid @RequestBody CreateEmployeeDTO employee){
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createEmployee(@Valid @RequestBody CreateEmployeeDTO employee){
         employeeService.createEmployee(employee);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("employee/{id}")
-    public ResponseEntity deleteEmployee(@PathVariable int id){
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteEmployee(@PathVariable int id){
         employeeService.deleteEmployee(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("employee")
-    public ResponseEntity updateEmployee(@Valid @RequestBody UpdateEmployeeDTO employee){
+    @ResponseStatus(HttpStatus.OK)
+    public void updateEmployee(@Valid @RequestBody UpdateEmployeeDTO employee){
         employeeService.updateEmployee(employee);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

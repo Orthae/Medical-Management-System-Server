@@ -1,5 +1,6 @@
 package orthae.com.github.medicalmanagementsystem.server.aop.security;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,9 +14,11 @@ import java.util.Collection;
 import java.util.List;
 
 @Setter
+@Getter
 @NoArgsConstructor
 public class UserDetailsDTO implements UserDetails {
 
+    private int id;
     private List<GrantedAuthority> employeeRoles;
     private String username;
     private String password;
@@ -25,6 +28,7 @@ public class UserDetailsDTO implements UserDetails {
     private boolean isEnabled;
 
     UserDetailsDTO(EmployeeEntity employee){
+        this.id = employee.getId();
         this.username = employee.getUsername();
         this.password = employee.getPassword();
         this.isAccountNotExpired = true;
@@ -35,7 +39,6 @@ public class UserDetailsDTO implements UserDetails {
          for(EmployeeRoleEntity e : employee.getEmployeeRoles()){
             employeeRoles.add(new SimpleGrantedAuthority( "ROLE_" + e.getRole()));
         }
-
     }
 
     @Override

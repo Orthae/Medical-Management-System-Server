@@ -23,10 +23,8 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         EmployeeEntity employee = employeeDAO.getEmployeeByUserName(name);
-        if(employee == null){
-            System.out.println("is null");
+        if(employee == null)
             throw new UsernameNotFoundException(name);
-        }
         return new UserDetailsDTO(employee);
     }
 }

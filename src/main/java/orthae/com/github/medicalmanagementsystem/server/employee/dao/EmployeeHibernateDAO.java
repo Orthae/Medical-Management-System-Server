@@ -57,9 +57,8 @@ public class EmployeeHibernateDAO {
 
     public void deleteEmployee(int id){
         Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("DELETE EmployeeEntity where id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+        EmployeeEntity entity = session.get(EmployeeEntity.class, id);
+        session.delete(entity);
     }
 
     public EmployeeEntity getEmployeeByUserName(String username) {
