@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
-import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeEntity;
-import orthae.com.github.medicalmanagementsystem.server.employee.service.EmployeeServerService;
+import orthae.com.github.medicalmanagementsystem.server.employee.service.EmployeeService;
+import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -15,21 +15,36 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class EmployeeRestController {
 
-    private EmployeeServerService employeeService;
+    private EmployeeService employeeService;
 
     @Autowired
-    public EmployeeRestController(EmployeeServerService employeeService){
+    public EmployeeRestController(EmployeeService employeeService){
         this.employeeService = employeeService;
     }
 
     @GetMapping("employee")
-    public List<EmployeeEntity> getEmployees(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
-        return employeeService.getEmployee(name, surname);
+    public List<Employee> findAllEmployees(){
+        return employeeService.findAllEmployees();
+    }
+
+    @GetMapping(value = "employee", params = {"name"})
+    public List<Employee> findEmployeesByName(@RequestParam String name){
+        return employeeService.findEmployeeByName(name);
+    }
+
+    @GetMapping(value = "employee", params = {"surname"})
+    public List<Employee> findEmployeesBySurname(@RequestParam String surname){
+        return employeeService.findEmployeeBySurname(surname);
+    }
+
+    @GetMapping(value = "employee", params = {"name","surname"})
+    public List<Employee> findEmployeesByNameAndSurname(@RequestParam String name, @RequestParam String surname){
+        return employeeService.findEmployeeByNameAndSurname(name, surname);
     }
 
     @GetMapping("employee/{id}")
-    public EmployeeEntity getEmployee(@PathVariable int id){
-        return employeeService.getEmployee(id);
+    public Employee getEmployee(@PathVariable int id){
+        return employeeService.findEmployeeById(id);
     }
 
     @PostMapping("employee")

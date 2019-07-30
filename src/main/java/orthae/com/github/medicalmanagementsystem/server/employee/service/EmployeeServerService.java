@@ -4,52 +4,76 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import orthae.com.github.medicalmanagementsystem.server.employee.dao.EmployeeHibernateDAO;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
-import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.repository.EmployeeRepository;
+import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 
 import java.util.List;
 
 @Service
-public class EmployeeServerService {
+public class EmployeeServerService implements EmployeeService {
 
-    private EmployeeHibernateDAO employeeDAO;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeServerService(EmployeeHibernateDAO employeeDAO) {
-        this.employeeDAO = employeeDAO;
+    public EmployeeServerService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     @Transactional
-    public List<EmployeeEntity> getEmployee(String name, String surname) {
-        if (name == null && surname == null)
-            return employeeDAO.getEmployee();
-        else
-            return employeeDAO.getEmployee(name, surname);
+    @Override
+    public List<Employee> findAllEmployees() {
+        return employeeRepository.findAllEmployees();
     }
 
     @Transactional
-    public EmployeeEntity getEmployee(int id) {
-        return employeeDAO.getEmployee(id);
+    @Override
+    public Employee findEmployeeById(int id) {
+        return employeeRepository.findEmployeeById(id);
     }
 
     @Transactional
+    @Override
+    public List<Employee> findEmployeeByName(String name) {
+        return employeeRepository.findEmployeesByName(name);
+    }
+
+    @Transactional
+    @Override
+    public List<Employee> findEmployeeBySurname(String surname) {
+        return employeeRepository.findEmployeesBySurname(surname);
+    }
+
+    @Transactional
+    @Override
+    public List<Employee> findEmployeeByNameAndSurname(String name, String surname) {
+        return employeeRepository.findEmployeesByNameAndSurname(name, surname);
+    }
+
+    @Transactional
+    @Override
     public void createEmployee(CreateEmployeeDTO employeeDTO) {
         ModelMapper mapper = new ModelMapper();
-        EmployeeEntity employeeEntity = mapper.map(employeeDTO, EmployeeEntity.class);
-        employeeDAO.saveEmployee(employeeEntity);
+        Employee employee = mapper.map(employeeDTO, Employee.class);
+        employeeRepository.saveEmployee(employee);
     }
 
     @Transactional
+    @Override
     public void deleteEmployee(int id) {
-        employeeDAO.deleteEmployee(id);
+        Employee employee = employeeRepository.findEmployeeById(id);
+        if(employee == null)
+//  TODO Proper exception
+            throw new RuntimeException("Not found");
+        employeeRepository.deleteEmployee(employee);
     }
 
     @Transactional
     public void updateEmployee(UpdateEmployeeDTO employeeDTO) {
         ModelMapper mapper = new ModelMapper();
-        EmployeeEntity employeeEntity = mapper.map(employeeDTO, EmployeeEntity.class);
-        employeeDAO.saveEmployee(employeeEntity);
+        Employee employee = mapper.map(employeeDTO, Employee.class);
+        employeeRepository.saveEmployee(employee);
     }
+
 }

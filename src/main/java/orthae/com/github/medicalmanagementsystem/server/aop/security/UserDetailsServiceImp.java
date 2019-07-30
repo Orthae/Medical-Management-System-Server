@@ -6,23 +6,23 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import orthae.com.github.medicalmanagementsystem.server.employee.dao.EmployeeHibernateDAO;
-import orthae.com.github.medicalmanagementsystem.server.employee.entity.EmployeeEntity;
+import orthae.com.github.medicalmanagementsystem.server.employee.repository.EmployeeHibernateRepository;
+import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 
 @Service
 public class UserDetailsServiceImp implements UserDetailsService {
 
-    private EmployeeHibernateDAO employeeDAO;
+    private EmployeeHibernateRepository employeeDAO;
 
     @Autowired
-    UserDetailsServiceImp(EmployeeHibernateDAO employeeDAO){
+    UserDetailsServiceImp(EmployeeHibernateRepository employeeDAO){
         this.employeeDAO = employeeDAO;
     }
 
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        EmployeeEntity employee = employeeDAO.getEmployeeByUserName(name);
+        Employee employee = employeeDAO.findEmployeeByUsername(name);
         if(employee == null)
             throw new UsernameNotFoundException(name);
         return new UserDetailsDTO(employee);

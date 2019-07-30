@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.employee.entity;
+package orthae.com.github.medicalmanagementsystem.server.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Table(name = "employees")
-public class EmployeeEntity {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,9 +44,9 @@ public class EmployeeEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
-    private List<EmployeeRoleEntity> employeeRoles;
+    private List<EmployeeRole> employeeRoles;
 
-    public List<EmployeeRoleEntity> getEmployeeRoles(){
+    public List<EmployeeRole> getEmployeeRoles(){
           return employeeRoles;
     }
 

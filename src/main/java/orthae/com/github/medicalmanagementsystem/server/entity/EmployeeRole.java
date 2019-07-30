@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.employee.entity;
+package orthae.com.github.medicalmanagementsystem.server.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @Table(name = "employee_roles")
-public class EmployeeRoleEntity {
+public class EmployeeRole {
 
     @Id
     @Column(name = "id")
