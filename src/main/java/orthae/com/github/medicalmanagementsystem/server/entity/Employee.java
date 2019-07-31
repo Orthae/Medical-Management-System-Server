@@ -1,12 +1,17 @@
 package orthae.com.github.medicalmanagementsystem.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -15,7 +20,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Table(name = "employees")
-public class Employee {
+public class Employee implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +44,7 @@ public class Employee {
 
     @NotBlank
     @NotNull
+    @JsonIgnore
     @Column (name = "password")
     private String password;
 
@@ -46,13 +52,38 @@ public class Employee {
     @JoinColumn(name = "employee_id")
     private List<EmployeeRole> employeeRoles;
 
+    @Transactional
     public List<EmployeeRole> getEmployeeRoles(){
           return employeeRoles;
     }
 
-    @SuppressWarnings("unused")
-    public void setPassword(String password){
-        this.password = password;
+    @Override
+    public String getPassword(){
+        return password;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return employeeRoles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

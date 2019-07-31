@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import orthae.com.github.medicalmanagementsystem.server.employee.repository.EmployeeHibernateRepository;
+import orthae.com.github.medicalmanagementsystem.server.employee.repository.EmployeeRepository;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmployeeHibernateRepositoryTest {
 
     @Autowired
-    EmployeeHibernateRepository employeeDAO;
+    EmployeeRepository employeeDAO;
 
     @Test
     void findAllEmployeesTest() {
@@ -29,12 +29,12 @@ class EmployeeHibernateRepositoryTest {
         assertEquals(list.get(0).getUsername(), "baydan");
         assertEquals(list.get(0).getPassword(), "{bcrypt}$2y$05$HvEkcNAN5CVoCAX0lP9Jsu/oRFBU2pPhZ2pGKdHUGr4IXTl4FiTYm");
         assertEquals(list.get(0).getEmployeeRoles().size(), 2);
-        assertEquals(list.get(0).getEmployeeRoles().get(0).getRole(), "ADMIN");
-        assertEquals(list.get(0).getEmployeeRoles().get(1).getRole(), "USER");
+        assertEquals(list.get(0).getEmployeeRoles().get(0).getAuthority(), "ROLE_ADMIN");
+        assertEquals(list.get(0).getEmployeeRoles().get(1).getAuthority(), "ROLE_USER");
         assertEquals(list.get(1).getName(), "Richard");
         assertEquals(list.get(1).getSurname(), "Morris");
         assertEquals(list.get(1).getUsername(), "morric");
-        assertEquals(list.get(1).getPassword(), "{noop}admin");
+        assertEquals(list.get(1).getPassword(), "{bcrypt}{noop}admin");
     }
 
     @Test
@@ -52,7 +52,7 @@ class EmployeeHibernateRepositoryTest {
         assertEquals(employee.getName(), "Richard");
         assertEquals(employee.getSurname(), "Morris");
         assertEquals(employee.getUsername(), "morric");
-        assertEquals(employee.getPassword(), "{noop}admin");
+        assertEquals(employee.getPassword(), "{bcrypt}{noop}admin");
     }
 
     @Test

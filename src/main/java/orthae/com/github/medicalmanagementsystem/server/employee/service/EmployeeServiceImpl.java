@@ -2,6 +2,7 @@ package orthae.com.github.medicalmanagementsystem.server.employee.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
@@ -12,13 +13,15 @@ import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import java.util.List;
 
 @Service
-public class EmployeeServerService implements EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public EmployeeServerService(EmployeeRepository employeeRepository) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -56,6 +59,7 @@ public class EmployeeServerService implements EmployeeService {
     public void createEmployee(CreateEmployeeDTO employeeDTO) {
         ModelMapper mapper = new ModelMapper();
         Employee employee = mapper.map(employeeDTO, Employee.class);
+        employee.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
         employeeRepository.saveEmployee(employee);
     }
 
@@ -73,6 +77,7 @@ public class EmployeeServerService implements EmployeeService {
     public void updateEmployee(UpdateEmployeeDTO employeeDTO) {
         ModelMapper mapper = new ModelMapper();
         Employee employee = mapper.map(employeeDTO, Employee.class);
+        employee.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
         employeeRepository.saveEmployee(employee);
     }
 
