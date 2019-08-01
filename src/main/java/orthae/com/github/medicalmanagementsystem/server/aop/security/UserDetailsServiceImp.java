@@ -25,7 +25,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
         Employee employee = employeeRepository.findEmployeeByUsername(username);
         if(employee == null)
             throw new UsernameNotFoundException(username);
-        employee.getEmployeeRoles().size();
+        employee.getAuthorities().size();
         return employee;
     }
 }

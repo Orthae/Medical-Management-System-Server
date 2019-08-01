@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -50,12 +49,7 @@ public class Employee implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
-    private List<EmployeeRole> employeeRoles;
-
-    @Transactional
-    public List<EmployeeRole> getEmployeeRoles(){
-          return employeeRoles;
-    }
+    private List<EmployeeAuthorities> authorities;
 
     @Override
     public String getPassword(){
@@ -64,7 +58,7 @@ public class Employee implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return employeeRoles;
+        return authorities;
     }
 
     @Override
