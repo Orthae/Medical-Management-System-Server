@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @Table(name = "employee_roles")
-public class EmployeeAuthorities implements GrantedAuthority {
+public class EmployeeAuthority implements GrantedAuthority {
 
     @Id
     @Column(name = "id")

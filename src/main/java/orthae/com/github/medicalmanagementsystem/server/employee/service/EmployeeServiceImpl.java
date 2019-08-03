@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
-import orthae.com.github.medicalmanagementsystem.server.employee.repository.EmployeeRepository;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
+import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
 import java.util.List;
 

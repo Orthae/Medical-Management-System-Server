@@ -8,8 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,30 +24,22 @@ public class Employee implements UserDetails {
     @Column(name = "id")
     private int id;
 
-    @NotNull
-    @NotBlank
     @Column(name = "name")
     private String name;
 
-    @NotBlank
-    @NotNull
     @Column (name = "surname")
     private String surname;
 
-    @NotBlank
-    @NotNull
     @Column (name = "username")
     private String username;
 
-    @NotBlank
-    @NotNull
     @JsonIgnore
     @Column (name = "password")
     private String password;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
-    private List<EmployeeAuthorities> authorities;
+    private List<EmployeeAuthority> authorities;
 
     @Override
     public String getPassword(){
@@ -62,16 +52,19 @@ public class Employee implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }

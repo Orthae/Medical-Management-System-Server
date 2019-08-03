@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.aop.security;
+package orthae.com.github.medicalmanagementsystem.server.security.bearertoken;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;

@@ -1,9 +1,6 @@
-package orthae.com.github.medicalmanagementsystem.server.aop.security;
+package orthae.com.github.medicalmanagementsystem.server.security.bearertoken;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,29 +16,33 @@ import java.util.Date;
 @Component
 public class BearerTokenProviderImpl implements BearerTokenProvider {
 
-    @Value("${security.token.expirationTime}")
+    @Value("${security.token.expiration-time}")
     private int expirationTime;
+
+    @Value("${security.token.sign-key}")
+    private String signKey;
 
     private UserDetailsService userDetailsService;
 
     @Autowired
-    public BearerTokenProviderImpl(@Qualifier("userDetailsServiceImp") UserDetailsService userDetailsService){
+    public BearerTokenProviderImpl(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
     @Override
     public boolean validate(String token) {
-        Jws<Claims> claims = Jwts.parser().setSigningKey("test").parseClaimsJws(token);
-        if(claims.getBody().getExpiration().before(new Date())){
+        try {
+            Jws<Claims> claims = Jwts.parser().setSigningKey("test").parseClaimsJws(token);
+            return claims.getBody().getExpiration().after(new Date());
+        } catch (ExpiredJwtException e) {
             return false;
         }
-        return true;
     }
 
     @Override
     public String extractToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
-        if(token != null && token.startsWith("Bearer"))
+        if (token != null && token.startsWith("Bearer"))
             return token.substring(7);
         return null;
     }
@@ -51,7 +52,7 @@ public class BearerTokenProviderImpl implements BearerTokenProvider {
         Claims claims = Jwts.claims().setSubject(username);
         Date created = new Date();
         Date expired = new Date(created.getTime() + expirationTime);
-        return Jwts.builder().addClaims(claims).setIssuedAt(created).setExpiration(expired).signWith(SignatureAlgorithm.HS256,"test").compact();
+        return Jwts.builder().addClaims(claims).setIssuedAt(created).setExpiration(expired).signWith(SignatureAlgorithm.HS256, "test").compact();
     }
 
     @Override

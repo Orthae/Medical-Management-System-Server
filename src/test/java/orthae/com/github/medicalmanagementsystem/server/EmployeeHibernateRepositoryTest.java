@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.transaction.annotation.Transactional;
-import orthae.com.github.medicalmanagementsystem.server.employee.repository.EmployeeRepository;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
+import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
 import java.util.ArrayList;
 import java.util.List;

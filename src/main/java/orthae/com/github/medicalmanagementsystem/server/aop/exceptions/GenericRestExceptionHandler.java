@@ -26,7 +26,6 @@ public class GenericRestExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-
     @ExceptionHandler
     public ResponseEntity<BadRequestResponse> handleException(StaleObjectStateException exc){
         BadRequestResponse response = new BadRequestResponse();

@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.employee.repository;
+package orthae.com.github.medicalmanagementsystem.server.repository;
 
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 
