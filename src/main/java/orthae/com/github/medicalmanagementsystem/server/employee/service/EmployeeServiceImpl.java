@@ -26,59 +26,65 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public List<Employee> findAllEmployees() {
-        return employeeRepository.findAllEmployees();
+    public List<Employee> findAll() {
+        return employeeRepository.findAll();
     }
 
     @Transactional
     @Override
-    public Employee findEmployeeById(int id) {
-        return employeeRepository.findEmployeeById(id);
+    public Employee findById(int id) {
+        return employeeRepository.findById(id);
     }
 
     @Transactional
     @Override
-    public List<Employee> findEmployeeByName(String name) {
-        return employeeRepository.findEmployeesByName(name);
+    public List<Employee> findByName(String name) {
+        return employeeRepository.findByName(name);
     }
 
     @Transactional
     @Override
-    public List<Employee> findEmployeeBySurname(String surname) {
-        return employeeRepository.findEmployeesBySurname(surname);
+    public List<Employee> findBySurname(String surname) {
+        return employeeRepository.findBySurname(surname);
     }
 
     @Transactional
     @Override
-    public List<Employee> findEmployeeByNameAndSurname(String name, String surname) {
-        return employeeRepository.findEmployeesByNameAndSurname(name, surname);
+    public List<Employee> findByNameAndSurname(String name, String surname) {
+        return employeeRepository.findByNameAndSurname(name, surname);
     }
 
     @Transactional
     @Override
-    public void createEmployee(CreateEmployeeDTO employeeDTO) {
+    public void create(CreateEmployeeDTO employeeDTO) {
         ModelMapper mapper = new ModelMapper();
         Employee employee = mapper.map(employeeDTO, Employee.class);
         employee.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
-        employeeRepository.saveEmployee(employee);
+        employeeRepository.save(employee);
     }
 
     @Transactional
     @Override
-    public void deleteEmployee(int id) {
-        Employee employee = employeeRepository.findEmployeeById(id);
+    public void delete(int id) {
+        Employee employee = employeeRepository.findById(id);
         if(employee == null)
 //  TODO Proper exception
             throw new RuntimeException("Not found");
-        employeeRepository.deleteEmployee(employee);
+        employeeRepository.delete(employee);
     }
 
     @Transactional
-    public void updateEmployee(UpdateEmployeeDTO employeeDTO) {
+    public void update(UpdateEmployeeDTO dto) {
         ModelMapper mapper = new ModelMapper();
-        Employee employee = mapper.map(employeeDTO, Employee.class);
-        employee.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
-        employeeRepository.saveEmployee(employee);
+        String password;
+        Employee employee = findById(dto.getId());
+        if(dto.getPassword() == null)
+            password = employee.getPassword();
+        else
+            password = passwordEncoder.encode(dto.getPassword());
+        mapper.map(dto, employee);
+        employee.setPassword(password);
+        employeeRepository.save(employee);
     }
 
 }

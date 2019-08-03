@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.server.session.dto.LoginDTO;
 import orthae.com.github.medicalmanagementsystem.server.session.service.SessionService;
 
-@RestController
-@RequestMapping("/api/v1")
-public class SessionRestController {
+import javax.validation.Valid;
 
+@SuppressWarnings("MVCPathVariableInspection")
+@RestController
+@RequestMapping("${rest.endpoint.path}")
+public class SessionRestController {
     private SessionService sessionService;
 
     @Autowired
@@ -19,7 +21,7 @@ public class SessionRestController {
 
     @PostMapping("/session")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public String login(@RequestBody LoginDTO loginDTO){
+    public String login(@Valid @RequestBody LoginDTO loginDTO){
         return sessionService.login(loginDTO);
     }
 

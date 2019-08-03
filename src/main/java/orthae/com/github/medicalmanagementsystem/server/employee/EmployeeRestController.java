@@ -11,8 +11,9 @@ import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import javax.validation.Valid;
 import java.util.List;
 
+@SuppressWarnings("MVCPathVariableInspection")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("${rest.endpoint.path}")
 public class EmployeeRestController {
 
     private EmployeeService employeeService;
@@ -24,44 +25,44 @@ public class EmployeeRestController {
 
     @GetMapping("employee")
     public List<Employee> findAllEmployees(){
-        return employeeService.findAllEmployees();
+        return employeeService.findAll();
     }
 
     @GetMapping(value = "employee", params = {"name"})
     public List<Employee> findEmployeesByName(@RequestParam String name){
-        return employeeService.findEmployeeByName(name);
+        return employeeService.findByName(name);
     }
 
     @GetMapping(value = "employee", params = {"surname"})
     public List<Employee> findEmployeesBySurname(@RequestParam String surname){
-        return employeeService.findEmployeeBySurname(surname);
+        return employeeService.findBySurname(surname);
     }
 
     @GetMapping(value = "employee", params = {"name","surname"})
     public List<Employee> findEmployeesByNameAndSurname(@RequestParam String name, @RequestParam String surname){
-        return employeeService.findEmployeeByNameAndSurname(name, surname);
+        return employeeService.findByNameAndSurname(name, surname);
     }
 
     @GetMapping("employee/{id}")
     public Employee getEmployee(@PathVariable int id){
-        return employeeService.findEmployeeById(id);
+        return employeeService.findById(id);
     }
 
     @PostMapping("employee")
     @ResponseStatus(HttpStatus.CREATED)
     public void createEmployee(@Valid @RequestBody CreateEmployeeDTO employee){
-        employeeService.createEmployee(employee);
+        employeeService.create(employee);
     }
 
     @DeleteMapping("employee/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteEmployee(@PathVariable int id){
-        employeeService.deleteEmployee(id);
+        employeeService.delete(id);
     }
 
     @PutMapping("employee")
     @ResponseStatus(HttpStatus.OK)
     public void updateEmployee(@Valid @RequestBody UpdateEmployeeDTO employee){
-        employeeService.updateEmployee(employee);
+        employeeService.update(employee);
     }
 }

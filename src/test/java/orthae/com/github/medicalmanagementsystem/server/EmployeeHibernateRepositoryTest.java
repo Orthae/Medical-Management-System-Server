@@ -24,7 +24,7 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findAllEmployeesTest() {
-        List<Employee> list = employeeRepository.findAllEmployees();
+        List<Employee> list = employeeRepository.findAll();
         assertNotNull(list);
         assertEquals(list.size(), 25);
 
@@ -51,7 +51,7 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findEmployeeById() {
-        Employee employee = employeeRepository.findEmployeeById(1);
+        Employee employee = employeeRepository.findById(1);
         assertEquals(employee.getName(), "Daniel");
         assertEquals(employee.getSurname(), "Bayne");
         assertEquals(employee.getUsername(), "baydan");
@@ -64,7 +64,7 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findEmployeeByIdTwo() {
-        Employee employee = employeeRepository.findEmployeeById(2);
+        Employee employee = employeeRepository.findById(2);
         assertEquals(employee.getName(), "Richard");
         assertEquals(employee.getSurname(), "Morris");
         assertEquals(employee.getUsername(), "morric");
@@ -73,27 +73,27 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findEmployeeByIdZero() {
-        Employee employee = employeeRepository.findEmployeeById(0);
+        Employee employee = employeeRepository.findById(0);
         assertNull(employee);
     }
 
     @Test
     void deleteEmployee(){
-        Employee employee = employeeRepository.findEmployeeById(1);
-        employeeRepository.deleteEmployee(employee);
-        List<Employee> list = employeeRepository.findAllEmployees();
+        Employee employee = employeeRepository.findById(1);
+        employeeRepository.delete(employee);
+        List<Employee> list = employeeRepository.findAll();
         assertFalse(list.contains(employee));
     }
 
     @Test
     void findByNameNoMatch(){
-        List<Employee> list = employeeRepository.findEmployeesByName("There is no such name");
+        List<Employee> list = employeeRepository.findByName("There is no such name");
         assertEquals(list.size(), 0);
     }
 
     @Test
     void findByNameOneMatch(){
-        List<Employee> list = employeeRepository.findEmployeesByName("Chelsy");
+        List<Employee> list = employeeRepository.findByName("Chelsy");
         assertEquals(list.size(), 1);
 
         Employee employee = list.get(0);
@@ -106,7 +106,7 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findByNameMultiMatch(){
-        List<Employee> list = employeeRepository.findEmployeesByName("Oliver");
+        List<Employee> list = employeeRepository.findByName("Oliver");
         assertEquals(list.size(), 2);
 
         Employee employee = list.get(0);

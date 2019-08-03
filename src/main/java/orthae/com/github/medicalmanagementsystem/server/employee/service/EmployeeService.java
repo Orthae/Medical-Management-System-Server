@@ -8,14 +8,14 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    List<Employee> findAllEmployees();
-    Employee findEmployeeById(int id);
-    List<Employee> findEmployeeByName(String name);
-    List<Employee> findEmployeeBySurname(String surname);
-    List<Employee> findEmployeeByNameAndSurname(String name, String surname);
-    void createEmployee(CreateEmployeeDTO createEmployee);
-    void deleteEmployee(int id);
-    void updateEmployee(UpdateEmployeeDTO updateEmployee);
+    List<Employee> findAll();
+    Employee findById(int id);
+    List<Employee> findByName(String name);
+    List<Employee> findBySurname(String surname);
+    List<Employee> findByNameAndSurname(String name, String surname);
+    void create(CreateEmployeeDTO createEmployee);
+    void delete(int id);
+    void update(UpdateEmployeeDTO updateEmployee);
 
 
 

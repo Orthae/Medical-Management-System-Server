@@ -6,12 +6,13 @@ import java.util.List;
 
 public interface EmployeeRepository {
 
-    List<Employee> findAllEmployees();
-    List<Employee> findEmployeesByName(String name);
-    List<Employee> findEmployeesBySurname(String surname);
-    List<Employee> findEmployeesByNameAndSurname(String name, String surname);
-    Employee findEmployeeById(int id);
-    Employee findEmployeeByUsername(String username);
-    void saveEmployee(Employee employee);
-    void deleteEmployee(Employee employee);
+    List<Employee> findAll();
+    List<Employee> findByName(String name);
+    List<Employee> findBySurname(String surname);
+    List<Employee> findByNameAndSurname(String name, String surname);
+    Employee findById(int id);
+    Employee findByUsername(String username);
+    void save(Employee employee);
+    void delete(Employee employee);
 }
+

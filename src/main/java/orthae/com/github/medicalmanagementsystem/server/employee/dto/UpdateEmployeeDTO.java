@@ -22,7 +22,6 @@ public class UpdateEmployeeDTO {
     @NotBlank(message = "field can't be empty")
     private String username;
 
-    @NotBlank(message = "field can't be empty")
     private String password;
 }
 

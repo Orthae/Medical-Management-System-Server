@@ -19,20 +19,20 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> findAllEmployees() {
+    public List<Employee> findAll() {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> query = session.createQuery("from Employee", Employee.class);
         return query.getResultList();
     }
 
     @Override
-    public Employee findEmployeeById(int id) {
+    public Employee findById(int id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(Employee.class, id);
     }
 
     @Override
-    public List<Employee> findEmployeesByName(String name) {
+    public List<Employee> findByName(String name) {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> query = session.createQuery("FROM Employee WHERE name =: name", Employee.class);
         query.setParameter("name", name);
@@ -40,7 +40,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> findEmployeesBySurname(String surname) {
+    public List<Employee> findBySurname(String surname) {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> query = session.createQuery("FROM Employee WHERE surname =: surname", Employee.class);
         query.setParameter("surname", surname);
@@ -48,26 +48,26 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> findEmployeesByNameAndSurname(String name, String surname) {
+    public List<Employee> findByNameAndSurname(String name, String surname) {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> query = session.createQuery("FROM Employee WHERE name =: name AND surname =: surname", Employee.class);
         return query.getResultList();
     }
 
     @Override
-    public void saveEmployee(Employee employee){
+    public void save(Employee employee){
         Session session = entityManager.unwrap(Session.class);
         session.saveOrUpdate(employee);
     }
 
     @Override
-    public void deleteEmployee(Employee employee) {
+    public void delete(Employee employee) {
         Session session = entityManager.unwrap(Session.class);
         session.delete(employee);
     }
 
     @Override
-    public Employee findEmployeeByUsername(String username) {
+    public Employee findByUsername(String username) {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> employeeQuery = session.createQuery("FROM Employee WHERE username = :username", Employee.class);
         employeeQuery.setParameter("username", username);
