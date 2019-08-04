@@ -9,4 +9,5 @@ public interface PatientService {
 
     List<Patient> findAll();
     void createPatient(CreatePatientDTO dto);
+    Patient findById(int id);
 }

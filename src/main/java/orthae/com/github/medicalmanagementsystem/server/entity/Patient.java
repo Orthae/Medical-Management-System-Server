@@ -5,7 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,6 +20,9 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "social_security")
+    private String socialSecurity;
+
     @Column(name = "name")
     private String name;
 
@@ -25,5 +31,15 @@ public class Patient {
 
     @Column(name = "email")
     private String email;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "patient_id")
+    private List<Visit> visitList;
+
+    public void addVisit(Visit visit){
+        if(visitList == null)
+            visitList = new ArrayList<>();
+        visitList.add(visit);
+    }
 
 }

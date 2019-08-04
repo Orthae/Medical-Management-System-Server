@@ -1,10 +1,11 @@
-package orthae.com.github.medicalmanagementsystem.server.repository;
+package orthae.com.github.medicalmanagementsystem.server.repository.impl;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
+import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
 import javax.persistence.EntityManager;
 import java.util.List;

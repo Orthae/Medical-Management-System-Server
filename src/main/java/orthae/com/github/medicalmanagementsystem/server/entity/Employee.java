@@ -39,7 +39,7 @@ public class Employee implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
-    private List<EmployeeAuthority> authorities;
+    private List<Authority> authorities;
 
     @Override
     public String getPassword(){
