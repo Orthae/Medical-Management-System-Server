@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employee.exceptions.EmployeeNotFound;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
@@ -68,8 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void delete(int id) {
         Employee employee = employeeRepository.findById(id);
         if(employee == null)
-//  TODO Proper exception
-            throw new RuntimeException("Not found");
+            throw new EmployeeNotFound("Couldn't find employee with id = " + id);
         employeeRepository.delete(employee);
     }
 

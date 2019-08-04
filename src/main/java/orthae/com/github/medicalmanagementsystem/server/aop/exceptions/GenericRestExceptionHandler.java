@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class GenericRestExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<BadRequestResponse> handleException(MethodArgumentNotValidException exc) {
-        BadRequestResponse response = new BadRequestResponse();
+    public ResponseEntity<GenericRequestResponse> handleException(MethodArgumentNotValidException exc) {
+        GenericRequestResponse response = new GenericRequestResponse();
         response.setMessage("Request is not valid");
         ArrayList<String> errorList = new ArrayList<>();
         for (FieldError error : exc.getBindingResult().getFieldErrors()) {
@@ -27,8 +27,8 @@ public class GenericRestExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<BadRequestResponse> handleException(StaleObjectStateException exc){
-        BadRequestResponse response = new BadRequestResponse();
+    public ResponseEntity<GenericRequestResponse> handleException(StaleObjectStateException exc){
+        GenericRequestResponse response = new GenericRequestResponse();
         response.setMessage(exc.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }

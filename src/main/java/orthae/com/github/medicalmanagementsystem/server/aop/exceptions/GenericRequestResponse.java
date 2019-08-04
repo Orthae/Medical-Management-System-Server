@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-class BadRequestResponse {
+public class GenericRequestResponse {
     String message;
     String[] errors;
 }
