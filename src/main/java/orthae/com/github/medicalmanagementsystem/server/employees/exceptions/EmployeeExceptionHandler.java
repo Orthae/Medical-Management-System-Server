@@ -1,10 +1,10 @@
-package orthae.com.github.medicalmanagementsystem.server.employee.exceptions;
+package orthae.com.github.medicalmanagementsystem.server.employees.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import orthae.com.github.medicalmanagementsystem.server.employee.exceptions.type.EmployeeNotFound;
+import orthae.com.github.medicalmanagementsystem.server.employees.exceptions.type.EmployeeNotFound;
 
 @ControllerAdvice
 public class EmployeeExceptionHandler {

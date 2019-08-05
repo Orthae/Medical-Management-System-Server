@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.employee.exceptions;
+package orthae.com.github.medicalmanagementsystem.server.employees.exceptions;
 
 import lombok.Getter;
 

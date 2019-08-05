@@ -1,17 +1,15 @@
-package orthae.com.github.medicalmanagementsystem.server.employee.dto;
+package orthae.com.github.medicalmanagementsystem.server.employees.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class UpdateEmployeeDTO {
-
-    @Min(value = 1, message = "can't be lower than 1")
-    private int id;
+@NoArgsConstructor
+public class CreateEmployeeDTO {
 
     @NotBlank(message = "field can't be empty")
     private String name;
@@ -22,6 +20,6 @@ public class UpdateEmployeeDTO {
     @NotBlank(message = "field can't be empty")
     private String username;
 
+    @NotBlank(message = "field can't be empty")
     private String password;
 }
-

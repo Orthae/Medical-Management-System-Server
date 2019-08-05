@@ -1,7 +1,7 @@
-package orthae.com.github.medicalmanagementsystem.server.patient.service;
+package orthae.com.github.medicalmanagementsystem.server.patients.service;
 
 import orthae.com.github.medicalmanagementsystem.server.entity.Patient;
-import orthae.com.github.medicalmanagementsystem.server.patient.dto.CreatePatientDTO;
+import orthae.com.github.medicalmanagementsystem.server.patients.dto.CreatePatientDTO;
 
 import java.util.List;
 

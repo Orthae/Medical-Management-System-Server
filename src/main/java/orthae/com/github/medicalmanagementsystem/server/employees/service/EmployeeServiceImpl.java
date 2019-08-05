@@ -1,13 +1,13 @@
-package orthae.com.github.medicalmanagementsystem.server.employee.service;
+package orthae.com.github.medicalmanagementsystem.server.employees.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import orthae.com.github.medicalmanagementsystem.server.employee.dto.CreateEmployeeDTO;
-import orthae.com.github.medicalmanagementsystem.server.employee.dto.UpdateEmployeeDTO;
-import orthae.com.github.medicalmanagementsystem.server.employee.exceptions.type.EmployeeNotFound;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.exceptions.type.EmployeeNotFound;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 

@@ -1,10 +1,10 @@
-package orthae.com.github.medicalmanagementsystem.server.patient.service;
+package orthae.com.github.medicalmanagementsystem.server.patients.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.entity.Patient;
-import orthae.com.github.medicalmanagementsystem.server.patient.dto.CreatePatientDTO;
+import orthae.com.github.medicalmanagementsystem.server.patients.dto.CreatePatientDTO;
 import orthae.com.github.medicalmanagementsystem.server.repository.PatientRepository;
 
 import java.util.List;

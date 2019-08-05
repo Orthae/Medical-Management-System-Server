@@ -9,6 +9,8 @@ import orthae.com.github.medicalmanagementsystem.server.repository.VisitReposito
 import orthae.com.github.medicalmanagementsystem.server.visit.dto.CreateVisitDTO;
 import orthae.com.github.medicalmanagementsystem.server.visit.dto.UpdateVisitDTO;
 
+import java.util.List;
+
 @Component
 public class VisitServiceImpl implements VisitService {
 
@@ -39,5 +41,10 @@ public class VisitServiceImpl implements VisitService {
         ModelMapper mapper = new ModelMapper();
         Visit visit = mapper.map(dto, Visit.class);
         visitRepository.save(visit);
+    }
+
+    @Override
+    public List<Visit> findByPatientId(int id) {
+        return visitRepository.findByPatientId(id);
     }
 }
