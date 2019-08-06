@@ -35,4 +35,9 @@ public class Patient {
     @JoinColumn(name = "patient_id")
     private List<Visit> visitList;
 
+    public List<Visit> getVisitList(){
+        System.out.println("CALLED");
+        return visitList;
+    }
+
 }

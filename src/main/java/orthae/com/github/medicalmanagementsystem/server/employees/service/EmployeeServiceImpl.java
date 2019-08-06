@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import orthae.com.github.medicalmanagementsystem.server.aop.Utility;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.exceptions.type.EmployeeNotFound;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
@@ -18,41 +20,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
     private PasswordEncoder passwordEncoder;
+    private Utility utility;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder, Utility utility) {
         this.employeeRepository = employeeRepository;
         this.passwordEncoder = passwordEncoder;
+        this.utility = utility;
     }
 
     @Transactional
     @Override
-    public List<Employee> findAll() {
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> findAll() {
+        return utility.mapAll(employeeRepository.findAll(), EmployeeDTO.class);
     }
 
     @Transactional
     @Override
-    public Employee findById(int id) {
-        return employeeRepository.findById(id);
+    public EmployeeDTO findById(int id) {
+        return utility.map(employeeRepository.findById(id), EmployeeDTO.class);
     }
 
     @Transactional
     @Override
-    public List<Employee> findByName(String name) {
-        return employeeRepository.findByName(name);
+    public List<EmployeeDTO> findByName(String name) {
+        return utility.mapAll(employeeRepository.findByName(name), EmployeeDTO.class);
     }
 
     @Transactional
     @Override
-    public List<Employee> findBySurname(String surname) {
-        return employeeRepository.findBySurname(surname);
+    public List<EmployeeDTO> findBySurname(String surname) {
+        return utility.mapAll(employeeRepository.findBySurname(surname), EmployeeDTO.class);
     }
 
     @Transactional
     @Override
-    public List<Employee> findByNameAndSurname(String name, String surname) {
-        return employeeRepository.findByNameAndSurname(name, surname);
+    public List<EmployeeDTO> findByNameAndSurname(String name, String surname) {
+        return utility.mapAll(employeeRepository.findByNameAndSurname(name, surname), EmployeeDTO.class);
     }
 
     @Transactional
@@ -74,10 +78,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Transactional
+    @Override
     public void update(UpdateEmployeeDTO dto) {
         ModelMapper mapper = new ModelMapper();
         String password;
-        Employee employee = findById(dto.getId());
+        Employee employee = employeeRepository.findById(dto.getId());
         if(dto.getPassword() == null)
             password = employee.getPassword();
         else

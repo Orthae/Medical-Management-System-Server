@@ -1,13 +1,12 @@
 package orthae.com.github.medicalmanagementsystem.server.patients.service;
 
-import orthae.com.github.medicalmanagementsystem.server.entity.Patient;
 import orthae.com.github.medicalmanagementsystem.server.patients.dto.CreatePatientDTO;
+import orthae.com.github.medicalmanagementsystem.server.patients.dto.PatientDTO;
 
 import java.util.List;
 
 public interface PatientService {
-
-    List<Patient> findAll();
+    List<PatientDTO> findAll();
     void createPatient(CreatePatientDTO dto);
-    Patient findById(int id);
+    PatientDTO findById(int id);
 }
