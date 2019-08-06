@@ -23,41 +23,41 @@ public class EmployeeRestController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("employees")
+    @GetMapping("${rest.endpoint.employees}")
     public List<Employee> findAllEmployees(){
         return employeeService.findAll();
     }
 
-    @GetMapping(value = "employees", params = {"name"})
+    @GetMapping(value = "${rest.endpoint.employees}", params = {"name"})
     public List<Employee> findEmployeesByName(@RequestParam String name){
         return employeeService.findByName(name);
     }
 
-    @GetMapping(value = "employees", params = {"surname"})
+    @GetMapping(value = "${rest.endpoint.employees}", params = {"surname"})
     public List<Employee> findEmployeesBySurname(@RequestParam String surname){
         return employeeService.findBySurname(surname);
     }
 
-    @GetMapping(value = "employees", params = {"name","surname"})
+    @GetMapping(value = "${rest.endpoint.employees}", params = {"name","surname"})
     public List<Employee> findEmployeesByNameAndSurname(@RequestParam String name, @RequestParam String surname){
         return employeeService.findByNameAndSurname(name, surname);
     }
 
-    @GetMapping("employees/{id}")
-    public Employee getEmployee(@PathVariable int id){
-        return employeeService.findById(id);
+    @GetMapping("${rest.endpoint.employees}/{employeeId}")
+    public Employee getEmployee(@PathVariable int employeeId){
+        return employeeService.findById(employeeId);
     }
 
-    @PostMapping("employees")
+    @PostMapping("${rest.endpoint.employees}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createEmployee(@Valid @RequestBody CreateEmployeeDTO employee){
         employeeService.create(employee);
     }
 
-    @DeleteMapping("employees/{id}")
+    @DeleteMapping("${rest.endpoint.employees}/{employeeId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteEmployee(@PathVariable int id){
-        employeeService.delete(id);
+    public void deleteEmployee(@PathVariable int employeeId){
+        employeeService.delete(employeeId);
     }
 
     @PutMapping("employees")

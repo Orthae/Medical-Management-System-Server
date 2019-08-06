@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.visit.service;
+package orthae.com.github.medicalmanagementsystem.server.visits.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.entity.Visit;
 import orthae.com.github.medicalmanagementsystem.server.repository.VisitRepository;
-import orthae.com.github.medicalmanagementsystem.server.visit.dto.CreateVisitDTO;
-import orthae.com.github.medicalmanagementsystem.server.visit.dto.UpdateVisitDTO;
+import orthae.com.github.medicalmanagementsystem.server.visits.dto.CreateVisitDTO;
+import orthae.com.github.medicalmanagementsystem.server.visits.dto.UpdateVisitDTO;
 
 import java.util.List;
 

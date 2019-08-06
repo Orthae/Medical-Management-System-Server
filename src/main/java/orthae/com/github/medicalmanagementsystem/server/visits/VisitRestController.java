@@ -1,11 +1,11 @@
-package orthae.com.github.medicalmanagementsystem.server.visit;
+package orthae.com.github.medicalmanagementsystem.server.visits;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.server.entity.Visit;
-import orthae.com.github.medicalmanagementsystem.server.visit.dto.CreateVisitDTO;
-import orthae.com.github.medicalmanagementsystem.server.visit.dto.UpdateVisitDTO;
-import orthae.com.github.medicalmanagementsystem.server.visit.service.VisitService;
+import orthae.com.github.medicalmanagementsystem.server.visits.dto.CreateVisitDTO;
+import orthae.com.github.medicalmanagementsystem.server.visits.dto.UpdateVisitDTO;
+import orthae.com.github.medicalmanagementsystem.server.visits.service.VisitService;
 
 import javax.validation.Valid;
 

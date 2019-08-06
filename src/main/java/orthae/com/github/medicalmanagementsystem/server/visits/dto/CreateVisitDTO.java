@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.visit.dto;
+package orthae.com.github.medicalmanagementsystem.server.visits.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

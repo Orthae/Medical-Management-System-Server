@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.visit.dto;
+package orthae.com.github.medicalmanagementsystem.server.visits.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
