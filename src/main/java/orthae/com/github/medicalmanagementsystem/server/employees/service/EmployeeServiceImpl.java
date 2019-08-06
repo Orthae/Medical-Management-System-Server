@@ -80,15 +80,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void update(UpdateEmployeeDTO dto) {
-        ModelMapper mapper = new ModelMapper();
-        String password;
         Employee employee = employeeRepository.findById(dto.getId());
-        if(dto.getPassword() == null)
-            password = employee.getPassword();
-        else
-            password = passwordEncoder.encode(dto.getPassword());
-        mapper.map(dto, employee);
-        employee.setPassword(password);
+        if(dto.getPassword() != null)
+            dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+        utility.map(dto, employee);
         employeeRepository.save(employee);
     }
 

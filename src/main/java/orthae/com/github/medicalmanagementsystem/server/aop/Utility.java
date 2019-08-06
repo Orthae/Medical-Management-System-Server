@@ -1,8 +1,10 @@
 package orthae.com.github.medicalmanagementsystem.server.aop;
 
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +17,13 @@ public class Utility {
         this.modelMapper = new ModelMapper();
     }
 
-    public ModelMapper getMapper(){
-        return  modelMapper;
+    @PostConstruct
+    private void config(){
+        modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
+    }
+
+    public void map(Object source, Object destination){
+        modelMapper.map(source, destination);
     }
 
     public <T> T map(Object source, Class<T> destinationType){
