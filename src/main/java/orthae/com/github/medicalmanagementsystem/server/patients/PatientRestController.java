@@ -42,7 +42,7 @@ public class PatientRestController {
         patientService.createPatient(dto);
     }
 
-    @GetMapping("${rest.endpoint.patients}/{patientId}/visits")
+    @GetMapping("${rest.endpoint.patients}/{patientId}/${rest.endpoint.visits}")
     public List<Visit> findAllPatientVisits(@PathVariable int patientId){
         return visitService.findByPatientId(patientId);
     }

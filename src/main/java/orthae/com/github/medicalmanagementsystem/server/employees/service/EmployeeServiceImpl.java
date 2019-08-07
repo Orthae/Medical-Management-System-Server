@@ -1,6 +1,5 @@
 package orthae.com.github.medicalmanagementsystem.server.employees.service;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -62,8 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void create(CreateEmployeeDTO employeeDTO) {
-        ModelMapper mapper = new ModelMapper();
-        Employee employee = mapper.map(employeeDTO, Employee.class);
+        Employee employee = utility.map(employeeDTO, Employee.class);
         employee.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
         employeeRepository.save(employee);
     }

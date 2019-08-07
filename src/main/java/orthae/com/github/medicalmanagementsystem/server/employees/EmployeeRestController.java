@@ -60,7 +60,7 @@ public class EmployeeRestController {
         employeeService.delete(employeeId);
     }
 
-    @PutMapping("employees")
+    @PutMapping("${rest.endpoint.employees}")
     @ResponseStatus(HttpStatus.OK)
     public void updateEmployee(@Valid @RequestBody UpdateEmployeeDTO employee){
         employeeService.update(employee);
