@@ -83,6 +83,7 @@ class EmployeeHibernateRepositoryTest {
         employeeRepository.delete(employee);
         List<Employee> list = employeeRepository.findAll();
         assertFalse(list.contains(employee));
+        assertEquals(list.size(), 24);
     }
 
     @Test
@@ -123,5 +124,29 @@ class EmployeeHibernateRepositoryTest {
         assertEquals(employee.getPassword(), "$2y$05$AyxkcHxUFMa.1J4my92OLOQlIJDxWly1CYo8vOtK1QqT6Wa1bg5CG");
         assertEquals(employee.getAuthorities().size(), 0);
     }
+
+//  TODO change to different employee
+    @Test
+    void findByUsername(){
+        Employee employee = employeeRepository.findByUsername("baydan");
+        assertNotNull(employee);
+        assertEquals(employee.getName(), "Daniel");
+        assertEquals(employee.getSurname(), "Bayne");
+        assertEquals(employee.getUsername(), "baydan");
+        assertEquals(employee.getPassword(), "$2y$05$L8IQDO993A5f/G/z7VjHm.XFwg4rdPCdUkTr/oTa0HaHSMPFQf9fu");
+        assertEquals(employee.getAuthorities().size(), 2);
+        List<GrantedAuthority> baydanAuth = new ArrayList<>(employee.getAuthorities());
+        assertEquals(baydanAuth.get(0).getAuthority(), "ROLE_ADMIN");
+        assertEquals(baydanAuth.get(1).getAuthority(), "ROLE_USER");
+    }
+
+    @Test
+    void findByUsernameNoMatch(){
+        Employee employee = employeeRepository.findByUsername("there is no such username test");
+        assertNull(employee);
+    }
+
+//  TODO add find by surname, name and surname, save tests.
+
 
 }
