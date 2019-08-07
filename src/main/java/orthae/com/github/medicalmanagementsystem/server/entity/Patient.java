@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -28,16 +29,15 @@ public class Patient {
     @Column(name = "surname")
     private String surname;
 
+    @Column(name = "birth_date")
+    @Temporal(TemporalType.DATE)
+    private Date birthDate;
+
     @Column(name = "email")
     private String email;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_id")
     private List<Visit> visitList;
-
-    public List<Visit> getVisitList(){
-        System.out.println("CALLED");
-        return visitList;
-    }
 
 }

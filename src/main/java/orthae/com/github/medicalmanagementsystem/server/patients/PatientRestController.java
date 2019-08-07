@@ -2,7 +2,6 @@ package orthae.com.github.medicalmanagementsystem.server.patients;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import orthae.com.github.medicalmanagementsystem.server.aop.Utility;
 import orthae.com.github.medicalmanagementsystem.server.entity.Visit;
 import orthae.com.github.medicalmanagementsystem.server.patients.dto.CreatePatientDTO;
 import orthae.com.github.medicalmanagementsystem.server.patients.dto.PatientDTO;
@@ -18,13 +17,11 @@ public class PatientRestController {
 
     private PatientService patientService;
     private VisitService visitService;
-    private Utility utility;
 
     @Autowired
-    public PatientRestController(PatientService patientService, VisitService visitService, Utility utility){
+    public PatientRestController(PatientService patientService, VisitService visitService){
         this.patientService = patientService;
         this.visitService = visitService;
-        this.utility = utility;
     }
 
     @GetMapping("${rest.endpoint.patients}")
