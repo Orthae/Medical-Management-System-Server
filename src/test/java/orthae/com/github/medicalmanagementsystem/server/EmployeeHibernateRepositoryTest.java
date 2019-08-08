@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
@@ -21,6 +22,9 @@ class EmployeeHibernateRepositoryTest {
 
     @Autowired
     EmployeeRepository employeeRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Test
     void findAllEmployeesTest() {
@@ -44,6 +48,14 @@ class EmployeeHibernateRepositoryTest {
         assertEquals(employee.getUsername(), "wiljan");
         assertEquals(employee.getPassword(), "$2y$05$fYs1xCi72853IBiDnz/veOsqtnGa/OlDjP0zYbQMq5vfEZsaiEJGi");
         assertEquals(employee.getAuthorities().size(), 0);
+
+        employee = list.get(22);
+        assertEquals(employee.getName(), "Rocco");
+        assertEquals(employee.getSurname(), "Bowden");
+        assertEquals(employee.getUsername(), "bowroc");
+        assertEquals(employee.getPassword(), "$2y$05$6dg1EmZ0as6IatdCyAJNpuIgcOdDCKcfYtc7EGkKviA4RBqX/zE06");
+        assertEquals(employee.getAuthorities().size(), 0);
+
 
 //  TODO ADD ONE MORE
 
@@ -75,15 +87,6 @@ class EmployeeHibernateRepositoryTest {
     void findEmployeeByIdZero() {
         Employee employee = employeeRepository.find(0);
         assertNull(employee);
-    }
-
-    @Test
-    void deleteEmployee(){
-        Employee employee = employeeRepository.find(1);
-        employeeRepository.delete(employee);
-        List<Employee> list = employeeRepository.find();
-        assertFalse(list.contains(employee));
-        assertEquals(list.size(), 24);
     }
 
     @Test
@@ -125,6 +128,87 @@ class EmployeeHibernateRepositoryTest {
         assertEquals(employee.getAuthorities().size(), 0);
     }
 
+    @Test
+    void findBySurnameNoMatch(){
+        List<Employee> list = employeeRepository.find(null, "there is no such surname");
+        assertEquals(list.size(), 0);
+    }
+
+    @Test
+    void findBySurnameOneMatch(){
+        List<Employee> list = employeeRepository.find(null, "Salinas");
+        assertEquals(list.size(), 1);
+        Employee employee = list.get(0);
+        assertEquals(employee.getName(), "Caitlin");
+        assertEquals(employee.getSurname(), "Salinas");
+        assertEquals(employee.getUsername(), "salcai");
+        assertEquals(employee.getPassword(), "$2y$05$2QfAwCUZaQD7LKrSgzN1.OREG2ksBkOXGmdHVPsVUQILjCsAXYrzC");
+        assertEquals(employee.getAuthorities().size(), 0);
+
+    }
+
+    @Test
+    void findBySurnameMultiMatch(){
+        List<Employee> list = employeeRepository.find(null, "Meyers");
+        assertEquals(list.size(), 2);
+
+        Employee employee = list.get(0);
+        assertEquals(employee.getName(), "Leon");
+        assertEquals(employee.getSurname(), "Meyers");
+        assertEquals(employee.getUsername(), "meyleo");
+        assertEquals(employee.getPassword(), "$2y$05$TjdhULMjfV1bwjx67pzrjuGc7S1gAmtMQtY1pMosjoWqmslCJmPy2");
+        assertEquals(employee.getAuthorities().size(), 2);
+
+        employee = list.get(1);
+        assertEquals(employee.getName(), "Nicholas");
+        assertEquals(employee.getSurname(), "Meyers");
+        assertEquals(employee.getUsername(), "meynic");
+        assertEquals(employee.getPassword(), "$2y$05$fyNfpRs.P8C4g64E6ba9DeCvU8jXpKxycUxVEGTqB52RT0WIr6.5q");
+        assertEquals(employee.getAuthorities().size(), 0);
+    }
+
+    @Test
+    void findByNameAndSurnameNoMatch(){
+        List<Employee> list = employeeRepository.find("No such name test", "No such surname test");
+        assertEquals(list.size(), 0);
+    }
+
+    @Test
+    void findByNameAndSurnameOneMatch(){
+        List<Employee> list = employeeRepository.find("Hania", "Black");
+        assertEquals(list.size(), 1);
+
+        Employee employee = list.get(0);
+        assertEquals(employee.getName(), "Hania");
+        assertEquals(employee.getSurname(), "Black");
+        assertEquals(employee.getUsername(), "blahan");
+        assertEquals(employee.getPassword(), "$2y$05$xqjHh3NpsRcWEYesvkiWueSLU7ARMQl2OTHR6lDOkbPCawEkVhYSy");
+        assertEquals(employee.getAuthorities().size(), 0);
+
+    }
+
+    @Test
+    void findByNameAndSurnameMultiMatch(){
+        List<Employee> list = employeeRepository.find("Heather", "Paterson");
+        assertEquals(list.size(), 2);
+
+        Employee employee = list.get(0);
+        assertEquals(employee.getName(), "Heather");
+        assertEquals(employee.getSurname(), "Paterson");
+        assertEquals(employee.getUsername(), "patheat");
+        assertEquals(employee.getPassword(), "$2y$05$TUfqZkJQ9hNpn6cVpwbnOOICCkji82jK4kFuVQXexkcsC60pH4ROq");
+        assertEquals(employee.getAuthorities().size(), 0);
+
+        employee = list.get(1);
+        assertEquals(employee.getName(), "Heather");
+        assertEquals(employee.getSurname(), "Paterson");
+        assertEquals(employee.getUsername(), "pathea");
+        assertEquals(employee.getPassword(), "$2y$05$nOV.TLjdsSgLVKjFytgm4.L9f/lem06UxTabB9B6NnBVgoox8nn/.");
+        assertEquals(employee.getAuthorities().size(), 0);
+
+
+    }
+
 //  TODO change to different employee
     @Test
     void findByUsername(){
@@ -146,12 +230,41 @@ class EmployeeHibernateRepositoryTest {
         assertNull(employee);
     }
 
-//  TODO add find by surname, name and surname, save tests.
+    @Test
+    void createEmployee(){
+//  TODO
 
-//    @Test
-//    void findByNameAndSurname(){
-//        List<Employee> list = employeeRepository.find("Ellouise", "Mullins");
-//        assertEquals(list.size(), 0);
-//    }
+    }
+
+    @Test
+    void createEmployeeNoUniqueUsername(){
+//  TODO
+
+    }
+
+    @Test
+    void updateEmployee(){
+//  TODO
+    }
+
+    @Test
+    void updateEmployeeNoUniqueUsername(){
+//  TODO
+    }
+
+    @Test
+    void deleteEmployee(){
+        Employee employee = employeeRepository.find(1);
+        employeeRepository.delete(employee);
+        List<Employee> list = employeeRepository.find();
+        assertFalse(list.contains(employee));
+        assertEquals(list.size(), 24);
+    }
+
+    @Test
+    void deleteEmployeeWrongId(){
+//  TODO
+
+    }
 
 }

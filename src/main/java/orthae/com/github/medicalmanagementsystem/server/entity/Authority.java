@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "employee_roles")
+@Table(name = "employees_roles")
 public class Authority implements GrantedAuthority {
 
     @Id
