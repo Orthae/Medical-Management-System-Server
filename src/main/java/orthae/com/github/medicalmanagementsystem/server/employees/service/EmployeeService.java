@@ -8,11 +8,8 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    List<EmployeeDTO> findAll();
     EmployeeDTO findById(int id);
-    List<EmployeeDTO> findByName(String name);
-    List<EmployeeDTO> findBySurname(String surname);
-    List<EmployeeDTO> findByNameAndSurname(String name, String surname);
+    List<EmployeeDTO> find(String name, String surname);
     void create(CreateEmployeeDTO createEmployee);
     void delete(int id);
     void update(UpdateEmployeeDTO updateEmployee);

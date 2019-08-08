@@ -23,24 +23,9 @@ public class EmployeeRestController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("${rest.endpoint.employees}")
-    public List<EmployeeDTO> findAllEmployees(){
-        return employeeService.findAll();
-    }
-
-    @GetMapping(value = "${rest.endpoint.employees}", params = {"name"})
-    public List<EmployeeDTO> findEmployeesByName(@RequestParam String name){
-        return employeeService.findByName(name);
-    }
-
-    @GetMapping(value = "${rest.endpoint.employees}", params = {"surname"})
-    public List<EmployeeDTO> findEmployeesBySurname(@RequestParam String surname){
-        return employeeService.findBySurname(surname);
-    }
-
-    @GetMapping(value = "${rest.endpoint.employees}", params = {"name","surname"})
-    public List<EmployeeDTO> findEmployeesByNameAndSurname(@RequestParam String name, @RequestParam String surname){
-        return employeeService.findByNameAndSurname(name, surname);
+    @GetMapping(value = "${rest.endpoint.employees}")
+    public List<EmployeeDTO> findEmployeesByNameAndSurname(@RequestParam(required = false) String name, @RequestParam(required = false) String surname){
+        return employeeService.find(name, surname);
     }
 
     @GetMapping("${rest.endpoint.employees}/{employeeId}")

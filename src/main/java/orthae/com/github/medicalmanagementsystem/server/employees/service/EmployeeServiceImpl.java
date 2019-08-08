@@ -30,32 +30,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public List<EmployeeDTO> findAll() {
-        return utility.mapAll(employeeRepository.findAll(), EmployeeDTO.class);
-    }
-
-    @Transactional
-    @Override
     public EmployeeDTO findById(int id) {
-        return utility.map(employeeRepository.findById(id), EmployeeDTO.class);
+        return utility.map(employeeRepository.find(id), EmployeeDTO.class);
     }
+
 
     @Transactional
     @Override
-    public List<EmployeeDTO> findByName(String name) {
-        return utility.mapAll(employeeRepository.findByName(name), EmployeeDTO.class);
-    }
-
-    @Transactional
-    @Override
-    public List<EmployeeDTO> findBySurname(String surname) {
-        return utility.mapAll(employeeRepository.findBySurname(surname), EmployeeDTO.class);
-    }
-
-    @Transactional
-    @Override
-    public List<EmployeeDTO> findByNameAndSurname(String name, String surname) {
-        return utility.mapAll(employeeRepository.findByNameAndSurname(name, surname), EmployeeDTO.class);
+    public List<EmployeeDTO> find(String name, String surname) {
+        return utility.mapAll(employeeRepository.find(name, surname), EmployeeDTO.class);
     }
 
     @Transactional
@@ -69,7 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void delete(int id) {
-        Employee employee = employeeRepository.findById(id);
+        Employee employee = employeeRepository.find(id);
         if(employee == null)
             throw new EmployeeNotFound("Couldn't find employee with id = " + id);
         employeeRepository.delete(employee);
@@ -78,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void update(UpdateEmployeeDTO dto) {
-        Employee employee = employeeRepository.findById(dto.getId());
+        Employee employee = employeeRepository.find(dto.getId());
         if(dto.getPassword() != null)
             dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         utility.map(dto, employee);

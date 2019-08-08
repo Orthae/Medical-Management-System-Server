@@ -1,5 +1,6 @@
 package orthae.com.github.medicalmanagementsystem.server.repository.impl;
 
+
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,12 @@ import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -20,39 +27,28 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> findAll() {
-        Session session = entityManager.unwrap(Session.class);
-        Query<Employee> query = session.createQuery("from Employee", Employee.class);
-        return query.getResultList();
-    }
-
-    @Override
-    public Employee findById(int id) {
+    public Employee find(int id) {
         Session session = entityManager.unwrap(Session.class);
         return session.get(Employee.class, id);
     }
 
     @Override
-    public List<Employee> findByName(String name) {
-        Session session = entityManager.unwrap(Session.class);
-        Query<Employee> query = session.createQuery("FROM Employee WHERE name =: name", Employee.class);
-        query.setParameter("name", name);
-        return query.getResultList();
+    public List<Employee> find(){
+        return find(null, null);
     }
 
-    @Override
-    public List<Employee> findBySurname(String surname) {
-        Session session = entityManager.unwrap(Session.class);
-        Query<Employee> query = session.createQuery("FROM Employee WHERE surname =: surname", Employee.class);
-        query.setParameter("surname", surname);
-        return query.getResultList();
-    }
-
-    @Override
-    public List<Employee> findByNameAndSurname(String name, String surname) {
-        Session session = entityManager.unwrap(Session.class);
-        Query<Employee> query = session.createQuery("FROM Employee WHERE name =: name AND surname =: surname", Employee.class);
-        return query.getResultList();
+    public List<Employee> find(String name, String surname){
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
+        Root<Employee> root = query.from(Employee.class);
+        List<Predicate> list = new ArrayList<>();
+        if(name != null)
+            list.add(builder.like(root.get("name"), name));
+        if(surname != null)
+            list.add(builder.like(root.get("surname"), surname));
+        query.where(builder.and(list.toArray(new Predicate[0])));
+        TypedQuery<Employee> typedQuery = entityManager.createQuery(query);
+        return typedQuery.getResultList();
     }
 
     @Override
@@ -68,7 +64,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public Employee findByUsername(String username) {
+    public Employee find(String username) {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> employeeQuery = session.createQuery("FROM Employee WHERE username = :username", Employee.class);
         employeeQuery.setParameter("username", username);
