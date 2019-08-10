@@ -233,13 +233,19 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void createEmployee(){
-//  TODO
-
+        Employee employee = new Employee();
+        employee.setName("TestName");
+        employee.setSurname("TestSurname");
+        employee.setUsername("TestUsername");
+        employee.setPassword("TestPassword");
+        employeeRepository.save(employee);
+        System.out.println(employee.getId());
+        List<Employee> list = employeeRepository.find("TestName", "TestSurname");
+        assertEquals(1, list.size());
     }
 
     @Test
     void createEmployeeNoUniqueUsername(){
-//  TODO
 
     }
 
