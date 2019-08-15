@@ -20,13 +20,13 @@ public class SessionRestController {
         this.loginService = loginService;
     }
 
-    @PostMapping("/session")
+    @PostMapping("${rest.endpoint.login}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public String login(@Valid @RequestBody LoginDTO loginDTO){
         return loginService.login(loginDTO);
     }
 
-    @DeleteMapping("/session")
+    @DeleteMapping("${rest.endpoint.login}")
     public void logout(HttpServletRequest request){
         loginService.logout(request);
     }
