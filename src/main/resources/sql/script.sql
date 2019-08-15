@@ -80,7 +80,7 @@ INSERT INTO employees (name, surname, username, password) VALUES ('Sannah', 'Blo
 INSERT INTO employees (name, surname, username, password) VALUES ('Dilan', 'Bradford', 'bradil', '$2y$05$jjhXFc6IvwPbW92CcAO5geqs10KUcQ8RNF7c/JlmFge5nLqHoAwnS');
 INSERT INTO employees (name, surname, username, password) VALUES ('Heather', 'Paterson', 'pathea', '$2y$05$nOV.TLjdsSgLVKjFytgm4.L9f/lem06UxTabB9B6NnBVgoox8nn/.');
 INSERT INTO employees (name, surname, username, password) VALUES ('Rocco', 'Bowden', 'bowroc', '$2y$05$6dg1EmZ0as6IatdCyAJNpuIgcOdDCKcfYtc7EGkKviA4RBqX/zE06');
-INSERT INTO employees (name, surname, username, password) VALUES ('Matas', 'Todd', 'todmat', '$2y$05$.VB4ZbfQYw996I.ewILeNONhTkxstJaHGk.dz0IgQPapyzWtWwOKW');
+INSERT INTO employees (name, surname, username, password) VALUES ('Heather', 'Paterson', 'patheat', '$2y$05$4LV6DNJtKoQ2LU4Tolw76OA2TH1rXc3nkUbQbBtSsM8jKvrESi9Oa');
 INSERT INTO employees (name, surname, username, password) VALUES ('Oliver', 'Kunal', 'kunoli', '$2y$05$AyxkcHxUFMa.1J4my92OLOQlIJDxWly1CYo8vOtK1QqT6Wa1bg5CG');
 
 INSERT INTO medical_company_db.employees_roles (employee_id, role)

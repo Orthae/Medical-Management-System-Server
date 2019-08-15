@@ -56,10 +56,6 @@ class EmployeeHibernateRepositoryTest {
         assertEquals("bowroc", employee.getUsername());
         assertTrue(passwordEncoder.matches("bowroc", employee.getPassword()));
         assertEquals(0, employee.getAuthorities().size());
-
-
-//  TODO ADD ONE MORE
-
     }
 
     @Test
@@ -139,6 +135,7 @@ class EmployeeHibernateRepositoryTest {
     void findBySurnameOneMatch(){
         List<Employee> list = employeeRepository.find(null, "Salinas");
         assertEquals(list.size(), 1);
+
         Employee employee = list.get(0);
         assertEquals("Caitlin", employee.getName());
         assertEquals("Salinas", employee.getSurname());
@@ -196,15 +193,15 @@ class EmployeeHibernateRepositoryTest {
         Employee employee = list.get(0);
         assertEquals("Heather", employee.getName());
         assertEquals("Paterson", employee.getSurname());
-        assertEquals("patheat", employee.getUsername());
-        assertTrue(passwordEncoder.matches("patheat", employee.getPassword()));
+        assertEquals("pathea", employee.getUsername());
+        assertTrue(passwordEncoder.matches("pathea", employee.getPassword()));
         assertEquals(0, employee.getAuthorities().size());
 
         employee = list.get(1);
         assertEquals("Heather", employee.getName());
         assertEquals("Paterson", employee.getSurname());
-        assertEquals("pathea", employee.getUsername());
-        assertTrue(passwordEncoder.matches("pathea", employee.getPassword()));
+        assertEquals("patheat", employee.getUsername());
+        assertTrue(passwordEncoder.matches("patheat", employee.getPassword()));
         assertEquals(0, employee.getAuthorities().size());
 
 
@@ -215,6 +212,7 @@ class EmployeeHibernateRepositoryTest {
     void findByUsername(){
         Employee employee = employeeRepository.find("baydan");
         assertNotNull(employee);
+
         assertEquals("Daniel", employee.getName());
         assertEquals("Bayne", employee.getSurname());
         assertEquals("baydan", employee.getUsername());
@@ -245,18 +243,20 @@ class EmployeeHibernateRepositoryTest {
     }
 
     @Test
-    void createEmployeeNoUniqueUsername(){
-
-    }
-
-    @Test
     void updateEmployee(){
-//  TODO
-    }
-
-    @Test
-    void updateEmployeeNoUniqueUsername(){
-//  TODO
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setName("TestName");
+        employee.setSurname("TestSurname");
+        employee.setUsername("TestUsername");
+        employee.setPassword("TestPassword");
+        employeeRepository.save(employee);
+        employee = employeeRepository.find(1);
+        assertEquals(1,employee.getId());
+        assertEquals("TestName", employee.getName());
+        assertEquals("TestSurname", employee.getSurname());
+        assertEquals("TestUsername", employee.getUsername());
+        assertEquals("TestPassword", employee.getPassword());
     }
 
     @Test
@@ -266,12 +266,6 @@ class EmployeeHibernateRepositoryTest {
         List<Employee> list = employeeRepository.find();
         assertFalse(list.contains(employee));
         assertEquals(24, list.size());
-    }
-
-    @Test
-    void deleteEmployeeWrongId(){
-//  TODO
-
     }
 
 }
