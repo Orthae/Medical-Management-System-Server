@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.security;
+package orthae.com.github.medicalmanagementsystem.server.aspects.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,13 +9,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import orthae.com.github.medicalmanagementsystem.server.security.bearertoken.BearerTokenConfig;
+import orthae.com.github.medicalmanagementsystem.server.aspects.security.session.SessionTokenConfig;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private SessionTokenConfig tokenConfig;
+
     @Autowired
-    private BearerTokenConfig tokenConfig;
+    public SecurityConfig(SessionTokenConfig tokenConfig){
+        this.tokenConfig = tokenConfig;
+    }
 
     @Bean
     @Override

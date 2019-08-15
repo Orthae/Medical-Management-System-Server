@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.aop.exceptions;
+package orthae.com.github.medicalmanagementsystem.server.aspects.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;

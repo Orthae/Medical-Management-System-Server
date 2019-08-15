@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.security.bearertoken;
+package orthae.com.github.medicalmanagementsystem.server.aspects.security.session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class BearerTokenConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+public class SessionTokenConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    private BearerTokenFilter tokenFilter;
+    private SessionTokenFilter tokenFilter;
 
     @Autowired
-    public BearerTokenConfig(BearerTokenFilter tokenFilter){
+    public SessionTokenConfig(SessionTokenFilter tokenFilter){
         this.tokenFilter = tokenFilter;
     }
 

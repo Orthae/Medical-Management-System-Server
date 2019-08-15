@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.session.dto;
+package orthae.com.github.medicalmanagementsystem.server.login.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

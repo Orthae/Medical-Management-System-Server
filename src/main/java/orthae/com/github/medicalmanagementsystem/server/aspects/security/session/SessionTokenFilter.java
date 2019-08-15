@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.security.bearertoken;
+package orthae.com.github.medicalmanagementsystem.server.aspects.security.session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,20 +14,19 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Component
-public class BearerTokenFilter extends GenericFilterBean {
+public class SessionTokenFilter extends GenericFilterBean {
 
-    private BearerTokenProvider tokenProvider;
+    private SessionService sessionService;
 
     @Autowired
-    public BearerTokenFilter(BearerTokenProvider tokenProvider){
-        this.tokenProvider = tokenProvider;
+    public SessionTokenFilter(SessionService sessionService){
+        this.sessionService = sessionService;
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String token = tokenProvider.extractToken((HttpServletRequest) request);
-        if(token != null && tokenProvider.validate(token)){
-            Authentication auth = tokenProvider.getAuthentication(token);
+        Authentication auth = sessionService.validate((HttpServletRequest) request);
+        if(auth != null){
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
         chain.doFilter(request, response) ;

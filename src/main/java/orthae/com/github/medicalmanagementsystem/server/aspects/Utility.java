@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.aop;
+package orthae.com.github.medicalmanagementsystem.server.aspects;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
