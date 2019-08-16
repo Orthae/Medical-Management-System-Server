@@ -12,7 +12,9 @@ import orthae.com.github.medicalmanagementsystem.server.employees.exceptions.typ
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -30,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public EmployeeDTO findById(int id) {
+    public EmployeeDTO find(int id) {
         return utility.map(employeeRepository.find(id), EmployeeDTO.class);
     }
 
@@ -38,7 +40,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public List<EmployeeDTO> find(String name, String surname) {
-        return utility.mapAll(employeeRepository.find(name, surname), EmployeeDTO.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("name", name);
+        params.put("surname", surname);
+        return utility.mapAll(employeeRepository.find(params), EmployeeDTO.class);
     }
 
     @Transactional

@@ -11,7 +11,9 @@ import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -88,13 +90,18 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findByNameNoMatch(){
-        List<Employee> list = employeeRepository.find("There is no such name", null);
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "There is no such name");
+        List<Employee> list = employeeRepository.find(params);
         assertEquals(0, list.size());
     }
 
     @Test
     void findByNameOneMatch(){
-        List<Employee> list = employeeRepository.find("Chelsy", null);
+
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "Chelsy");
+        List<Employee> list = employeeRepository.find(params);
         assertEquals(1, list.size());
 
         Employee employee = list.get(0);
@@ -107,7 +114,9 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findByNameMultiMatch(){
-        List<Employee> list = employeeRepository.find("Oliver", null);
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "Oliver");
+        List<Employee> list = employeeRepository.find(params);
         assertEquals(2, list.size());
 
         Employee employee = list.get(0);
@@ -127,13 +136,17 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findBySurnameNoMatch(){
-        List<Employee> list = employeeRepository.find(null, "there is no such surname");
+        Map<String, String> params = new HashMap<>();
+        params.put("surname", "There is no such surname");
+        List<Employee> list = employeeRepository.find(params);
         assertEquals(list.size(), 0);
     }
 
     @Test
     void findBySurnameOneMatch(){
-        List<Employee> list = employeeRepository.find(null, "Salinas");
+        Map<String, String> params = new HashMap<>();
+        params.put("surname", "Salinas");
+        List<Employee> list = employeeRepository.find(params);
         assertEquals(list.size(), 1);
 
         Employee employee = list.get(0);
@@ -147,7 +160,9 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findBySurnameMultiMatch(){
-        List<Employee> list = employeeRepository.find(null, "Meyers");
+        Map<String, String> params = new HashMap<>();
+        params.put("surname", "Meyers");
+        List<Employee> list = employeeRepository.find(params);
         assertEquals(list.size(), 2);
 
         Employee employee = list.get(0);
@@ -167,13 +182,19 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findByNameAndSurnameNoMatch(){
-        List<Employee> list = employeeRepository.find("No such name test", "No such surname test");
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "No such name test");
+        params.put("surname", "No such surname test");
+        List<Employee> list = employeeRepository.find(params);
         assertEquals(list.size(), 0);
     }
 
     @Test
     void findByNameAndSurnameOneMatch(){
-        List<Employee> list = employeeRepository.find("Hania", "Black");
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "Hania");
+        params.put("surname", "Black");
+        List<Employee> list = employeeRepository.find(params);
         assertEquals(list.size(), 1);
 
         Employee employee = list.get(0);
@@ -187,7 +208,10 @@ class EmployeeHibernateRepositoryTest {
 
     @Test
     void findByNameAndSurnameMultiMatch(){
-        List<Employee> list = employeeRepository.find("Heather", "Paterson");
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "Heather");
+        params.put("surname", "Paterson");
+        List<Employee> list = employeeRepository.find(params);
         assertEquals(list.size(), 2);
 
         Employee employee = list.get(0);
@@ -237,8 +261,11 @@ class EmployeeHibernateRepositoryTest {
         employee.setUsername("TestUsername");
         employee.setPassword("TestPassword");
         employeeRepository.save(employee);
-        System.out.println(employee.getId());
-        List<Employee> list = employeeRepository.find("TestName", "TestSurname");
+
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "TestName");
+        params.put("surname", "TestSurname");
+        List<Employee> list = employeeRepository.find(params);
         assertEquals(1, list.size());
     }
 

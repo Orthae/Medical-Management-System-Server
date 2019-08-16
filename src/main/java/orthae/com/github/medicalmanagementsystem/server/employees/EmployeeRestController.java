@@ -30,7 +30,7 @@ public class EmployeeRestController {
 
     @GetMapping("${rest.endpoint.employees}/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable int employeeId){
-        return employeeService.findById(employeeId);
+        return employeeService.find(employeeId);
     }
 
     @PostMapping("${rest.endpoint.employees}")

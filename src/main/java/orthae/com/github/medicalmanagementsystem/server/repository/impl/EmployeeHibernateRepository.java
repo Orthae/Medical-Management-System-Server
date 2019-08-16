@@ -15,7 +15,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class EmployeeHibernateRepository implements EmployeeRepository {
@@ -34,22 +36,23 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
 
     @Override
     public List<Employee> find(){
-        return find(null, null);
+        return find(new HashMap<>());
     }
 
-    public List<Employee> find(String name, String surname){
+    public List<Employee> find(Map<String, String> params){
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Employee> query = builder.createQuery(Employee.class);
-        Root<Employee> root = query.from(Employee.class);
+        CriteriaQuery<Employee> criteria = builder.createQuery(Employee.class);
+        Root<Employee> root = criteria.from(Employee.class);
         List<Predicate> list = new ArrayList<>();
-        if(name != null)
-            list.add(builder.like(root.get("name"), name));
-        if(surname != null)
-            list.add(builder.like(root.get("surname"), surname));
-        query.where(builder.and(list.toArray(new Predicate[0])));
-        TypedQuery<Employee> typedQuery = entityManager.createQuery(query);
-        return typedQuery.getResultList();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            if(entry.getValue() != null)
+                list.add(builder.like(root.get(entry.getKey()), entry.getValue()));
+        }
+        criteria.where(builder.and(list.toArray(new Predicate[0]))).orderBy(builder.asc(root.get("id")));
+        TypedQuery<Employee> query = entityManager.createQuery(criteria);
+        return query.getResultList();
     }
+
 
     @Override
     public void save(Employee employee){
