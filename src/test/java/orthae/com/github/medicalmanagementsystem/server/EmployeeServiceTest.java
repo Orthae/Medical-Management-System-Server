@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
 
@@ -12,12 +14,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@Transactional
 @DisplayName("Employee Service Tests")
 class EmployeeServiceTest {
 
     @Autowired
     EmployeeService employeeService;
-
 
     @Test
     void findById(){
@@ -34,7 +36,21 @@ class EmployeeServiceTest {
         assertEquals(25, list.size());
     }
 
+    @Test
+    void createEmployee(){
+        CreateEmployeeDTO dto = new CreateEmployeeDTO();
+        dto.setName("TestName");
+        dto.setSurname("TestSurname");
+        dto.setUsername("TestUsername");
+        dto.setPassword("TestPassword");
+        employeeService.create(dto);
 
+        List<EmployeeDTO> list = employeeService.find("TestName", "TestSurname");
+        EmployeeDTO employeeDTO = list.get(0);
+        assertEquals(dto.getName(), employeeDTO.getName());
+        assertEquals(dto.getSurname(), employeeDTO.getSurname());
+        assertEquals(dto.getUsername(), employeeDTO.getUsername());
+    }
 
 
 
