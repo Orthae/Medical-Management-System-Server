@@ -39,10 +39,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public List<EmployeeDTO> find(String name, String surname) {
+    public List<EmployeeDTO> find(String name, String surname, String username, String email) {
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
         params.put("surname", surname);
+        params.put("username", username);
+        params.put("email", email);
         return utility.mapAll(employeeRepository.find(params), EmployeeDTO.class);
     }
 

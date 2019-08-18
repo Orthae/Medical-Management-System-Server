@@ -32,7 +32,7 @@ class EmployeeServiceTest {
 
     @Test
     void findAll(){
-        List<EmployeeDTO> list = employeeService.find(null, null);
+        List<EmployeeDTO> list = employeeService.find(null, null, null, null);
         assertEquals(25, list.size());
     }
 
@@ -46,7 +46,7 @@ class EmployeeServiceTest {
         dto.setPassword("TestPassword");
         employeeService.create(dto);
 
-        List<EmployeeDTO> list = employeeService.find("TestName", "TestSurname");
+        List<EmployeeDTO> list = employeeService.find("TestName", "TestSurname", null,null);
         EmployeeDTO employeeDTO = list.get(0);
         assertEquals(dto.getName(), employeeDTO.getName());
         assertEquals(dto.getSurname(), employeeDTO.getSurname());
