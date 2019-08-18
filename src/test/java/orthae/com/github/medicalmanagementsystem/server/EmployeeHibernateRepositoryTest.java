@@ -248,6 +248,25 @@ class EmployeeHibernateRepositoryTest {
     }
 
     @Test
+    void findByEmail(){
+        Map<String, String> params = new HashMap<>();
+        params.put("email", "danica.landry@company.com");
+
+        List<Employee> list = employeeRepository.find(params);
+        Employee employee = list.get(0);
+        assertNotNull(employee);
+    }
+
+    @Test
+    void findByEmailNoMatch(){
+        Map<String, String> params = new HashMap<>();
+        params.put("email", "There is no such email");
+
+        List<Employee> list = employeeRepository.find(params);
+        assertEquals(0, list.size());
+    }
+
+    @Test
     void findByUsernameNoMatch(){
         Employee employee = employeeRepository.find("there is no such username test");
         assertNull(employee);
