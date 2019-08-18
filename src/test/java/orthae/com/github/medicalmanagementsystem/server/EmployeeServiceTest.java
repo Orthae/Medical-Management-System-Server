@@ -42,6 +42,7 @@ class EmployeeServiceTest {
         dto.setName("TestName");
         dto.setSurname("TestSurname");
         dto.setUsername("TestUsername");
+        dto.setEmail("TestEmail");
         dto.setPassword("TestPassword");
         employeeService.create(dto);
 
@@ -50,6 +51,7 @@ class EmployeeServiceTest {
         assertEquals(dto.getName(), employeeDTO.getName());
         assertEquals(dto.getSurname(), employeeDTO.getSurname());
         assertEquals(dto.getUsername(), employeeDTO.getUsername());
+        assertEquals(dto.getEmail(), employeeDTO.getEmail());
     }
 
 

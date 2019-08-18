@@ -33,6 +33,9 @@ public class Employee implements UserDetails {
     @Column (name = "username")
     private String username;
 
+    @Column (name = "email")
+    private String email;
+
     @JsonIgnore
     @Column (name = "password")
     private String password;

@@ -8,7 +8,7 @@ import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
-import orthae.com.github.medicalmanagementsystem.server.employees.exceptions.type.EmployeeNotFound;
+import orthae.com.github.medicalmanagementsystem.server.employees.exception.type.EmployeeNotFound;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 

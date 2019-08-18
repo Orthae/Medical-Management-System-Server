@@ -254,11 +254,32 @@ class EmployeeHibernateRepositoryTest {
     }
 
     @Test
+    void uniqueEmail(){
+        assertTrue(employeeRepository.isEmailUnique("There is no such email test"));
+    }
+
+    @Test
+    void notUniqueEmail(){
+        assertFalse(employeeRepository.isEmailUnique("daniel.bayne@company.com"));
+    }
+
+    @Test
+    void uniqueUsername(){
+        assertTrue(employeeRepository.isUsernameUnique("There is no such username test"));
+    }
+
+    @Test
+    void notUniqueUsername(){
+        assertFalse(employeeRepository.isUsernameUnique("bonabi"));
+    }
+
+    @Test
     void createEmployee(){
         Employee employee = new Employee();
         employee.setName("TestName");
         employee.setSurname("TestSurname");
         employee.setUsername("TestUsername");
+        employee.setEmail("TestEmail");
         employee.setPassword("TestPassword");
         employeeRepository.save(employee);
 

@@ -55,6 +55,25 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
 
 
     @Override
+    public boolean isEmailUnique(String email){
+        Session session = entityManager.unwrap(Session.class);
+        Query<Employee> query = session.createQuery("FROM Employee WHERE email = :email", Employee.class);
+        query.setParameter("email", email);
+        Employee employee = query.getResultStream().findFirst().orElse(null);
+        return employee == null;
+
+    }
+
+    @Override
+    public boolean isUsernameUnique(String username){
+        Session session = entityManager.unwrap(Session.class);
+        Query<Employee> query = session.createQuery("FROM Employee WHERE username = :username", Employee.class);
+        query.setParameter("username", username);
+        Employee employee = query.getResultStream().findFirst().orElse(null);
+        return employee == null;
+    }
+
+    @Override
     public void save(Employee employee){
         Session session = entityManager.unwrap(Session.class);
         session.saveOrUpdate(employee);

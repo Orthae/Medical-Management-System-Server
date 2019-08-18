@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.employees.exceptions.type;
+package orthae.com.github.medicalmanagementsystem.server.employees.exception.type;
 
 
 public class EmployeeNotFound extends RuntimeException {

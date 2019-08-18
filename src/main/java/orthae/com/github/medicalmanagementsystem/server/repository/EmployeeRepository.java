@@ -10,6 +10,8 @@ public interface EmployeeRepository {
     List<Employee> find(Map<String, String> params);
     Employee find(int id);
     Employee find(String username);
+    boolean isEmailUnique(String email);
+    boolean isUsernameUnique(String username);
     void save(Employee employee);
     void delete(Employee employee);
 }
