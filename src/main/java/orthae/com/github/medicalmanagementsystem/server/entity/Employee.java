@@ -8,8 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
 @Entity
@@ -40,7 +39,7 @@ public class Employee implements UserDetails {
     @Column (name = "password")
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "employee_id")
     private List<Authority> authorities;
 
@@ -48,6 +47,13 @@ public class Employee implements UserDetails {
     public String getPassword(){
         return password;
     }
+
+    public void addAuthority(Authority authority){
+        if(authorities == null)
+            authorities = new ArrayList<>();
+        authorities.add(authority);
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

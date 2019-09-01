@@ -25,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private Utility utility;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder, Utility utility) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder,  Utility utility) {
         this.employeeRepository = employeeRepository;
         this.passwordEncoder = passwordEncoder;
         this.utility = utility;
@@ -70,8 +70,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void update(UpdateEmployeeDTO dto) {
         Employee employee = employeeRepository.find(dto.getId());
-        if(dto.getPassword() != null)
-            dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         utility.map(dto, employee);
         employeeRepository.save(employee);
     }

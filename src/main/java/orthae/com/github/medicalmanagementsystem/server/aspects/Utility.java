@@ -2,7 +2,11 @@ package orthae.com.github.medicalmanagementsystem.server.aspects;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.entity.Authority;
+import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -12,9 +16,11 @@ import java.util.List;
 public class Utility {
 
     private ModelMapper modelMapper;
+    private PasswordEncoder passwordEncoder;
 
-    public Utility(){
+    public Utility(PasswordEncoder passwordEncoder){
         this.modelMapper = new ModelMapper();
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -24,6 +30,28 @@ public class Utility {
 
     public void map(Object source, Object destination){
         modelMapper.map(source, destination);
+    }
+
+    public void map(UpdateEmployeeDTO source, Employee destination){
+        if(source.getName() != null)
+            destination.setName(source.getName());
+        if(source.getSurname() != null)
+            destination.setSurname(source.getSurname());
+        if(source.getUsername() != null)
+            destination.setUsername(source.getUsername());
+        if(source.getEmail() != null)
+            destination.setEmail(source.getEmail());
+        if(source.getPassword() != null)
+            destination.setPassword(passwordEncoder.encode(source.getPassword()));
+        for(Authority authority : source.getAuthorities()){
+            authority.setEmployee(destination);
+        }
+        if(source.getAuthorities().isEmpty()){
+            destination.getAuthorities().clear();
+        }
+        for(Authority authority : source.getAuthorities()){
+            destination.addAuthority(authority);
+        }
     }
 
     public <T> T map(Object source, Class<T> destinationType){
