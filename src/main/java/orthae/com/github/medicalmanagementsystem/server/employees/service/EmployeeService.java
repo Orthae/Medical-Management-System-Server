@@ -1,6 +1,6 @@
 package orthae.com.github.medicalmanagementsystem.server.employees.service;
 
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
@@ -11,7 +11,7 @@ public interface EmployeeService {
 
     EmployeeDetailsDto find(int id);
     List<EmployeeDTO> find(String name, String surname, String username, String email);
-    void create(CreateEmployeeDTO createEmployee);
+    void create(CreateEmployeeDto createEmployee);
     void delete(int id);
     void update(UpdateEmployeeDTO updateEmployee);
 

@@ -13,23 +13,23 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreateEmployeeDTO {
+public class CreateEmployeeDto {
 
-    @NotBlank(message = "field can't be empty")
+    @NotBlank(message = "Name field can't be empty")
     private String name;
 
-    @NotBlank(message = "field can't be empty")
+    @NotBlank(message = "Surname field can't be empty")
     private String surname;
 
     @UniqueUsername
-    @NotBlank(message = "field can't be empty")
+    @NotBlank(message = "Username field can't be empty")
     private String username;
 
     @UniqueEmail
-    @NotBlank(message = "field can't be empty")
+    @NotBlank(message = "Email field can't be empty")
     private String email;
 
-    @NotBlank(message = "field can't be empty")
+    @NotBlank(message = "Password field can't be empty")
     private String password;
 
     private List<Authority> authorities;

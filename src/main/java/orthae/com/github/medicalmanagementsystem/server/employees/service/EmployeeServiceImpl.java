@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
@@ -51,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public void create(CreateEmployeeDTO employeeDTO) {
+    public void create(CreateEmployeeDto employeeDTO) {
         Employee employee = utility.map(employeeDTO, Employee.class);
         employee.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
         employeeRepository.save(employee);
