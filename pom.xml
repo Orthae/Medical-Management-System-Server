@@ -11,7 +11,7 @@
 	<groupId>orthae.com.github</groupId>
 	<artifactId>medicalmanagementsystem.server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>MedicalManagementServer</name>
+	<name>MedicalManagementSystemServer</name>
 	<description>Server for medical management system application</description>
 
 	<properties>

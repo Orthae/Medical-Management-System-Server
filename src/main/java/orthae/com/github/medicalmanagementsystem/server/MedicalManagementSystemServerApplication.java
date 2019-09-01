@@ -4,10 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MedicalManagementServerApplication {
-
+public class MedicalManagementSystemServerApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(MedicalManagementServerApplication.class, args);
+		SpringApplication.run(MedicalManagementSystemServerApplication.class, args);
 	}
-
 }
