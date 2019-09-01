@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.exception.type.EmployeeNotFound;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
@@ -32,8 +33,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public EmployeeDTO find(int id) {
-        return utility.map(employeeRepository.find(id), EmployeeDTO.class);
+    public EmployeeDetailsDto find(int id) {
+        return utility.map(employeeRepository.find(id), EmployeeDetailsDto.class);
     }
 
 

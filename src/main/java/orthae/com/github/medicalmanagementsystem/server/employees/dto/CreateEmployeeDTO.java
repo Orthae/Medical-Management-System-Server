@@ -5,8 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import orthae.com.github.medicalmanagementsystem.server.employees.validator.UniqueEmail;
 import orthae.com.github.medicalmanagementsystem.server.employees.validator.UniqueUsername;
+import orthae.com.github.medicalmanagementsystem.server.entity.Authority;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,4 +31,6 @@ public class CreateEmployeeDTO {
 
     @NotBlank(message = "field can't be empty")
     private String password;
+
+    private List<Authority> authorities;
 }

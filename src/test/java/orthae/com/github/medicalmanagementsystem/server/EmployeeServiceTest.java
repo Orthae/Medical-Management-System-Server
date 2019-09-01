@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
 
 import java.util.List;
@@ -23,7 +24,7 @@ class EmployeeServiceTest {
 
     @Test
     void findById(){
-        EmployeeDTO employee = employeeService.find(1);
+        EmployeeDetailsDto employee = employeeService.find(1);
         assertEquals(1, employee.getId());
         assertEquals("Daniel", employee.getName());
         assertEquals("Bayne", employee.getSurname());

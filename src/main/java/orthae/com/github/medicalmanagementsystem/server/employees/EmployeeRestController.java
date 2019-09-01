@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
 
@@ -30,7 +31,7 @@ public class EmployeeRestController {
     }
 
     @GetMapping("${rest.endpoint.employees}/{employeeId}")
-    public EmployeeDTO getEmployee(@PathVariable int employeeId) {
+    public EmployeeDetailsDto getEmployee(@PathVariable int employeeId) {
         return employeeService.find(employeeId);
     }
 
