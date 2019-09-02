@@ -41,8 +41,8 @@ class EmployeeHibernateRepositoryTest {
         assertTrue(passwordEncoder.matches("baydan", employee.getPassword()));
         assertEquals(2, employee.getAuthorities().size());
         List<GrantedAuthority> baydanAuth = new ArrayList<>(employee.getAuthorities());
-        assertEquals("ROLE_ADMIN", baydanAuth.get(0).getAuthority());
-        assertEquals("ROLE_USER", baydanAuth.get(1).getAuthority());
+        assertEquals("MANAGEMENT", baydanAuth.get(0).getAuthority());
+        assertEquals("USER", baydanAuth.get(1).getAuthority());
 
         employee = list.get(9);
         assertEquals("Jana", employee.getName());
@@ -69,8 +69,8 @@ class EmployeeHibernateRepositoryTest {
         assertTrue(passwordEncoder.matches("baydan", employee.getPassword()));
         assertEquals(2, employee.getAuthorities().size());
         List<GrantedAuthority> baydanAuth = new ArrayList<>(employee.getAuthorities());
-        assertEquals("ROLE_ADMIN", baydanAuth.get(0).getAuthority());
-        assertEquals("ROLE_USER", baydanAuth.get(1).getAuthority());
+        assertEquals("MANAGEMENT", baydanAuth.get(0).getAuthority());
+        assertEquals("USER", baydanAuth.get(1).getAuthority());
     }
 
     @Test
@@ -243,8 +243,8 @@ class EmployeeHibernateRepositoryTest {
         assertTrue(passwordEncoder.matches("baydan", employee.getPassword()));
         assertEquals(2, employee.getAuthorities().size());
         List<GrantedAuthority> baydanAuth = new ArrayList<>(employee.getAuthorities());
-        assertEquals("ROLE_ADMIN", baydanAuth.get(0).getAuthority());
-        assertEquals("ROLE_USER", baydanAuth.get(1).getAuthority());
+        assertEquals("MANAGEMENT", baydanAuth.get(0).getAuthority());
+        assertEquals("USER", baydanAuth.get(1).getAuthority());
     }
 
     @Test

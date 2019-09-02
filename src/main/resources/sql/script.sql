@@ -55,10 +55,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO employees (name, surname, username, email, password)
 VALUES ('Daniel', 'Bayne', 'baydan', 'daniel.bayne@company.com' ,'$2y$05$L8IQDO993A5f/G/z7VjHm.XFwg4rdPCdUkTr/oTa0HaHSMPFQf9fu');
-INSERT INTO employees_roles (employee_id, role)
-VALUES (1, 'ADMIN');
-INSERT INTO employees_roles (employee_id, role)
-VALUES (1, 'USER');
+INSERT INTO employees_roles (employee_id, role) VALUES (1, 'MANAGEMENT');
+INSERT INTO employees_roles (employee_id, role) VALUES (1, 'USER');
 
 INSERT INTO employees (name, surname, username, email, password)
 VALUES ('Richard', 'Morris', 'morric', 'richard.morris@company.com', '$2y$05$dDh/KjkFg7qBdiYUq.haEuH0dmnlIoGg3d7hGaZklEk.BETns0Ma6');

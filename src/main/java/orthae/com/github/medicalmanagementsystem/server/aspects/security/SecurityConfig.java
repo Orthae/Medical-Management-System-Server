@@ -34,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/api/v1/sessiom").permitAll();
-        http.authorizeRequests().antMatchers("/api/v1/employee", "/api/v1/employee*", "/api/v1/employee*/", "/api/v1/employee/*").hasAuthority("ADMIN").and()
+//  TODO check for proper wildcard;
+        http.authorizeRequests().antMatchers("/api/v1/employee", "/api/v1/employee*", "/api/v1/employee*/", "/api/v1/employee/*").hasAuthority("MANAGEMENT").and()
                 .apply(tokenConfig);
 //        http.authorizeRequests().antMatchers("/api/v1/employee/*").hasAnyRole("ADMIN");
     }
