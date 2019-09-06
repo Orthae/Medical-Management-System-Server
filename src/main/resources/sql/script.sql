@@ -11,9 +11,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 CREATE TABLE employees
 (
     id       INT         NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
-    name     VARCHAR(16) NOT NULL,
-    surname  VARCHAR(16) NOT NULL,
-    username VARCHAR(16) NOT NULL UNIQUE,
+    name     VARCHAR(24) NOT NULL,
+    surname  VARCHAR(24) NOT NULL,
+    username VARCHAR(24) NOT NULL UNIQUE,
     email    VARCHAR(32) NOT NULL UNIQUE,
     password VARCHAR(60) NOT NULL
 ) ENGINE = InnoDB;
