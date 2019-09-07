@@ -6,6 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ExceptionResponse {
-    String message;
-    String[] errors;
+    private long timestamp;
+    private int statusCode;
+    private String requestType;
+    private String message;
+    private String path;
 }

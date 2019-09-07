@@ -7,21 +7,24 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class GenericRestExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ExceptionResponse> handleException(MethodArgumentNotValidException exc) {
+    public ResponseEntity<ExceptionResponse> handleException(MethodArgumentNotValidException exc, HttpServletRequest request) {
         ExceptionResponse response = new ExceptionResponse();
-        response.setMessage("Request is not valid:");
-        ArrayList<String> errorList = new ArrayList<>();
+        StringBuilder builder = new StringBuilder("Validation of request failed:\n");
         for (FieldError error : exc.getBindingResult().getFieldErrors()) {
-            errorList.add(error.getDefaultMessage());
+            builder.append((error.getDefaultMessage()));
+            builder.append("\n");
         }
-        String[] errorArray = errorList.toArray(new String[0]);
-        response.setErrors(errorArray);
+        response.setTimestamp(System.currentTimeMillis());
+        response.setMessage(builder.toString().trim());
+        response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        response.setPath(request.getServletPath());
+        response.setRequestType(request.getMethod());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
