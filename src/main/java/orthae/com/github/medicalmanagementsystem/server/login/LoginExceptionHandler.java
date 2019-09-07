@@ -7,13 +7,19 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import orthae.com.github.medicalmanagementsystem.server.aspects.exceptions.ExceptionResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class LoginExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ExceptionResponse> handleException(BadCredentialsException e){
+    public ResponseEntity<ExceptionResponse> handleException(BadCredentialsException exception, HttpServletRequest request){
         ExceptionResponse response = new ExceptionResponse();
-        response.setMessage("Incorrect credentials");
+        response.setMessage(exception.getMessage());
+        response.setRequestType(request.getMethod());
+        response.setPath(request.getServletPath());
+        response.setStatusCode(HttpStatus.UNAUTHORIZED.value());
+        response.setTimestamp(System.currentTimeMillis());
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
