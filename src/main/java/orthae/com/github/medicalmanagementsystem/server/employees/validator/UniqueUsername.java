@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueUsername {
-    String message() default "Username already in use";
+    String message() default "Username already in use.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 

@@ -67,8 +67,9 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     @Override
     public boolean isUsernameUnique(int id, String username){
         Session session = entityManager.unwrap(Session.class);
-        Query<Employee> query = session.createQuery("FROM Employee WHERE username = :username", Employee.class);
+        Query<Employee> query = session.createQuery("FROM Employee WHERE username = :username AND NOT id = :id", Employee.class);
         query.setParameter("username", username);
+        query.setParameter("id", id);
         Employee employee = query.getResultStream().findFirst().orElse(null);
         return employee == null;
     }

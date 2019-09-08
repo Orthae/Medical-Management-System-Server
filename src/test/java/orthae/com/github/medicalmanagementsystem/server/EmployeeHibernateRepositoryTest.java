@@ -272,25 +272,46 @@ class EmployeeHibernateRepositoryTest {
         assertNull(employee);
     }
 
-//    @Test
-//    void uniqueEmail(){
-//        assertTrue(employeeRepository.isEmailUnique("There is no such email test"));
-//    }
-//
-//    @Test
-//    void notUniqueEmail(){
-//        assertFalse(employeeRepository.isEmailUnique("daniel.bayne@company.com"));
-//    }
-//
-//    @Test
-//    void uniqueUsername(){
-//        assertTrue(employeeRepository.isUsernameUnique("There is no such username test"));
-//    }
-//
-//    @Test
-//    void notUniqueUsername(){
-//        assertFalse(employeeRepository.isUsernameUnique("bonabi"));
-//    }
+    @Test
+    void uniqueEmailCreate(){
+        assertTrue(employeeRepository.isEmailUnique(0,"There is no such email test"));
+    }
+
+    @Test
+    void notUniqueEmailCreate(){
+        assertFalse(employeeRepository.isEmailUnique(0,"daniel.bayne@company.com"));
+    }
+
+    @Test
+    void uniqueEmailUpdate() {
+        assertTrue(employeeRepository.isEmailUnique(1,"daniel.bayne@company.com"));
+    }
+
+    @Test
+    void notUniqueEmailUpdate() {
+        assertFalse(employeeRepository.isEmailUnique(0,"daniel.bayne@company.com"));
+    }
+
+    @Test
+    void uniqueUsernameCreate(){
+        assertTrue(employeeRepository.isUsernameUnique(0,"There is no such username test"));
+    }
+
+    @Test
+    void notUniqueUsernameCreate(){
+        assertFalse(employeeRepository.isUsernameUnique(0,"bonabi"));
+    }
+
+    @Test
+    void uniqueUsernameUpdate(){
+        assertTrue(employeeRepository.isUsernameUnique(16,"bonabi"));
+    }
+
+    @Test
+    void notUniqueUsernameUpdate(){
+        assertFalse(employeeRepository.isUsernameUnique(0,"bonabi"));
+    }
+
 
     @Test
     void createEmployee(){
