@@ -33,16 +33,18 @@ public class Utility {
     }
 
     public void map(EmployeeDetailsDto source, Employee destination){
-        if(source.getName() != null)
+        if(source.getName() != null && !source.getName().isEmpty())
             destination.setName(source.getName());
-        if(source.getSurname() != null)
+        if(source.getSurname() != null && !source.getSurname().isEmpty())
             destination.setSurname(source.getSurname());
-        if(source.getUsername() != null)
+        if(source.getUsername() != null && !source.getUsername().isEmpty())
             destination.setUsername(source.getUsername());
-        if(source.getEmail() != null)
+        if(source.getEmail() != null && !source.getEmail().isEmpty())
             destination.setEmail(source.getEmail());
-        if(source.getPassword() != null)
+        if(source.getPassword() != null && !source.getPassword().isEmpty()){
             destination.setPassword(passwordEncoder.encode(source.getPassword()));
+
+        }
         for(Authority authority : source.getAuthorities()){
             authority.setEmployee(destination);
         }
