@@ -2,6 +2,7 @@ package orthae.com.github.medicalmanagementsystem.server.aspects.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,15 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        super.configure(http);
         http.httpBasic().disable();
         http.csrf().disable();
+        http.apply(tokenConfig);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/api/v1/sessiom").permitAll();
-//  TODO check for proper wildcard;
-        http.authorizeRequests().antMatchers("/api/v1/employee", "/api/v1/employee*", "/api/v1/employee*/", "/api/v1/employee/*").hasAuthority("MANAGEMENT").and()
-                .apply(tokenConfig);
-//        http.authorizeRequests().antMatchers("/api/v1/employee/*").hasAnyRole("ADMIN");
+        http.authorizeRequests().antMatchers("/api/v1/employees/**").hasAuthority("MANAGEMENT");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/v1/login/**").authenticated();
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/api/v1/login/**").authenticated();
     }
 
     @Bean
