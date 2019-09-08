@@ -9,6 +9,7 @@ import orthae.com.github.medicalmanagementsystem.server.employees.exception.type
 @ControllerAdvice
 public class EmployeeExceptionHandler {
 
+//  TODO Rewrite to utilize ExceptionResponse class
     @ExceptionHandler
     public ResponseEntity<EmployeeExceptionResponse> handleException(EmployeeNotFound e){
      return new ResponseEntity<>(new EmployeeExceptionResponse(e), HttpStatus.NOT_FOUND);

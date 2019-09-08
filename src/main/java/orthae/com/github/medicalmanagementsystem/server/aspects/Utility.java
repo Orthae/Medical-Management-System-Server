@@ -4,7 +4,7 @@ import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.entity.Authority;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 
@@ -32,7 +32,7 @@ public class Utility {
         modelMapper.map(source, destination);
     }
 
-    public void map(UpdateEmployeeDTO source, Employee destination){
+    public void map(EmployeeDetailsDto source, Employee destination){
         if(source.getName() != null)
             destination.setName(source.getName());
         if(source.getSurname() != null)

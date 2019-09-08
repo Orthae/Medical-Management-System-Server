@@ -2,7 +2,7 @@ package orthae.com.github.medicalmanagementsystem.server.aspects.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,7 +16,7 @@ public class GenericRestExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleException(MethodArgumentNotValidException exc, HttpServletRequest request) {
         ExceptionResponse response = new ExceptionResponse();
         StringBuilder builder = new StringBuilder("Validation of request failed:\n");
-        for (FieldError error : exc.getBindingResult().getFieldErrors()) {
+        for (ObjectError error : exc.getBindingResult().getAllErrors()) {
             builder.append((error.getDefaultMessage()));
             builder.append("\n");
         }

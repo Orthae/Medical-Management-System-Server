@@ -55,17 +55,17 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
 
 
     @Override
-    public boolean isEmailUnique(String email){
+    public boolean isEmailUnique(int id, String email){
         Session session = entityManager.unwrap(Session.class);
-        Query<Employee> query = session.createQuery("FROM Employee WHERE email = :email", Employee.class);
+        Query<Employee> query = session.createQuery("FROM Employee WHERE email = :email AND NOT id = :id", Employee.class);
         query.setParameter("email", email);
+        query.setParameter("id", id);
         Employee employee = query.getResultStream().findFirst().orElse(null);
         return employee == null;
-
     }
 
     @Override
-    public boolean isUsernameUnique(String username){
+    public boolean isUsernameUnique(int id, String username){
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> query = session.createQuery("FROM Employee WHERE username = :username", Employee.class);
         query.setParameter("username", username);

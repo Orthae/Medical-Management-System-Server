@@ -5,10 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.exception.type.EmployeeNotFound;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
@@ -51,8 +49,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public void create(CreateEmployeeDto employeeDTO) {
+    public void create(EmployeeDetailsDto employeeDTO) {
         Employee employee = utility.map(employeeDTO, Employee.class);
+        employee.setId(0);
         employee.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
         employeeRepository.save(employee);
     }
@@ -68,7 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public void update(UpdateEmployeeDTO dto) {
+    public void update(EmployeeDetailsDto dto) {
         Employee employee = employeeRepository.find(dto.getId());
         utility.map(dto, employee);
         employeeRepository.save(employee);

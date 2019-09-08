@@ -1,12 +1,15 @@
 package orthae.com.github.medicalmanagementsystem.server.employees.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
+@Component
+public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, EmployeeDetailsDto> {
 
     private EmployeeRepository employeeRepository;
 
@@ -16,10 +19,7 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, St
     }
 
     @Override
-    public boolean isValid(String email, ConstraintValidatorContext context) {
-        if(email != null){
-            return employeeRepository.isEmailUnique(email);
-        }
-        return true;
+    public boolean isValid(EmployeeDetailsDto value, ConstraintValidatorContext context) {
+            return employeeRepository.isEmailUnique(value.getId(), value.getEmail());
     }
 }

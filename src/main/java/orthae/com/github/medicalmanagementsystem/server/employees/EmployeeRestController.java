@@ -3,10 +3,8 @@ package orthae.com.github.medicalmanagementsystem.server.employees;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.UpdateEmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
 
 import javax.validation.Valid;
@@ -37,7 +35,7 @@ public class EmployeeRestController {
 
     @PostMapping("${rest.endpoint.employees}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createEmployee(@Valid @RequestBody CreateEmployeeDto employee) {
+    public void createEmployee(@Valid @RequestBody EmployeeDetailsDto employee) {
         employeeService.create(employee);
     }
 
@@ -49,7 +47,7 @@ public class EmployeeRestController {
 
     @PutMapping("${rest.endpoint.employees}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateEmployee(@Valid @RequestBody UpdateEmployeeDTO employee) {
+    public void updateEmployee(@Valid @RequestBody EmployeeDetailsDto employee) {
         employeeService.update(employee);
     }
 }

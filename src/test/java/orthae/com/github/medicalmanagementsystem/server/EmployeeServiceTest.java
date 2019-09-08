@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.CreateEmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
@@ -39,7 +38,7 @@ class EmployeeServiceTest {
 
     @Test
     void createEmployee(){
-        CreateEmployeeDto dto = new CreateEmployeeDto();
+        EmployeeDetailsDto dto = new EmployeeDetailsDto();
         dto.setName("TestName");
         dto.setSurname("TestSurname");
         dto.setUsername("TestUsername");
