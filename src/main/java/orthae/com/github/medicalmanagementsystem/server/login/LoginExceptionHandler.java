@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import orthae.com.github.medicalmanagementsystem.server.aspects.exceptions.ExceptionResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @ControllerAdvice
 public class LoginExceptionHandler {
@@ -19,7 +20,7 @@ public class LoginExceptionHandler {
         response.setError(exception.getClass().getSimpleName());
         response.setPath(request.getServletPath());
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.setTimestamp(System.currentTimeMillis());
+        response.setTimestamp(new Date());
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
