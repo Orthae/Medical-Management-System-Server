@@ -15,10 +15,10 @@ public class LoginExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleException(BadCredentialsException exception, HttpServletRequest request){
         ExceptionResponse response = new ExceptionResponse();
-        response.setMessage(exception.getMessage());
-        response.setRequestType(request.getMethod());
+        response.setMessage("Username or password incorrect.");
+        response.setError(exception.getClass().getSimpleName());
         response.setPath(request.getServletPath());
-        response.setStatusCode(HttpStatus.UNAUTHORIZED.value());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setTimestamp(System.currentTimeMillis());
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }

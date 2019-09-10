@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class ExceptionResponse {
     private long timestamp;
-    private int statusCode;
-    private String requestType;
+    private int status;
+    private String error;
     private String message;
     private String path;
 }

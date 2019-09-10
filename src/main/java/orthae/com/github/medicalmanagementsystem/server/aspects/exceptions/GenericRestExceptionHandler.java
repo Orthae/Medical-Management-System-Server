@@ -2,6 +2,7 @@ package orthae.com.github.medicalmanagementsystem.server.aspects.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,11 +23,24 @@ public class GenericRestExceptionHandler {
         }
         response.setTimestamp(System.currentTimeMillis());
         response.setMessage(builder.toString().trim());
-        response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setPath(request.getServletPath());
-        response.setRequestType(request.getMethod());
+        response.setError(exc.getClass().getSimpleName());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleException(AccessDeniedException exc, HttpServletRequest request) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setTimestamp(System.currentTimeMillis());
+        response.setMessage(exc.getMessage());
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        response.setPath(request.getServletPath());
+        response.setError(request.getMethod());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+
 
 //    @ExceptionHandler
 //    public ResponseEntity<ExceptionResponse> handleException(StaleObjectStateException exc){
