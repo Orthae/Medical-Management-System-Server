@@ -43,8 +43,8 @@ public class Utility {
             destination.setEmail(source.getEmail());
         if(source.getPassword() != null && !source.getPassword().isEmpty()){
             destination.setPassword(passwordEncoder.encode(source.getPassword()));
-
         }
+        destination.setActive(source.isActive());
         for(Authority authority : source.getAuthorities()){
             authority.setEmployee(destination);
         }
