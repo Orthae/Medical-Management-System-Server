@@ -12,6 +12,8 @@ public interface EmployeeRepository {
     Employee find(String username);
     boolean isEmailUnique(int id, String email);
     boolean isUsernameUnique(int id, String username);
+    void activate(int id);
+    void deactivate(int id);
     void save(Employee employee);
     void delete(Employee employee);
 }

@@ -94,4 +94,19 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
         return employeeQuery.uniqueResult();
     }
 
+    @Override
+    public void activate(int id) {
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("UPDATE Employee SET active = 1 WHERE id = :id ");
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    @Override
+    public void deactivate(int id) {
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("UPDATE Employee SET active = 0 WHERE id = :id ");
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
 }

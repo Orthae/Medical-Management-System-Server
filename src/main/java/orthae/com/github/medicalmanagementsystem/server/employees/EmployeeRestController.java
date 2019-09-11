@@ -50,4 +50,18 @@ public class EmployeeRestController {
     public void updateEmployee(@Valid @RequestBody EmployeeDetailsDto employee) {
         employeeService.update(employee);
     }
+
+    @PostMapping("${rest.endpoint.employees}/{employeeId}/active")
+    @ResponseStatus(HttpStatus.OK)
+    public void activateEmployee(@PathVariable int employeeId){
+        employeeService.activate(employeeId);
+    }
+
+    @DeleteMapping("${rest.endpoint.employees}/{employeeId}/active")
+    @ResponseStatus(HttpStatus.OK)
+    public void deactivateEmployee(@PathVariable int employeeId){
+        employeeService.deactivate(employeeId);
+    }
+
+
 }

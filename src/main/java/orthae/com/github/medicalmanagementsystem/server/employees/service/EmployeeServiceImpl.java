@@ -73,4 +73,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.save(employee);
     }
 
+    @Transactional
+    @Override
+    public void activate(int id) {
+        employeeRepository.activate(id);
+    }
+
+    @Transactional
+    @Override
+    public void deactivate(int id) {
+        employeeRepository.deactivate(id);
+    }
+
+
 }
+
