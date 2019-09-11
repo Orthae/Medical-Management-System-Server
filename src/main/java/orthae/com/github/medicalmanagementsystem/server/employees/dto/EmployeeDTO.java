@@ -6,11 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EmployeeDTO {
-
     private int id;
     private String name;
     private String surname;
     private String username;
     private String email;
-
+    private boolean active;
 }

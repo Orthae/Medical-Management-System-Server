@@ -1,5 +1,6 @@
 package orthae.com.github.medicalmanagementsystem.server.employees.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,7 +39,11 @@ public class EmployeeDetailsDto {
     @Length(max = 32, message = "Name field can't be longer than 32 characters")
     private String email;
 
+    @Getter(onMethod_ = {@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)})
     private String password;
-
+    private boolean active;
     private List<Authority> authorities;
+
+
+
 }
