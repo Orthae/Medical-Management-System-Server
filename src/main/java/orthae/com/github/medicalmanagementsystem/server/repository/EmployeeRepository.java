@@ -14,6 +14,7 @@ public interface EmployeeRepository {
     boolean isUsernameUnique(int id, String username);
     void activate(int id);
     void deactivate(int id);
+    void changePassword(int id, String password);
     void save(Employee employee);
     void delete(Employee employee);
 }

@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
 
 import java.util.List;
@@ -32,7 +32,7 @@ class EmployeeServiceTest {
 
     @Test
     void findAll(){
-        List<EmployeeDTO> list = employeeService.find(null, null, null, null);
+        List<EmployeeDto> list = employeeService.find(null, null, null, null);
         assertEquals(25, list.size());
     }
 
@@ -46,8 +46,8 @@ class EmployeeServiceTest {
         dto.setPassword("TestPassword");
         employeeService.create(dto);
 
-        List<EmployeeDTO> list = employeeService.find("TestName", "TestSurname", null,null);
-        EmployeeDTO employeeDTO = list.get(0);
+        List<EmployeeDto> list = employeeService.find("TestName", "TestSurname", null,null);
+        EmployeeDto employeeDTO = list.get(0);
         assertEquals(dto.getName(), employeeDTO.getName());
         assertEquals(dto.getSurname(), employeeDTO.getSurname());
         assertEquals(dto.getUsername(), employeeDTO.getUsername());

@@ -5,8 +5,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeChangePasswordDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.exception.type.EmployeeNotFound;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
@@ -38,13 +39,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public List<EmployeeDTO> find(String name, String surname, String username, String email) {
+    public List<EmployeeDto> find(String name, String surname, String username, String email) {
         Map<String, String> params = new HashMap<>();
         params.put("name", name);
         params.put("surname", surname);
         params.put("username", username);
         params.put("email", email);
-        return utility.mapAll(employeeRepository.find(params), EmployeeDTO.class);
+        return utility.mapAll(employeeRepository.find(params), EmployeeDto.class);
     }
 
     @Transactional
@@ -85,6 +86,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deactivate(id);
     }
 
+    @Override
+    public void changePassword(int id, EmployeeChangePasswordDto dto) {
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        employeeRepository.changePassword(id, encodedPassword);
+    }
 
 }
 

@@ -3,8 +3,9 @@ package orthae.com.github.medicalmanagementsystem.server.employees;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDTO;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeChangePasswordDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
 
 import javax.validation.Valid;
@@ -23,7 +24,7 @@ public class EmployeeRestController {
     }
 
     @GetMapping(value = "${rest.endpoint.employees}")
-    public List<EmployeeDTO> findEmployeesByNameAndSurname(@RequestParam(required = false) String name, @RequestParam(required = false) String surname,
+    public List<EmployeeDto> findEmployeesByNameAndSurname(@RequestParam(required = false) String name, @RequestParam(required = false) String surname,
                                                            @RequestParam(required = false) String username, @RequestParam(required = false) String email) {
         return employeeService.find(name, surname, username, email);
     }
@@ -63,5 +64,9 @@ public class EmployeeRestController {
         employeeService.deactivate(employeeId);
     }
 
+    @PutMapping("${rest.endpoint.employees}/{employeeId}/active")
+    public void changeEmployeePassword(@PathVariable int employeeId, @Valid @RequestBody EmployeeChangePasswordDto dto){
+        employeeService.changePassword(employeeId, dto);
+    }
 
 }

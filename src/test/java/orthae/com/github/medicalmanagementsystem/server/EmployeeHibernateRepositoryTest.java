@@ -1,6 +1,7 @@
 package orthae.com.github.medicalmanagementsystem.server;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,14 +20,95 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@DisplayName("Employee Repository Tests")
+@DisplayName("Employee Hibernate Repository Tests")
 class EmployeeHibernateRepositoryTest {
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+
+    @Nested
+    @DisplayName("Unique Email Tests")
+    class UniqueEmailTests {
+
+        @Nested
+        @Transactional
+        @SpringBootTest
+        @DisplayName("On Creating")
+        class OnCreate {
+            @Test
+            void uniqueEmailCreate(){
+                assertTrue(employeeRepository.isEmailUnique(0,"There is no such email test"));
+            }
+
+            @Test
+            void notUniqueEmailCreate(){
+                assertFalse(employeeRepository.isEmailUnique(0,"daniel.bayne@company.com"));
+            }
+        }
+
+        @Nested
+        @Transactional
+        @SpringBootTest
+        @DisplayName("On Updating")
+        class OnUpdate {
+            @Test
+            void uniqueEmailUpdate() {
+                assertTrue(employeeRepository.isEmailUnique(1,"daniel.bayne@company.com"));
+            }
+
+            @Test
+            void notUniqueEmailUpdate() {
+                assertFalse(employeeRepository.isEmailUnique(0,"daniel.bayne@company.com"));
+            }
+
+        }
+
+    }
+
+
+    @Nested
+    @DisplayName("Unique Username Tests")
+    class UniqueUsernameTests{
+
+        @Nested
+        @Transactional
+        @SpringBootTest
+        @DisplayName("On Creating")
+        class onCreate {
+            @Test
+            void uniqueUsernameCreate(){
+                assertTrue(employeeRepository.isUsernameUnique(0,"There is no such username test"));
+            }
+
+            @Test
+            void notUniqueUsernameCreate(){
+                assertFalse(employeeRepository.isUsernameUnique(0,"bonabi"));
+            }
+
+        }
+
+        @Nested
+        @Transactional
+        @SpringBootTest
+        @DisplayName("On Updating")
+        class onUpdate {
+            @Test
+            void uniqueUsernameUpdate(){
+                assertTrue(employeeRepository.isUsernameUnique(16,"bonabi"));
+            }
+
+            @Test
+            void notUniqueUsernameUpdate(){
+                assertFalse(employeeRepository.isUsernameUnique(0,"bonabi"));
+            }
+        }
+
+    }
+
+
 
     @Test
     void findAllEmployeesTest() {
@@ -272,46 +354,6 @@ class EmployeeHibernateRepositoryTest {
         assertNull(employee);
     }
 
-    @Test
-    void uniqueEmailCreate(){
-        assertTrue(employeeRepository.isEmailUnique(0,"There is no such email test"));
-    }
-
-    @Test
-    void notUniqueEmailCreate(){
-        assertFalse(employeeRepository.isEmailUnique(0,"daniel.bayne@company.com"));
-    }
-
-    @Test
-    void uniqueEmailUpdate() {
-        assertTrue(employeeRepository.isEmailUnique(1,"daniel.bayne@company.com"));
-    }
-
-    @Test
-    void notUniqueEmailUpdate() {
-        assertFalse(employeeRepository.isEmailUnique(0,"daniel.bayne@company.com"));
-    }
-
-    @Test
-    void uniqueUsernameCreate(){
-        assertTrue(employeeRepository.isUsernameUnique(0,"There is no such username test"));
-    }
-
-    @Test
-    void notUniqueUsernameCreate(){
-        assertFalse(employeeRepository.isUsernameUnique(0,"bonabi"));
-    }
-
-    @Test
-    void uniqueUsernameUpdate(){
-        assertTrue(employeeRepository.isUsernameUnique(16,"bonabi"));
-    }
-
-    @Test
-    void notUniqueUsernameUpdate(){
-        assertFalse(employeeRepository.isUsernameUnique(0,"bonabi"));
-    }
-
 
     @Test
     void createEmployee(){
@@ -354,6 +396,13 @@ class EmployeeHibernateRepositoryTest {
         List<Employee> list = employeeRepository.find();
         assertFalse(list.contains(employee));
         assertEquals(24, list.size());
+    }
+
+    @Test
+    void changePassword(){
+        employeeRepository.changePassword(1, "Testing");
+        Employee employee = employeeRepository.find(1);
+        assertEquals("Testing", employee.getPassword());
     }
 
 }

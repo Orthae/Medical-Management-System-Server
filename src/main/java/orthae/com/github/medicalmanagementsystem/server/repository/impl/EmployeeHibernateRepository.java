@@ -95,6 +95,15 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
+    public void changePassword(int id, String password) {
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("UPDATE Employee SET password = :password WHERE id = :id");
+        query.setParameter("id", id);
+        query.setParameter("password", password);
+        query.executeUpdate();
+    }
+
+    @Override
     public void activate(int id) {
         Session session = entityManager.unwrap(Session.class);
         Query query = session.createQuery("UPDATE Employee SET active = 1 WHERE id = :id ");
