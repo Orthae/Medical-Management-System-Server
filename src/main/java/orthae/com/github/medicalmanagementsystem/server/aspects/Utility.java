@@ -5,8 +5,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.entity.Authority;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
+import orthae.com.github.medicalmanagementsystem.server.entity.Session;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class Utility {
         if(source.getPassword() != null && !source.getPassword().isEmpty()){
             destination.setPassword(passwordEncoder.encode(source.getPassword()));
         }
-        destination.setActive(source.isActive());
+        destination.setEnabled(source.isEnabled());
         for(Authority authority : source.getAuthorities()){
             authority.setEmployee(destination);
         }
@@ -67,5 +69,24 @@ public class Utility {
         }
         return list;
     }
+
+    public List<EmployeeDto> mapListEmployeeDto(List<Employee> source, Class<EmployeeDto> destinationType){
+        List<EmployeeDto> list = new ArrayList<>();
+        for(Employee e : source){
+            EmployeeDto dto = map(e, destinationType);
+            if(e.getSessions() != null && !e.getSessions().isEmpty()){
+                for(Session session : e.getSessions()){
+                    if(session.isValid()){
+                    dto.setActive(true);
+                    break;
+                    }
+                }
+            }
+            list.add(dto);
+        }
+        return list;
+    }
+
+
 
 }

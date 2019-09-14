@@ -42,7 +42,7 @@ public class EmployeeDetailsDto {
     @Getter(onMethod_ = {@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)})
     private String password;
 
-    private boolean active;
+    private boolean enabled;
     private List<Authority> authorities;
 
 

@@ -16,7 +16,7 @@ CREATE TABLE employees
     username VARCHAR(24) NOT NULL UNIQUE,
     email    VARCHAR(32) NOT NULL UNIQUE,
     password VARCHAR(60) NOT NULL,
-    active BOOLEAN NOT NULL DEFAULT 1
+    enabled BOOLEAN NOT NULL DEFAULT 1
 ) ENGINE = InnoDB;
 
 CREATE TABLE employees_roles

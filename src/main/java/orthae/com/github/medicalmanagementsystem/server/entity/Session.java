@@ -1,6 +1,7 @@
 package orthae.com.github.medicalmanagementsystem.server.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,20 +15,23 @@ import java.util.Date;
 public class Session {
 
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "id")
-        private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "employee_id")
-        private Employee employee;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Employee employee;
 
-        @Column(name = "session_token")
-        private String sessionToken;
+    @Column(name = "session_token")
+    private String sessionToken;
 
-        @Column(name = "session_expiry")
-        private Date sessionExpiry;
+    @Column(name = "session_expiry")
+    private Date sessionExpiry;
 
+    public boolean isValid() {
+        return sessionExpiry.after(new Date());
+    }
 
 }

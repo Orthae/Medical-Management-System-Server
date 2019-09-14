@@ -12,5 +12,5 @@ public class EmployeeDto {
     private String username;
     private String email;
     private boolean active;
-    private boolean loggedIn;
+    private boolean enabled;
 }

@@ -1,12 +1,13 @@
 package orthae.com.github.medicalmanagementsystem.server.employees;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import orthae.com.github.medicalmanagementsystem.server.aspects.security.session.SessionService;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeChangePasswordDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
+import orthae.com.github.medicalmanagementsystem.server.entity.Session;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -17,10 +18,11 @@ import java.util.List;
 public class EmployeeRestController {
 
     private EmployeeService employeeService;
+    private SessionService sessionService;
 
-    @Autowired
-    public EmployeeRestController(EmployeeService employeeService) {
+    public EmployeeRestController(EmployeeService employeeService, SessionService sessionService) {
         this.employeeService = employeeService;
+        this.sessionService = sessionService;
     }
 
     @GetMapping(value = "${rest.endpoint.employees}")
@@ -54,19 +56,24 @@ public class EmployeeRestController {
 
     @PostMapping("${rest.endpoint.employees}/{employeeId}/active")
     @ResponseStatus(HttpStatus.OK)
-    public void activateEmployee(@PathVariable int employeeId){
-        employeeService.activate(employeeId);
+    public void enableEmployee(@PathVariable int employeeId){
+        employeeService.enable(employeeId);
     }
 
     @DeleteMapping("${rest.endpoint.employees}/{employeeId}/active")
     @ResponseStatus(HttpStatus.OK)
-    public void deactivateEmployee(@PathVariable int employeeId){
-        employeeService.deactivate(employeeId);
+    public void disableEmployee(@PathVariable int employeeId){
+        employeeService.disable(employeeId);
     }
 
     @PutMapping("${rest.endpoint.employees}/{employeeId}/password")
     public void changeEmployeePassword(@PathVariable int employeeId, @Valid @RequestBody EmployeeChangePasswordDto dto){
         employeeService.changePassword(employeeId, dto);
+    }
+
+    @GetMapping("${rest.endpoint.employees}/{employeeId}/sessions")
+    public List<Session> getEmployeeSessions(@PathVariable int employeeId){
+        return sessionService.getSessions(employeeId);
     }
 
 }

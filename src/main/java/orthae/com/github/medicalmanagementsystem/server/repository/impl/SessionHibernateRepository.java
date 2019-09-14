@@ -7,6 +7,7 @@ import orthae.com.github.medicalmanagementsystem.server.entity.Session;
 import orthae.com.github.medicalmanagementsystem.server.repository.SessionRepository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 public class SessionHibernateRepository implements SessionRepository {
@@ -22,6 +23,14 @@ public class SessionHibernateRepository implements SessionRepository {
     public Session find(int id) {
         org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
         return hSession.get(Session.class, id);
+    }
+
+    @Override
+    public List<Session> findEmployeeSessions(int employeeId) {
+        org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
+        Query<Session> query = hSession.createQuery("FROM Session s WHERE s.employee.id = :employeeId", Session.class);
+        query.setParameter("employeeId", employeeId);
+        return query.getResultList();
     }
 
     @Override

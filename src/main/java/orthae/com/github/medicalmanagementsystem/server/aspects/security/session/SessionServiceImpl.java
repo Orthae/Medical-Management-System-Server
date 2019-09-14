@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class SessionServiceImpl implements SessionService {
@@ -41,13 +42,19 @@ public class SessionServiceImpl implements SessionService {
         deleteSession(session);
     }
 
+    @Override
+    public List<Session> getSessions(int employeeId) {
+//        List<Session> sessionList = sessionRepository.find(employeeId);
+        return sessionRepository.findEmployeeSessions(employeeId);
+    }
+
     @Transactional
     @Override
     public Authentication validate(HttpServletRequest request) {
         String token = extractToken(request);
         Session session = sessionRepository.find(token);
         if (session != null) {
-            if (session.getSessionExpiry().after(new Date())) {
+            if (session.isValid()) {
                 extendToken(session);
                 return new UsernamePasswordAuthenticationToken(session.getEmployee(), null, session.getEmployee().getAuthorities());
             } else {

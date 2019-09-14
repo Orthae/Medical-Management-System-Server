@@ -45,8 +45,12 @@ public class Employee implements UserDetails {
     @JoinColumn(name = "employee_id")
     private List<Authority> authorities;
 
-    @Column (name = "active")
-    private boolean active;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "employee_id")
+    private List<Session> sessions;
+
+    @Column (name = "enabled")
+    private boolean enabled;
 
     @Override
     public String getPassword(){
@@ -83,8 +87,4 @@ public class Employee implements UserDetails {
         return true;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return active;
-    }
 }

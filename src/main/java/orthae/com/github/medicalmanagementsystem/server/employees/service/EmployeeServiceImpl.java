@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         params.put("surname", surname);
         params.put("username", username);
         params.put("email", email);
-        return utility.mapAll(employeeRepository.find(params), EmployeeDto.class);
+        return utility.mapListEmployeeDto(employeeRepository.find(params), EmployeeDto.class);
     }
 
     @Transactional
@@ -76,13 +76,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public void activate(int id) {
+    public void enable(int id) {
         employeeRepository.activate(id);
     }
 
     @Transactional
     @Override
-    public void deactivate(int id) {
+    public void disable(int id) {
         employeeRepository.deactivate(id);
     }
 

@@ -106,7 +106,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     @Override
     public void activate(int id) {
         Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("UPDATE Employee SET active = 1 WHERE id = :id ");
+        Query query = session.createQuery("UPDATE Employee SET enabled  = 1 WHERE id = :id ");
         query.setParameter("id", id);
         query.executeUpdate();
     }
@@ -114,7 +114,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     @Override
     public void deactivate(int id) {
         Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("UPDATE Employee SET active = 0 WHERE id = :id ");
+        Query query = session.createQuery("UPDATE Employee SET enabled = 0 WHERE id = :id ");
         query.setParameter("id", id);
         query.executeUpdate();
     }
