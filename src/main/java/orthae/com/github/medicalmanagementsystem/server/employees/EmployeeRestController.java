@@ -64,7 +64,7 @@ public class EmployeeRestController {
         employeeService.deactivate(employeeId);
     }
 
-    @PutMapping("${rest.endpoint.employees}/{employeeId}/active")
+    @PutMapping("${rest.endpoint.employees}/{employeeId}/password")
     public void changeEmployeePassword(@PathVariable int employeeId, @Valid @RequestBody EmployeeChangePasswordDto dto){
         employeeService.changePassword(employeeId, dto);
     }

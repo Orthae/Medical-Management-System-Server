@@ -86,6 +86,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deactivate(id);
     }
 
+    @Transactional
     @Override
     public void changePassword(int id, EmployeeChangePasswordDto dto) {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
