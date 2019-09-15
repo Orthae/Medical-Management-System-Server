@@ -22,8 +22,28 @@ CREATE TABLE employees
 CREATE TABLE employees_roles
 (
     id          INT         NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
-    employee_id INT DEFAULT NULL REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    employee_id INT         REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     role        VARCHAR(16) NOT NULl
+) ENGINE = InnoDB;
+
+
+CREATE TABLE employees_schedule (
+    id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT REFERENCES employees(id) ON DELETE NO ACTION ON UPDATE NO ACTION ,
+    from_date DATE,
+    to_date DATE,
+    message VARCHAR(500),
+    status TINYINT,
+    response VARCHAR(500)
+) ENGINE = InnoDB;
+
+CREATE TABLE sessions
+(
+    id             INT          NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
+    employee_id    INT          NOT NULL REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ip_address     VARCHAR(20)  NOT NULL,
+    session_token  VARCHAR(128) NOT NULL UNIQUE,
+    session_expiry DATETIME     NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE patients
@@ -44,13 +64,7 @@ CREATE TABLE patients_visits
     visit_type ENUM ('General', 'Internal','Cardiology', 'Neurology') NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE sessions
-(
-    id             INT          NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
-    employee_id    INT          NOT NULL REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    session_token  VARCHAR(128) NOT NULL UNIQUE,
-    session_expiry DATETIME     NOT NULL
-) ENGINE = InnoDB;
+
 
 SET FOREIGN_KEY_CHECKS = 1;
 

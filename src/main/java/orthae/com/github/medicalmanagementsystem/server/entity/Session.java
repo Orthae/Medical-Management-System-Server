@@ -20,9 +20,12 @@ public class Session {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private Employee employee;
+
+    @Column(name = "ip_address")
+    private String ipAddress;
 
     @Column(name = "session_token")
     private String sessionToken;

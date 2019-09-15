@@ -34,6 +34,13 @@ public class SessionHibernateRepository implements SessionRepository {
     }
 
     @Override
+    public List<Session> find() {
+        org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
+        Query<Session> query = hSession.createQuery("FROM Session", Session.class);
+        return query.getResultList();
+    }
+
+    @Override
     public Session find(String token) {
         org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
         Query<Session> query = hSession.createQuery("FROM Session WHERE sessionToken = :sessionToken", Session.class);

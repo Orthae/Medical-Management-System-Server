@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface LoginService {
     EmployeeDetailsDto getCurrent();
-    String login(LoginDTO dto);
+    String login(LoginDTO dto, HttpServletRequest request);
     void logout(HttpServletRequest request);
 
 }

@@ -5,6 +5,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.entity.Session;
 import orthae.com.github.medicalmanagementsystem.server.repository.SessionRepository;
@@ -23,29 +25,25 @@ public class SessionServiceImpl implements SessionService {
 
     private SessionRepository sessionRepository;
     private SecureRandom secureRandom;
+    private Utility utility;
 
-    public SessionServiceImpl(SessionRepository sessionRepository) {
+    public SessionServiceImpl(SessionRepository sessionRepository, Utility utility) {
         this.sessionRepository = sessionRepository;
         this.secureRandom = new SecureRandom();
+        this.utility = utility;
     }
 
     @Transactional
     @Override
-    public void deleteSession(Session session) {
-        sessionRepository.delete(session);
+    public List<SessionDto> getSessions() {
+        List<Session> list = sessionRepository.find();
+        return utility.mapListSessionDto(list);
     }
 
     @Override
-    @Transactional
-    public void deleteSession(String token) {
-        Session session = sessionRepository.find(token);
-        deleteSession(session);
-    }
-
-    @Override
-    public List<Session> getSessions(int employeeId) {
-//        List<Session> sessionList = sessionRepository.find(employeeId);
-        return sessionRepository.findEmployeeSessions(employeeId);
+    public List<SessionDto> getSessions(int employeeId) {
+        List<Session> list = sessionRepository.findEmployeeSessions(employeeId);
+        return utility.mapListSessionDto(list);
     }
 
     @Transactional
@@ -58,7 +56,6 @@ public class SessionServiceImpl implements SessionService {
                 extendToken(session);
                 return new UsernamePasswordAuthenticationToken(session.getEmployee(), null, session.getEmployee().getAuthorities());
             } else {
-                deleteSession(session);
                 return null;
             }
         } else
@@ -68,11 +65,16 @@ public class SessionServiceImpl implements SessionService {
 
     @Transactional
     @Override
-    public String createSession(Authentication auth) {
+    public String createSession(Authentication auth, HttpServletRequest request) {
         Session session = new Session();
         Employee employee = (Employee) auth.getPrincipal();
         session.setEmployee(employee);
         session.setSessionToken(generateToken());
+        String ipAddress = request.getHeader("X-FORWARDED-FOR");
+        if (ipAddress == null)
+            session.setIpAddress(request.getRemoteAddr());
+        else
+            session.setIpAddress(ipAddress);
         extendToken(session);
         sessionRepository.save(session);
         return session.getSessionToken();
@@ -81,6 +83,7 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public String extractToken(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
+
         if (token != null && token.startsWith("Bearer"))
             return token.substring(7);
         return null;

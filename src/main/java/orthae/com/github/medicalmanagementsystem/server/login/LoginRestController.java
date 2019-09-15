@@ -28,8 +28,8 @@ public class LoginRestController {
 
     @PostMapping("${rest.endpoint.login}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public String login(@Valid @RequestBody LoginDTO loginDTO) {
-        return loginService.login(loginDTO);
+    public String login(@Valid @RequestBody LoginDTO loginDTO, HttpServletRequest request) {
+        return loginService.login(loginDTO, request);
     }
 
     @DeleteMapping("${rest.endpoint.login}")

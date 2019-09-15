@@ -6,8 +6,8 @@ import orthae.com.github.medicalmanagementsystem.server.aspects.security.session
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeChangePasswordDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
-import orthae.com.github.medicalmanagementsystem.server.entity.Session;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -72,7 +72,7 @@ public class EmployeeRestController {
     }
 
     @GetMapping("${rest.endpoint.employees}/{employeeId}/sessions")
-    public List<Session> getEmployeeSessions(@PathVariable int employeeId){
+    public List<SessionDto> getEmployeeSessions(@PathVariable int employeeId){
         return sessionService.getSessions(employeeId);
     }
 

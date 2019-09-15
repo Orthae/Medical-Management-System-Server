@@ -5,8 +5,9 @@ import orthae.com.github.medicalmanagementsystem.server.entity.Session;
 import java.util.List;
 
 public interface SessionRepository {
-        Session find(int id);
         List<Session> findEmployeeSessions(int employeeId);
+        List<Session> find();
+        Session find(int id);
         Session find(String token);
         void save(Session session);
         void delete(Session session);

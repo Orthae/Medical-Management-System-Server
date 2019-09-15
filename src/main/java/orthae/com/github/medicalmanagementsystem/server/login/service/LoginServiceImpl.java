@@ -37,15 +37,16 @@ public class LoginServiceImpl implements LoginService {
 
 
     @Override
-    public String login(LoginDTO dto) {
+    public String login(LoginDTO dto, HttpServletRequest request) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
-        return sessionService.createSession(authentication);
+        return sessionService.createSession(authentication, request);
     }
 
     @Override
     public void logout(HttpServletRequest request) {
         String token = sessionService.extractToken(request);
-        sessionService.deleteSession(token);
+//  TODO make session method to close session without deleting
+//        sessionService.deleteSession(token);
     }
 
 

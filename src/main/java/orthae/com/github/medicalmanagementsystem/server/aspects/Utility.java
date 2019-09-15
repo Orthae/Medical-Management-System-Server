@@ -2,10 +2,10 @@ package orthae.com.github.medicalmanagementsystem.server.aspects;
 
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
 import orthae.com.github.medicalmanagementsystem.server.entity.Authority;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.entity.Session;
@@ -18,11 +18,8 @@ import java.util.List;
 public class Utility {
 
     private ModelMapper modelMapper;
-    private PasswordEncoder passwordEncoder;
-
-    public Utility(PasswordEncoder passwordEncoder){
+    public Utility(){
         this.modelMapper = new ModelMapper();
-        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -43,9 +40,6 @@ public class Utility {
             destination.setUsername(source.getUsername());
         if(source.getEmail() != null && !source.getEmail().isEmpty())
             destination.setEmail(source.getEmail());
-        if(source.getPassword() != null && !source.getPassword().isEmpty()){
-            destination.setPassword(passwordEncoder.encode(source.getPassword()));
-        }
         destination.setEnabled(source.isEnabled());
         for(Authority authority : source.getAuthorities()){
             authority.setEmployee(destination);
@@ -70,10 +64,10 @@ public class Utility {
         return list;
     }
 
-    public List<EmployeeDto> mapListEmployeeDto(List<Employee> source, Class<EmployeeDto> destinationType){
+    public List<EmployeeDto> mapListEmployeeDto(List<Employee> source){
         List<EmployeeDto> list = new ArrayList<>();
         for(Employee e : source){
-            EmployeeDto dto = map(e, destinationType);
+            EmployeeDto dto = map(e, EmployeeDto.class);
             if(e.getSessions() != null && !e.getSessions().isEmpty()){
                 for(Session session : e.getSessions()){
                     if(session.isValid()){
@@ -87,6 +81,15 @@ public class Utility {
         return list;
     }
 
-
+    public List<SessionDto> mapListSessionDto(List<Session> source){
+        List<SessionDto> list = new ArrayList<>();
+        for(Session session : source){
+            SessionDto dto = map(session, SessionDto.class);
+            dto.setUsername(session.getEmployee().getUsername());
+            dto.setActive(session.isValid());
+            list.add(dto);
+        }
+        return list;
+    }
 
 }

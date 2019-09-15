@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         params.put("surname", surname);
         params.put("username", username);
         params.put("email", email);
-        return utility.mapListEmployeeDto(employeeRepository.find(params), EmployeeDto.class);
+        return utility.mapListEmployeeDto(employeeRepository.find(params));
     }
 
     @Transactional
@@ -71,6 +71,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(EmployeeDetailsDto dto) {
         Employee employee = employeeRepository.find(dto.getId());
         utility.map(dto, employee);
+        if(dto.getPassword() != null && !dto.getPassword().isEmpty()){
+            employee.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
         employeeRepository.save(employee);
     }
 
