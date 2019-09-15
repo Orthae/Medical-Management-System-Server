@@ -9,11 +9,10 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "sessions")
+@Table(name = "employees_sessions")
 @Getter
 @Setter
 public class Session {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +28,9 @@ public class Session {
 
     @Column(name = "session_token")
     private String sessionToken;
+
+    @Column(name = "session_creation")
+    private Date sessionCreation;
 
     @Column(name = "session_expiry")
     private Date sessionExpiry;

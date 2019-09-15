@@ -70,6 +70,7 @@ public class SessionServiceImpl implements SessionService {
         Employee employee = (Employee) auth.getPrincipal();
         session.setEmployee(employee);
         session.setSessionToken(generateToken());
+        session.setSessionCreation(new Date());
         String ipAddress = request.getHeader("X-FORWARDED-FOR");
         if (ipAddress == null)
             session.setIpAddress(request.getRemoteAddr());

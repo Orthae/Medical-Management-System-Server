@@ -27,7 +27,7 @@ CREATE TABLE employees_roles
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE employees_schedule (
+CREATE TABLE employees_schedules (
     id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
     employee_id INT REFERENCES employees(id) ON DELETE NO ACTION ON UPDATE NO ACTION ,
     from_date DATE,
@@ -37,12 +37,13 @@ CREATE TABLE employees_schedule (
     response VARCHAR(500)
 ) ENGINE = InnoDB;
 
-CREATE TABLE sessions
+CREATE TABLE employees_sessions
 (
     id             INT          NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
     employee_id    INT          NOT NULL REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     ip_address     VARCHAR(20)  NOT NULL,
     session_token  VARCHAR(128) NOT NULL UNIQUE,
+    session_creation DATETIME   NOT NULL,
     session_expiry DATETIME     NOT NULL
 ) ENGINE = InnoDB;
 
@@ -68,10 +69,9 @@ CREATE TABLE patients_visits
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-INSERT INTO employees (name, surname, username, email, password)
-VALUES ('Daniel', 'Bayne', 'baydan', 'daniel.bayne@company.com' ,'$2y$05$L8IQDO993A5f/G/z7VjHm.XFwg4rdPCdUkTr/oTa0HaHSMPFQf9fu');
+INSERT INTO employees (name, surname, username, email, password, enabled)
+VALUES ('Daniel', 'Bayne', 'baydan', 'daniel.bayne@company.com' ,'$2y$05$L8IQDO993A5f/G/z7VjHm.XFwg4rdPCdUkTr/oTa0HaHSMPFQf9fu', 1);
 INSERT INTO employees_roles (employee_id, role) VALUES (1, 'MANAGEMENT');
-INSERT INTO employees_roles (employee_id, role) VALUES (1, 'USER');
 
 INSERT INTO employees (name, surname, username, email, password)
 VALUES ('Richard', 'Morris', 'morric', 'richard.morris@company.com', '$2y$05$dDh/KjkFg7qBdiYUq.haEuH0dmnlIoGg3d7hGaZklEk.BETns0Ma6');

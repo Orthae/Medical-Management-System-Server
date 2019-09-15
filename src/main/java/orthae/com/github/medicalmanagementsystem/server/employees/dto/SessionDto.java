@@ -14,6 +14,7 @@ public class SessionDto {
     private String username;
     private String sessionToken;
     private String ipAddress;
+    private Date sessionCreation;
     private Date sessionExpiry;
     private boolean active;
 }
