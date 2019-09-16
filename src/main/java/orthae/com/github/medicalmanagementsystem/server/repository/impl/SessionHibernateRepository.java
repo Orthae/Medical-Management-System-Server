@@ -3,10 +3,15 @@ package orthae.com.github.medicalmanagementsystem.server.repository.impl;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.entity.Session;
 import orthae.com.github.medicalmanagementsystem.server.repository.SessionRepository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -15,7 +20,7 @@ public class SessionHibernateRepository implements SessionRepository {
     private EntityManager entityManager;
 
     @Autowired
-    public SessionHibernateRepository(EntityManager entityManager ){
+    public SessionHibernateRepository(EntityManager entityManager){
         this.entityManager = entityManager;
     }
 
@@ -47,6 +52,32 @@ public class SessionHibernateRepository implements SessionRepository {
         query.setParameter("sessionToken", token);
         return query.getResultStream().findFirst().orElse(null);
     }
+
+    public List<Session> find(String username, String ipAddress, Boolean active, String date){
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Session> criteria = builder.createQuery(Session.class);
+        Root<Session> root = criteria.from(Session.class);
+        Join<Session, Employee> join = root.join("employee");
+        List<Predicate> list = new ArrayList<>();
+        if(username != null)
+            list.add(builder.like(join.get("username"), username));
+        if (ipAddress != null)
+            list.add(builder.like(root.get("ipAddress"), ipAddress));
+        if(active != null){
+            if(active)
+                list.add(builder.greaterThan(root.get("sessionExpiry"), new Date()));
+            else
+                list.add(builder.lessThan(root.get("sessionExpiry"), new Date()));
+        }
+        if(date != null){
+            list.add(builder.like(root.get("sessionCreation").as(String.class), date + "%"));
+        }
+
+        criteria.where(builder.and(list.toArray(new Predicate[0]))).orderBy(builder.asc(root.get("id")));
+        TypedQuery<Session> query = entityManager.createQuery(criteria);
+        return query.getResultList();
+    }
+
 
     @Override
     public void save(Session session) {

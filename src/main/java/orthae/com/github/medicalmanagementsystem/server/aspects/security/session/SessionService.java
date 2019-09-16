@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SessionService {
     String createSession(Authentication auth, HttpServletRequest request);
-    List<SessionDto> getSessions();
+    List<SessionDto> getSessions(String username, String ipAddress, Boolean active, String date);
     List<SessionDto> getSessions(int employeeId);
     String extractToken(HttpServletRequest request);
     Authentication validate(HttpServletRequest request);

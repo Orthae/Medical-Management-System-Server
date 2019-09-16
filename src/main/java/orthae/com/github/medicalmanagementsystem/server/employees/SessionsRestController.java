@@ -2,6 +2,7 @@ package orthae.com.github.medicalmanagementsystem.server.employees;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import orthae.com.github.medicalmanagementsystem.server.aspects.security.session.SessionService;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
@@ -20,7 +21,8 @@ public class SessionsRestController {
     }
 
     @GetMapping("${rest.endpoint.employees}/sessions")
-    public List<SessionDto> getSessions(){
-        return sessionService.getSessions();
+    public List<SessionDto> getSessions(@RequestParam(required = false) String username, @RequestParam(required = false) String ipAddress,
+                                        @RequestParam(required = false) Boolean active, @RequestParam(required = false) String date){
+        return sessionService.getSessions(username, ipAddress, active, date);
     }
 }
