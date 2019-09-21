@@ -7,7 +7,7 @@ import java.util.List;
 public interface SessionRepository {
         List<Session> findEmployeeSessions(int employeeId);
         List<Session> find();
-        List<Session> find(String username, String ipAddress, Boolean active, String date);
+        List<Session> find(String username, String ipAddress, Boolean active, String created, String expiring);
         Session find(int id);
         Session find(String token);
         void save(Session session);

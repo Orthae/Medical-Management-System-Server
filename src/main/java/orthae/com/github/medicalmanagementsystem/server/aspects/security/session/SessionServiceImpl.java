@@ -35,8 +35,8 @@ public class SessionServiceImpl implements SessionService {
 
     @Transactional
     @Override
-    public List<SessionDto> getSessions(String username, String ipAddress, Boolean active, String date) {
-        List<Session> list = sessionRepository.find(username, ipAddress, active, date);
+    public List<SessionDto> getSessions(String username, String ipAddress, Boolean active, String created, String expiring) {
+        List<Session> list = sessionRepository.find(username, ipAddress, active, created, expiring);
         return utility.mapListSessionDto(list);
     }
 

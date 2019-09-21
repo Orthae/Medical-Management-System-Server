@@ -53,7 +53,8 @@ public class SessionHibernateRepository implements SessionRepository {
         return query.getResultStream().findFirst().orElse(null);
     }
 
-    public List<Session> find(String username, String ipAddress, Boolean active, String date){
+    @Override
+    public List<Session> find(String username, String ipAddress, Boolean active, String created, String expiring){
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Session> criteria = builder.createQuery(Session.class);
         Root<Session> root = criteria.from(Session.class);
@@ -69,10 +70,10 @@ public class SessionHibernateRepository implements SessionRepository {
             else
                 list.add(builder.lessThan(root.get("sessionExpiry"), new Date()));
         }
-        if(date != null){
-            list.add(builder.like(root.get("sessionCreation").as(String.class), date + "%"));
-        }
-
+        if(created != null)
+            list.add(builder.like(root.get("sessionCreation").as(String.class), created + "%"));
+        if(expiring != null)
+            list.add(builder.like(root.get("sessionExpiry").as(String.class), expiring + "%"));
         criteria.where(builder.and(list.toArray(new Predicate[0]))).orderBy(builder.asc(root.get("id")));
         TypedQuery<Session> query = entityManager.createQuery(criteria);
         return query.getResultList();

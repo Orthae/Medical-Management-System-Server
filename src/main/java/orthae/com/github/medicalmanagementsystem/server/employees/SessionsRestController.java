@@ -22,7 +22,8 @@ public class SessionsRestController {
 
     @GetMapping("${rest.endpoint.employees}/sessions")
     public List<SessionDto> getSessions(@RequestParam(required = false) String username, @RequestParam(required = false) String ipAddress,
-                                        @RequestParam(required = false) Boolean active, @RequestParam(required = false) String date){
-        return sessionService.getSessions(username, ipAddress, active, date);
+                                        @RequestParam(required = false) Boolean active, @RequestParam(required = false) String created,
+                                        @RequestParam(required = false) String expiring){
+        return sessionService.getSessions(username, ipAddress, active, created, expiring);
     }
 }
