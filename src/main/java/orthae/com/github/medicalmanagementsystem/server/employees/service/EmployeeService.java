@@ -7,9 +7,8 @@ import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDt
 import java.util.List;
 
 public interface EmployeeService {
-
-    EmployeeDetailsDto find(int id);
-    List<EmployeeDto> find(String name, String surname, String username, String email);
+    EmployeeDetailsDto get(int id);
+    List<EmployeeDto> search(String name, String surname, String username, String email, Boolean active, Boolean enabled);
     void create(EmployeeDetailsDto createEmployee);
     void enable(int id);
     void disable(int id);

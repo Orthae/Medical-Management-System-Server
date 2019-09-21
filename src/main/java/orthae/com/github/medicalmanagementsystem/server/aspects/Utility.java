@@ -74,6 +74,7 @@ public class Utility {
                     dto.setActive(true);
                     break;
                     }
+                    dto.setActive(false);
                 }
             }
             list.add(dto);

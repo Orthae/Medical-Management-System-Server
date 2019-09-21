@@ -26,14 +26,15 @@ public class EmployeeRestController {
     }
 
     @GetMapping(value = "${rest.endpoint.employees}")
-    public List<EmployeeDto> findEmployeesByNameAndSurname(@RequestParam(required = false) String name, @RequestParam(required = false) String surname,
-                                                           @RequestParam(required = false) String username, @RequestParam(required = false) String email) {
-        return employeeService.find(name, surname, username, email);
+    public List<EmployeeDto> searchEmployees(@RequestParam(required = false) String name, @RequestParam(required = false) String surname,
+                                                           @RequestParam(required = false) String username, @RequestParam(required = false) String email,
+                                                           @RequestParam(required = false) Boolean active, @RequestParam(required = false) Boolean enabled) {
+            return employeeService.search(name, surname, username, email, active, enabled);
     }
 
     @GetMapping("${rest.endpoint.employees}/{employeeId}")
     public EmployeeDetailsDto getEmployee(@PathVariable int employeeId) {
-        return employeeService.find(employeeId);
+        return employeeService.get(employeeId);
     }
 
     @PostMapping("${rest.endpoint.employees}")

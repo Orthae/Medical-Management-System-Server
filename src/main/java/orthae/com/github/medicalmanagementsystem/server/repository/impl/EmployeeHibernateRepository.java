@@ -15,9 +15,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class EmployeeHibernateRepository implements EmployeeRepository {
@@ -29,33 +28,45 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public Employee find(int id) {
-        Session session = entityManager.unwrap(Session.class);
+    public Employee get(int id) {
+        Session session = entityManager.unwrap(org.hibernate.Session.class);
         return session.get(Employee.class, id);
     }
 
-    @Override
-    public List<Employee> find(){
-        return find(new HashMap<>());
-    }
-
-    public List<Employee> find(Map<String, String> params){
+    public List<Employee> search(String name, String surname, String username, String email, Boolean active, Boolean enabled) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Employee> criteria = builder.createQuery(Employee.class);
-        Root<Employee> root = criteria.from(Employee.class);
+        Root<Employee> employee = criteria.from(Employee.class);
         List<Predicate> list = new ArrayList<>();
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            if(entry.getValue() != null)
-                list.add(builder.like(root.get(entry.getKey()), entry.getValue()));
+        List<Predicate> having = new ArrayList<>();
+        if (name != null)
+            list.add(builder.like(employee.get("name"), name));
+        if (surname != null)
+            list.add(builder.like(employee.get("surname"), surname));
+        if (username != null)
+            list.add(builder.like(employee.get("username"), username));
+        if (email != null)
+            list.add(builder.like(employee.get("email"), email));
+        if (active != null) {
+            if (active) {
+                having.add(builder.greaterThan(builder.max(employee.get("sessions").get("sessionExpiry")).as(Date.class), new Date()));
+            } else
+                having.add(builder.lessThan(builder.max(employee.get("sessions").get("sessionExpiry")).as(Date.class), new Date()));
         }
-        criteria.where(builder.and(list.toArray(new Predicate[0]))).orderBy(builder.asc(root.get("id")));
+        if (enabled != null) {
+            if (enabled)
+                list.add(builder.isTrue(employee.get("enabled")));
+            else
+                list.add(builder.isFalse(employee.get("enabled")));
+        }
+        criteria.where(builder.and(list.toArray(new Predicate[0]))).groupBy(employee.get("id")).having(having.toArray(new Predicate[0])).orderBy(builder.asc(employee.get("id")));
         TypedQuery<Employee> query = entityManager.createQuery(criteria);
         return query.getResultList();
     }
 
 
     @Override
-    public boolean isEmailUnique(int id, String email){
+    public boolean isEmailUnique(int id, String email) {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> query = session.createQuery("FROM Employee WHERE email = :email AND NOT id = :id", Employee.class);
         query.setParameter("email", email);
@@ -65,7 +76,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public boolean isUsernameUnique(int id, String username){
+    public boolean isUsernameUnique(int id, String username) {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> query = session.createQuery("FROM Employee WHERE username = :username AND NOT id = :id", Employee.class);
         query.setParameter("username", username);
@@ -87,7 +98,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public Employee find(String username) {
+    public Employee get(String username) {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> employeeQuery = session.createQuery("FROM Employee WHERE username = :username", Employee.class);
         employeeQuery.setParameter("username", username);

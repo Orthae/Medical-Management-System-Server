@@ -43,7 +43,7 @@ CREATE TABLE employees_schedules
 CREATE TABLE employees_sessions
 (
     id               INT          NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
-    employee_id      INT          NOT NULL REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    employee_id      INT          REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     ip_address       VARCHAR(39)  NOT NULL,
     session_token    VARCHAR(128) NOT NULL UNIQUE,
     session_creation DATETIME     NOT NULL,

@@ -12,9 +12,7 @@ import orthae.com.github.medicalmanagementsystem.server.employees.exception.type
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -32,20 +30,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public EmployeeDetailsDto find(int id) {
-        return utility.map(employeeRepository.find(id), EmployeeDetailsDto.class);
+    public EmployeeDetailsDto get(int id) {
+        return utility.map(employeeRepository.get(id), EmployeeDetailsDto.class);
     }
 
 
     @Transactional
     @Override
-    public List<EmployeeDto> find(String name, String surname, String username, String email) {
-        Map<String, String> params = new HashMap<>();
-        params.put("name", name);
-        params.put("surname", surname);
-        params.put("username", username);
-        params.put("email", email);
-        return utility.mapListEmployeeDto(employeeRepository.find(params));
+    public List<EmployeeDto> search(String name, String surname, String username, String email, Boolean active, Boolean enabled) {
+        return utility.mapListEmployeeDto(employeeRepository.search(name, surname, username, email, active, enabled));
     }
 
     @Transactional
@@ -60,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void delete(int id) {
-        Employee employee = employeeRepository.find(id);
+        Employee employee = employeeRepository.get(id);
         if(employee == null)
             throw new EmployeeNotFound("Couldn't find employee with id = " + id);
         employeeRepository.delete(employee);
@@ -69,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void update(EmployeeDetailsDto dto) {
-        Employee employee = employeeRepository.find(dto.getId());
+        Employee employee = employeeRepository.get(dto.getId());
         utility.map(dto, employee);
         if(dto.getPassword() != null && !dto.getPassword().isEmpty()){
             employee.setPassword(passwordEncoder.encode(dto.getPassword()));

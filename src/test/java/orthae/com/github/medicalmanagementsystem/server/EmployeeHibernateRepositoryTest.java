@@ -12,9 +12,7 @@ import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -115,19 +113,18 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findAllEmployeesTest() {
-            List<Employee> list = employeeRepository.find();
+            List<Employee> list = employeeRepository.search(null, null, null, null, null, null);
             assertNotNull(list);
-            assertEquals(list.size(), 25);
+            assertEquals(25, list.size());
 
             Employee employee = list.get(0);
             assertEquals("Daniel", employee.getName());
             assertEquals("Bayne", employee.getSurname());
             assertEquals("baydan", employee.getUsername());
             assertTrue(passwordEncoder.matches("baydan", employee.getPassword()));
-            assertEquals(2, employee.getAuthorities().size());
+            assertEquals(1, employee.getAuthorities().size());
             List<GrantedAuthority> baydanAuth = new ArrayList<>(employee.getAuthorities());
             assertEquals("MANAGEMENT", baydanAuth.get(0).getAuthority());
-            assertEquals("USER", baydanAuth.get(1).getAuthority());
 
             employee = list.get(9);
             assertEquals("Jana", employee.getName());
@@ -147,20 +144,19 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findEmployeeById() {
-            Employee employee = employeeRepository.find(1);
+            Employee employee = employeeRepository.get(1);
             assertEquals("Daniel", employee.getName());
             assertEquals("Bayne", employee.getSurname());
             assertEquals("baydan", employee.getUsername());
             assertTrue(passwordEncoder.matches("baydan", employee.getPassword()));
-            assertEquals(2, employee.getAuthorities().size());
+            assertEquals(1, employee.getAuthorities().size());
             List<GrantedAuthority> baydanAuth = new ArrayList<>(employee.getAuthorities());
             assertEquals("MANAGEMENT", baydanAuth.get(0).getAuthority());
-            assertEquals("USER", baydanAuth.get(1).getAuthority());
         }
 
         @Test
         void findEmployeeByIdTwo() {
-            Employee employee = employeeRepository.find(2);
+            Employee employee = employeeRepository.get(2);
             assertEquals("Richard", employee.getName());
             assertEquals("Morris", employee.getSurname());
             assertEquals("morric", employee.getUsername());
@@ -169,7 +165,7 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findEmployeeByIdZero() {
-            Employee employee = employeeRepository.find(0);
+            Employee employee = employeeRepository.get(0);
             assertNull(employee);
         }
 
@@ -183,10 +179,7 @@ class EmployeeHibernateRepositoryTest {
             employee.setPassword("TestPassword");
             employeeRepository.save(employee);
 
-            Map<String, String> params = new HashMap<>();
-            params.put("name", "TestName");
-            params.put("surname", "TestSurname");
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search("TestName", "TestSurname", null, null, null, null);
             assertEquals(1, list.size());
         }
 
@@ -199,7 +192,7 @@ class EmployeeHibernateRepositoryTest {
             employee.setUsername("TestUsername");
             employee.setPassword("TestPassword");
             employeeRepository.save(employee);
-            employee = employeeRepository.find(1);
+            employee = employeeRepository.get(1);
             assertEquals(1,employee.getId());
             assertEquals("TestName", employee.getName());
             assertEquals("TestSurname", employee.getSurname());
@@ -209,9 +202,9 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void deleteEmployee(){
-            Employee employee = employeeRepository.find(1);
+            Employee employee = employeeRepository.get(1);
             employeeRepository.delete(employee);
-            List<Employee> list = employeeRepository.find();
+            List<Employee> list = employeeRepository.search(null, null, null, null, null, null);
             assertFalse(list.contains(employee));
             assertEquals(24, list.size());
         }
@@ -224,18 +217,13 @@ class EmployeeHibernateRepositoryTest {
     class SearchingEmployee {
         @Test
         void findByNameNoMatch(){
-            Map<String, String> params = new HashMap<>();
-            params.put("name", "There is no such name");
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search("There is no such name", null, null, null, null, null);
             assertEquals(0, list.size());
         }
 
         @Test
         void findByNameOneMatch(){
-
-            Map<String, String> params = new HashMap<>();
-            params.put("name", "Chelsy");
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search("Chelsy", null, null, null, null, null);
             assertEquals(1, list.size());
 
             Employee employee = list.get(0);
@@ -248,9 +236,7 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findByNameMultiMatch(){
-            Map<String, String> params = new HashMap<>();
-            params.put("name", "Oliver");
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search("Oliver", null, null, null, null, null);
             assertEquals(2, list.size());
 
             Employee employee = list.get(0);
@@ -270,17 +256,13 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findBySurnameNoMatch(){
-            Map<String, String> params = new HashMap<>();
-            params.put("surname", "There is no such surname");
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search(null, "There is no such surname", null, null, null, null);
             assertEquals(list.size(), 0);
         }
 
         @Test
         void findBySurnameOneMatch(){
-            Map<String, String> params = new HashMap<>();
-            params.put("surname", "Salinas");
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search(null, "Salinas", null, null, null, null);
             assertEquals(list.size(), 1);
 
             Employee employee = list.get(0);
@@ -294,9 +276,7 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findBySurnameMultiMatch(){
-            Map<String, String> params = new HashMap<>();
-            params.put("surname", "Meyers");
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search(null, "Meyers", null, null, null, null);
             assertEquals(list.size(), 2);
 
             Employee employee = list.get(0);
@@ -304,7 +284,6 @@ class EmployeeHibernateRepositoryTest {
             assertEquals("Meyers", employee.getSurname());
             assertEquals("meyleo", employee.getUsername());
             assertTrue(passwordEncoder.matches("meyleo", employee.getPassword()));
-            assertEquals(2, employee.getAuthorities().size());
 
             employee = list.get(1);
             assertEquals("Nicholas", employee.getName());
@@ -316,19 +295,13 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findByNameAndSurnameNoMatch(){
-            Map<String, String> params = new HashMap<>();
-            params.put("name", "No such name test");
-            params.put("surname", "No such surname test");
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search("No such name test", "There is no such surname", null, null, null, null);
             assertEquals(list.size(), 0);
         }
 
         @Test
         void findByNameAndSurnameOneMatch(){
-            Map<String, String> params = new HashMap<>();
-            params.put("name", "Hania");
-            params.put("surname", "Black");
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search("Hania", "Black", null, null, null, null);
             assertEquals(list.size(), 1);
 
             Employee employee = list.get(0);
@@ -342,10 +315,7 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findByNameAndSurnameMultiMatch(){
-            Map<String, String> params = new HashMap<>();
-            params.put("name", "Heather");
-            params.put("surname", "Paterson");
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search("Heather", "Paterson", null, null, null, null);
             assertEquals(list.size(), 2);
 
             Employee employee = list.get(0);
@@ -368,41 +338,34 @@ class EmployeeHibernateRepositoryTest {
         //  TODO change to different employee
         @Test
         void findByUsername(){
-            Employee employee = employeeRepository.find("baydan");
+            Employee employee = employeeRepository.get("baydan");
             assertNotNull(employee);
 
             assertEquals("Daniel", employee.getName());
             assertEquals("Bayne", employee.getSurname());
             assertEquals("baydan", employee.getUsername());
             assertTrue(passwordEncoder.matches("baydan", employee.getPassword()));
-            assertEquals(2, employee.getAuthorities().size());
+            assertEquals(1, employee.getAuthorities().size());
             List<GrantedAuthority> baydanAuth = new ArrayList<>(employee.getAuthorities());
             assertEquals("MANAGEMENT", baydanAuth.get(0).getAuthority());
-            assertEquals("USER", baydanAuth.get(1).getAuthority());
         }
 
         @Test
         void findByEmail(){
-            Map<String, String> params = new HashMap<>();
-            params.put("email", "danica.landry@company.com");
-
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search(null, null, null, "danica.landry@company.com", null, null);
             Employee employee = list.get(0);
             assertNotNull(employee);
         }
 
         @Test
         void findByEmailNoMatch(){
-            Map<String, String> params = new HashMap<>();
-            params.put("email", "There is no such email");
-
-            List<Employee> list = employeeRepository.find(params);
+            List<Employee> list = employeeRepository.search(null, null, null, "There is no such email", null, null);
             assertEquals(0, list.size());
         }
 
         @Test
         void findByUsernameNoMatch(){
-            Employee employee = employeeRepository.find("there is no such username test");
+            Employee employee = employeeRepository.get("there is no such username test");
             assertNull(employee);
         }
 
@@ -417,7 +380,7 @@ class EmployeeHibernateRepositoryTest {
     @Test
     void changePassword(){
         employeeRepository.changePassword(1, "Testing");
-        Employee employee = employeeRepository.find(1);
+        Employee employee = employeeRepository.get(1);
         assertEquals("Testing", employee.getPassword());
     }
 
