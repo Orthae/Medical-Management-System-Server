@@ -49,9 +49,9 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
             list.add(builder.like(employee.get("email"), email));
         if (active != null) {
             if (active) {
-                having.add(builder.greaterThan(builder.max(employee.get("sessions").get("sessionExpiry")).as(Date.class), new Date()));
+                having.add(builder.greaterThan(builder.max(employee.join("sessions").get("sessionExpiry")).as(Date.class), new Date()));
             } else
-                having.add(builder.lessThan(builder.max(employee.get("sessions").get("sessionExpiry")).as(Date.class), new Date()));
+                having.add(builder.lessThan(builder.max(employee.join("sessions").get("sessionExpiry")).as(Date.class), new Date()));
         }
         if (enabled != null) {
             if (enabled)
