@@ -7,8 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
-import orthae.com.github.medicalmanagementsystem.server.aspects.security.session.SessionService;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.session.SessionService;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
 import orthae.com.github.medicalmanagementsystem.server.login.dto.LoginDTO;
 

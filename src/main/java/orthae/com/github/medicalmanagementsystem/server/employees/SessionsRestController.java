@@ -1,11 +1,8 @@
 package orthae.com.github.medicalmanagementsystem.server.employees;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import orthae.com.github.medicalmanagementsystem.server.aspects.security.session.SessionService;
+import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.session.SessionService;
 
 import java.util.List;
 
@@ -26,4 +23,15 @@ public class SessionsRestController {
                                         @RequestParam(required = false) String expiring){
         return sessionService.getSessions(username, ipAddress, active, created, expiring);
     }
+
+    @DeleteMapping("${rest.endpoint.employees}/sessions/{sessionId}")
+    public void invalidateSession(@PathVariable int sessionId){
+        sessionService.invalidateSession(sessionId);
+    }
+
+    @DeleteMapping("${rest.endpoint.employees}/{employeeId}/sessions")
+    public void invalidateEmployeeSessions(@PathVariable int employeeId){
+        sessionService.invalidateEmployeeSessions(employeeId);
+    }
+
 }

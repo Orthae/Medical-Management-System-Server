@@ -39,18 +39,27 @@ public class SessionHibernateRepository implements SessionRepository {
     }
 
     @Override
-    public List<Session> find() {
-        org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
-        Query<Session> query = hSession.createQuery("FROM Session", Session.class);
-        return query.getResultList();
-    }
-
-    @Override
     public Session find(String token) {
         org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
         Query<Session> query = hSession.createQuery("FROM Session WHERE sessionToken = :sessionToken", Session.class);
         query.setParameter("sessionToken", token);
         return query.getResultStream().findFirst().orElse(null);
+    }
+
+    @Override
+    public void invalidateSession(int sessionId) {
+        org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
+        Query query = hSession.createQuery("UPDATE Session SET sessionExpiry = UTC_TIMESTAMP WHERE id = :id");
+        query.setParameter("id", sessionId);
+        query.executeUpdate();
+    }
+
+    @Override
+    public void invalidateEmployeeSessions(int employeeId) {
+        org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
+        Query query = hSession.createQuery("UPDATE Session SET sessionExpiry = UTC_TIMESTAMP WHERE employee.id = :id");
+        query.setParameter("id", employeeId);
+        query.executeUpdate();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.aspects.security.session;
+package orthae.com.github.medicalmanagementsystem.server.employees.session;
 
 import org.springframework.security.core.Authentication;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
@@ -12,5 +12,6 @@ public interface SessionService {
     List<SessionDto> getSessions(int employeeId);
     String extractToken(HttpServletRequest request);
     Authentication validate(HttpServletRequest request);
-
+    void invalidateSession(int sessionId);
+    void invalidateEmployeeSessions(int employeeId);
 }

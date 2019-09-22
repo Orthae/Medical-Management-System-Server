@@ -2,12 +2,12 @@ package orthae.com.github.medicalmanagementsystem.server.employees;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import orthae.com.github.medicalmanagementsystem.server.aspects.security.session.SessionService;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeChangePasswordDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
+import orthae.com.github.medicalmanagementsystem.server.employees.session.SessionService;
 
 import javax.validation.Valid;
 import java.util.List;

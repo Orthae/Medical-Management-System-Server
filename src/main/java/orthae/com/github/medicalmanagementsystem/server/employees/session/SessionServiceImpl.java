@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.aspects.security.session;
+package orthae.com.github.medicalmanagementsystem.server.employees.session;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,6 +60,18 @@ public class SessionServiceImpl implements SessionService {
             }
         } else
             return null;
+    }
+
+    @Transactional
+    @Override
+    public void invalidateSession(int sessionId) {
+        sessionRepository.invalidateSession(sessionId);
+    }
+
+    @Transactional
+    @Override
+    public void invalidateEmployeeSessions(int employeeId) {
+        sessionRepository.invalidateEmployeeSessions(employeeId);
     }
 
 

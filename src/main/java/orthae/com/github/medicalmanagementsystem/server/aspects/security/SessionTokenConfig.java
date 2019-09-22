@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.aspects.security.session;
+package orthae.com.github.medicalmanagementsystem.server.aspects.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;

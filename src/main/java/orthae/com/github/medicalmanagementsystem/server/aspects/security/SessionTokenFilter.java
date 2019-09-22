@@ -1,10 +1,11 @@
-package orthae.com.github.medicalmanagementsystem.server.aspects.security.session;
+package orthae.com.github.medicalmanagementsystem.server.aspects.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
+import orthae.com.github.medicalmanagementsystem.server.employees.session.SessionService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
