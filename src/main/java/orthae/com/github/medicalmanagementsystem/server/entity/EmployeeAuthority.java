@@ -14,7 +14,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @Table(name = "employees_roles")
-public class Authority implements GrantedAuthority {
+public class EmployeeAuthority implements GrantedAuthority {
 
     @Id
     @Column(name = "id")
@@ -33,7 +33,7 @@ public class Authority implements GrantedAuthority {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Authority authority1 = (Authority) o;
+        EmployeeAuthority authority1 = (EmployeeAuthority) o;
         return authority.equals(authority1.authority);
     }
 

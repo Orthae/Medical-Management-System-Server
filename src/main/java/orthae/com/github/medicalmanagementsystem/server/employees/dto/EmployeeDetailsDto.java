@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import orthae.com.github.medicalmanagementsystem.server.employees.validator.PasswordCheck;
 import orthae.com.github.medicalmanagementsystem.server.employees.validator.UniqueEmail;
 import orthae.com.github.medicalmanagementsystem.server.employees.validator.UniqueUsername;
-import orthae.com.github.medicalmanagementsystem.server.entity.Authority;
+import orthae.com.github.medicalmanagementsystem.server.entity.EmployeeAuthority;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -43,7 +43,7 @@ public class EmployeeDetailsDto {
     private String password;
 
     private boolean enabled;
-    private List<Authority> authorities;
+    private List<EmployeeAuthority> authorities;
 
 
 

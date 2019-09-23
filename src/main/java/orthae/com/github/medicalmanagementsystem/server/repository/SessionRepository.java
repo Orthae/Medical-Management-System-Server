@@ -1,18 +1,18 @@
 package orthae.com.github.medicalmanagementsystem.server.repository;
 
-import orthae.com.github.medicalmanagementsystem.server.entity.Session;
+import orthae.com.github.medicalmanagementsystem.server.entity.EmployeeSession;
 
 import java.util.List;
 
 public interface SessionRepository {
-        List<Session> findEmployeeSessions(int employeeId);
-        List<Session> find(String username, String ipAddress, Boolean active, String created, String expiring);
-        Session find(int id);
-        Session find(String token);
+        List<EmployeeSession> findEmployeeSessions(int employeeId);
+        List<EmployeeSession> find(String username, String ipAddress, Boolean active, String created, String expiring);
+        EmployeeSession find(int id);
+        EmployeeSession find(String token);
         void invalidateSession(int sessionId);
         void invalidateEmployeeSessions(int employeeId);
-        void save(Session session);
-        void delete(Session session);
+        void save(EmployeeSession session);
+        void delete(EmployeeSession session);
 
 
 }

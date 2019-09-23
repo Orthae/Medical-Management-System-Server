@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
-import orthae.com.github.medicalmanagementsystem.server.entity.Session;
+import orthae.com.github.medicalmanagementsystem.server.entity.EmployeeSession;
 import orthae.com.github.medicalmanagementsystem.server.repository.SessionRepository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,13 +36,13 @@ public class SessionServiceImpl implements SessionService {
     @Transactional
     @Override
     public List<SessionDto> getSessions(String username, String ipAddress, Boolean active, String created, String expiring) {
-        List<Session> list = sessionRepository.find(username, ipAddress, active, created, expiring);
+        List<EmployeeSession> list = sessionRepository.find(username, ipAddress, active, created, expiring);
         return utility.mapListSessionDto(list);
     }
 
     @Override
     public List<SessionDto> getSessions(int employeeId) {
-        List<Session> list = sessionRepository.findEmployeeSessions(employeeId);
+        List<EmployeeSession> list = sessionRepository.findEmployeeSessions(employeeId);
         return utility.mapListSessionDto(list);
     }
 
@@ -50,7 +50,7 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public Authentication validate(HttpServletRequest request) {
         String token = extractToken(request);
-        Session session = sessionRepository.find(token);
+        EmployeeSession session = sessionRepository.find(token);
         if (session != null) {
             if (session.isValid()) {
                 extendToken(session);
@@ -78,7 +78,7 @@ public class SessionServiceImpl implements SessionService {
     @Transactional
     @Override
     public String createSession(Authentication auth, HttpServletRequest request) {
-        Session session = new Session();
+        EmployeeSession session = new EmployeeSession();
         Employee employee = (Employee) auth.getPrincipal();
         session.setEmployee(employee);
         session.setSessionToken(generateToken());
@@ -102,7 +102,7 @@ public class SessionServiceImpl implements SessionService {
         return null;
     }
 
-    private void extendToken(Session session) {
+    private void extendToken(EmployeeSession session) {
         long tokenExpiry = new Date().getTime() + sessionLength;
         session.setSessionExpiry(new Date(tokenExpiry));
     }

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
-import orthae.com.github.medicalmanagementsystem.server.entity.Authority;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
-import orthae.com.github.medicalmanagementsystem.server.entity.Session;
+import orthae.com.github.medicalmanagementsystem.server.entity.EmployeeAuthority;
+import orthae.com.github.medicalmanagementsystem.server.entity.EmployeeSession;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -41,13 +41,13 @@ public class Utility {
         if(source.getEmail() != null && !source.getEmail().isEmpty())
             destination.setEmail(source.getEmail());
         destination.setEnabled(source.isEnabled());
-        for(Authority authority : source.getAuthorities()){
+        for(EmployeeAuthority authority : source.getAuthorities()){
             authority.setEmployee(destination);
         }
         if(source.getAuthorities().isEmpty()){
             destination.getAuthorities().clear();
         }
-        for(Authority authority : source.getAuthorities()){
+        for(EmployeeAuthority authority : source.getAuthorities()){
             destination.addAuthority(authority);
         }
     }
@@ -69,7 +69,7 @@ public class Utility {
         for(Employee e : source){
             EmployeeDto dto = map(e, EmployeeDto.class);
             if(e.getSessions() != null && !e.getSessions().isEmpty()){
-                for(Session session : e.getSessions()){
+                for(EmployeeSession session : e.getSessions()){
                     if(session.isValid()){
                     dto.setActive(true);
                     break;
@@ -82,9 +82,9 @@ public class Utility {
         return list;
     }
 
-    public List<SessionDto> mapListSessionDto(List<Session> source){
+    public List<SessionDto> mapListSessionDto(List<EmployeeSession> source){
         List<SessionDto> list = new ArrayList<>();
-        for(Session session : source){
+        for(EmployeeSession session : source){
             SessionDto dto = map(session, SessionDto.class);
             dto.setUsername(session.getEmployee().getUsername());
             dto.setActive(session.isValid());

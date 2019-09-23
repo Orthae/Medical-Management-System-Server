@@ -43,11 +43,11 @@ public class Employee implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "employee_id")
-    private List<Authority> authorities;
+    private List<EmployeeAuthority> authorities;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "employee_id")
-    private List<Session> sessions;
+    private List<EmployeeSession> sessions;
 
     @Column (name = "enabled")
     private boolean enabled;
@@ -57,7 +57,7 @@ public class Employee implements UserDetails {
         return password;
     }
 
-    public void addAuthority(Authority authority){
+    public void addAuthority(EmployeeAuthority authority){
         if(authorities == null)
             authorities = new ArrayList<>();
         authorities.add(authority);

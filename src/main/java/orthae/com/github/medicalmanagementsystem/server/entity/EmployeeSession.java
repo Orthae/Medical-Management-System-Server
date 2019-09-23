@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "employees_sessions")
 @Getter
 @Setter
-public class Session {
+public class EmployeeSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,7 +4,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
-import orthae.com.github.medicalmanagementsystem.server.entity.Session;
+import orthae.com.github.medicalmanagementsystem.server.entity.EmployeeSession;
 import orthae.com.github.medicalmanagementsystem.server.repository.SessionRepository;
 
 import javax.persistence.EntityManager;
@@ -25,23 +25,23 @@ public class SessionHibernateRepository implements SessionRepository {
     }
 
     @Override
-    public Session find(int id) {
+    public EmployeeSession find(int id) {
         org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
-        return hSession.get(Session.class, id);
+        return hSession.get(EmployeeSession.class, id);
     }
 
     @Override
-    public List<Session> findEmployeeSessions(int employeeId) {
+    public List<EmployeeSession> findEmployeeSessions(int employeeId) {
         org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
-        Query<Session> query = hSession.createQuery("FROM Session s WHERE s.employee.id = :employeeId", Session.class);
+        Query<EmployeeSession> query = hSession.createQuery("FROM Session s WHERE s.employee.id = :employeeId", EmployeeSession.class);
         query.setParameter("employeeId", employeeId);
         return query.getResultList();
     }
 
     @Override
-    public Session find(String token) {
+    public EmployeeSession find(String token) {
         org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
-        Query<Session> query = hSession.createQuery("FROM Session WHERE sessionToken = :sessionToken", Session.class);
+        Query<EmployeeSession> query = hSession.createQuery("FROM Session WHERE sessionToken = :sessionToken", EmployeeSession.class);
         query.setParameter("sessionToken", token);
         return query.getResultStream().findFirst().orElse(null);
     }
@@ -63,11 +63,11 @@ public class SessionHibernateRepository implements SessionRepository {
     }
 
     @Override
-    public List<Session> find(String username, String ipAddress, Boolean active, String created, String expiring){
+    public List<EmployeeSession> find(String username, String ipAddress, Boolean active, String created, String expiring){
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Session> criteria = builder.createQuery(Session.class);
-        Root<Session> root = criteria.from(Session.class);
-        Join<Session, Employee> join = root.join("employee");
+        CriteriaQuery<EmployeeSession> criteria = builder.createQuery(EmployeeSession.class);
+        Root<EmployeeSession> root = criteria.from(EmployeeSession.class);
+        Join<EmployeeSession, Employee> join = root.join("employee");
         List<Predicate> list = new ArrayList<>();
         if(username != null)
             list.add(builder.like(join.get("username"), username));
@@ -84,19 +84,19 @@ public class SessionHibernateRepository implements SessionRepository {
         if(expiring != null)
             list.add(builder.like(root.get("sessionExpiry").as(String.class), expiring + "%"));
         criteria.where(builder.and(list.toArray(new Predicate[0]))).orderBy(builder.asc(root.get("id")));
-        TypedQuery<Session> query = entityManager.createQuery(criteria);
+        TypedQuery<EmployeeSession> query = entityManager.createQuery(criteria);
         return query.getResultList();
     }
 
 
     @Override
-    public void save(Session session) {
+    public void save(EmployeeSession session) {
         org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
         hSession.saveOrUpdate(session);
     }
 
     @Override
-    public void delete(Session session) {
+    public void delete(EmployeeSession session) {
         org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
         hSession.delete(session);
     }
