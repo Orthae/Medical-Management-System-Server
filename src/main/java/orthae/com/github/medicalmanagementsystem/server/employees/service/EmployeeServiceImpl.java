@@ -8,8 +8,10 @@ import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeChangePasswordDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.WorkdayDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.exception.type.EmployeeNotFound;
-import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
+import orthae.com.github.medicalmanagementsystem.server.entity.employee.Employee;
+import orthae.com.github.medicalmanagementsystem.server.entity.employee.Workday;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
 import java.util.List;
@@ -87,6 +89,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void changePassword(int id, EmployeeChangePasswordDto dto) {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         employeeRepository.changePassword(id, encodedPassword);
+    }
+
+
+//  TODO add some logic
+    @Transactional
+    @Override
+    public void addWorkday(int id, WorkdayDto... dto) {
+        Employee employee = employeeRepository.get(id);
+        for(WorkdayDto workdayDto : dto)
+            employee.addWorkday(utility.map(workdayDto, Workday.class));
+        employeeRepository.save(employee);
     }
 
 }

@@ -1,6 +1,6 @@
 package orthae.com.github.medicalmanagementsystem.server.repository;
 
-import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
+import orthae.com.github.medicalmanagementsystem.server.entity.employee.Employee;
 
 import java.util.List;
 

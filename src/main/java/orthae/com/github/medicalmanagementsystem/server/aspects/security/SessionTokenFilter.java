@@ -5,7 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
-import orthae.com.github.medicalmanagementsystem.server.employees.session.SessionService;
+import orthae.com.github.medicalmanagementsystem.server.employees.service.SessionService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

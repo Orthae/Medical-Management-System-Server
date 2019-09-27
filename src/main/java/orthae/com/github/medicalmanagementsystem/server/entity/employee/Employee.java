@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.entity;
+package orthae.com.github.medicalmanagementsystem.server.entity.employee;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -8,9 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
 @Entity
@@ -41,28 +39,33 @@ public class Employee implements UserDetails {
     @Column (name = "password")
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "employee_id")
-    private List<EmployeeAuthority> authorities;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "employee_id")
-    private List<EmployeeSession> sessions;
-
     @Column (name = "enabled")
     private boolean enabled;
 
-    @Override
-    public String getPassword(){
-        return password;
-    }
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "employee_id")
+    private List<Authority> authorities;
 
-    public void addAuthority(EmployeeAuthority authority){
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "employee_id")
+    private List<Session> sessions;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "employee_id")
+    private Set<Workday> workdays;
+
+    public void addAuthority(Authority authority){
         if(authorities == null)
             authorities = new ArrayList<>();
         authorities.add(authority);
     }
 
+    public void addWorkday(Workday workday){
+        if(workdays == null)
+            workdays = new HashSet<>();
+        workdays.add(workday);
+
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

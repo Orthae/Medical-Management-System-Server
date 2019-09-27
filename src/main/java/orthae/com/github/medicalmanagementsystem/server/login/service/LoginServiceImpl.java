@@ -8,8 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
-import orthae.com.github.medicalmanagementsystem.server.employees.session.SessionService;
-import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
+import orthae.com.github.medicalmanagementsystem.server.employees.service.SessionService;
+import orthae.com.github.medicalmanagementsystem.server.entity.employee.Employee;
 import orthae.com.github.medicalmanagementsystem.server.login.dto.LoginDTO;
 
 import javax.servlet.http.HttpServletRequest;

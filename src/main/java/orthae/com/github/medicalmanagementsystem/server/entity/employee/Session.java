@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.entity;
+package orthae.com.github.medicalmanagementsystem.server.entity.employee;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,14 +12,14 @@ import java.util.Date;
 @Table(name = "employees_sessions")
 @Getter
 @Setter
-public class EmployeeSession {
+public class Session {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Employee employee;
 

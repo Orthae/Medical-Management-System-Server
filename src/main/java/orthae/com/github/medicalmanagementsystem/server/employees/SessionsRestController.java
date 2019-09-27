@@ -2,7 +2,7 @@ package orthae.com.github.medicalmanagementsystem.server.employees;
 
 import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
-import orthae.com.github.medicalmanagementsystem.server.employees.session.SessionService;
+import orthae.com.github.medicalmanagementsystem.server.employees.service.SessionService;
 
 import java.util.List;
 

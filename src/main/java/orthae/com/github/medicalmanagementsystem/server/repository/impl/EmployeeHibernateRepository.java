@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import orthae.com.github.medicalmanagementsystem.server.entity.Employee;
+import orthae.com.github.medicalmanagementsystem.server.entity.employee.Employee;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 
 import javax.persistence.EntityManager;
@@ -51,6 +51,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
             if (active) {
                 having.add(builder.greaterThan(builder.max(employee.join("sessions").get("sessionExpiry")).as(Date.class), new Date()));
             } else
+//  TODO Fix displaying for employees without any sessions, currently they are not being displayed at all.
                 having.add(builder.lessThan(builder.max(employee.join("sessions").get("sessionExpiry")).as(Date.class), new Date()));
         }
         if (enabled != null) {
@@ -86,7 +87,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public void save(Employee employee){
+    public void save(Employee employee) {
         Session session = entityManager.unwrap(Session.class);
         session.saveOrUpdate(employee);
     }

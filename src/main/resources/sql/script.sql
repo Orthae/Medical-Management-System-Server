@@ -28,27 +28,25 @@ CREATE TABLE employees_roles
     role        VARCHAR(16) NOT NULl
 ) ENGINE = InnoDB;
 
-
-CREATE TABLE employees_schedules
-(
-    id          INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
-    employee_id INT REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    from_date   DATE,
-    to_date     DATE,
-    message     VARCHAR(500),
-    status      TINYINT,
-    response    VARCHAR(500)
-) ENGINE = InnoDB;
-
 CREATE TABLE employees_sessions
 (
     id               INT          NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
-    employee_id      INT          REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    employee_id      INT REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     ip_address       VARCHAR(39)  NOT NULL,
     session_token    VARCHAR(128) NOT NULL UNIQUE,
     session_creation DATETIME     NOT NULL,
     session_expiry   DATETIME     NOT NULL
 ) ENGINE = InnoDB;
+
+CREATE TABLE employees_workdays
+(
+    id          INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    workday_date DATE NOT NULL,
+    start_hour TIME,
+    end_hour TIME
+) ENGINE = InnoDB;
+
 
 CREATE TABLE patients
 (

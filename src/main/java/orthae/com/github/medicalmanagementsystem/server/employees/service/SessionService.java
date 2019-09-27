@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server.employees.session;
+package orthae.com.github.medicalmanagementsystem.server.employees.service;
 
 import org.springframework.security.core.Authentication;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
