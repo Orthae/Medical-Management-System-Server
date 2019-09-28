@@ -10,10 +10,7 @@ import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepos
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,9 +47,11 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
         if (active != null) {
             if (active) {
                 having.add(builder.greaterThan(builder.max(employee.join("sessions").get("sessionExpiry")).as(Date.class), new Date()));
-            } else
-//  TODO Fix displaying for employees without any sessions, currently they are not being displayed at all.
-                having.add(builder.lessThan(builder.max(employee.join("sessions").get("sessionExpiry")).as(Date.class), new Date()));
+            } else {
+                having.add(builder.lessThan(builder.max(employee.join("sessions",JoinType.LEFT).get("sessionExpiry")).as(Date.class), new Date()));
+                having.add(builder.equal(builder.count(employee.join("sessions", JoinType.LEFT).get("sessionExpiry")), 0));
+            }
+            criteria.having(builder.or(having.toArray(new Predicate[0])));
         }
         if (enabled != null) {
             if (enabled)
@@ -60,7 +59,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
             else
                 list.add(builder.isFalse(employee.get("enabled")));
         }
-        criteria.where(builder.and(list.toArray(new Predicate[0]))).groupBy(employee.get("id")).having(having.toArray(new Predicate[0])).orderBy(builder.asc(employee.get("id")));
+        criteria.where(builder.and(list.toArray(new Predicate[0]))).groupBy(employee.get("id")).orderBy(builder.asc(employee.get("id")));
         TypedQuery<Employee> query = entityManager.createQuery(criteria);
         return query.getResultList();
     }
