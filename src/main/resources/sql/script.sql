@@ -38,16 +38,6 @@ CREATE TABLE employees_sessions
     session_expiry   DATETIME     NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE employees_workdays
-(
-    id          INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
-    employee_id INT REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    workday_date DATE NOT NULL,
-    start_hour TIME,
-    end_hour TIME
-) ENGINE = InnoDB;
-
-
 CREATE TABLE patients
 (
     id              INT                NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
