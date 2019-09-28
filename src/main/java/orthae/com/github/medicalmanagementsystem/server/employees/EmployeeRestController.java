@@ -2,10 +2,12 @@ package orthae.com.github.medicalmanagementsystem.server.employees;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.*;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeChangePasswordDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
+import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.SessionService;
-import orthae.com.github.medicalmanagementsystem.server.employees.service.WorkdayService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -17,12 +19,10 @@ public class EmployeeRestController {
 
     private EmployeeService employeeService;
     private SessionService sessionService;
-    private WorkdayService workdayService;
 
-    public EmployeeRestController(EmployeeService employeeService, SessionService sessionService, WorkdayService workdayService) {
+    public EmployeeRestController(EmployeeService employeeService, SessionService sessionService) {
         this.employeeService = employeeService;
         this.sessionService = sessionService;
-        this.workdayService = workdayService;
     }
 
     @GetMapping(value = "${rest.endpoint.employees}")
@@ -75,16 +75,6 @@ public class EmployeeRestController {
     @GetMapping("${rest.endpoint.employees}/{employeeId}/sessions")
     public List<SessionDto> getEmployeeSessions(@PathVariable int employeeId){
         return sessionService.getSessions(employeeId);
-    }
-
-    @GetMapping("${rest.endpoint.employees}/{employeeId}/workdays")
-    public List<WorkdayDto> getEmployeeWorkdays(@PathVariable int employeeId){
-        return workdayService.getAllByEmployeeId(employeeId);
-    }
-
-    @PostMapping("${rest.endpoint.employees}/{employeeId}/workdays")
-    public void createWorkday(@PathVariable int employeeId, @RequestBody WorkdayDto... dto){
-        employeeService.addWorkday(employeeId, dto);
     }
 
 }
