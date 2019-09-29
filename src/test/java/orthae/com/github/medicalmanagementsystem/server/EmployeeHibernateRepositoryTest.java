@@ -28,81 +28,57 @@ class EmployeeHibernateRepositoryTest {
     private PasswordEncoder passwordEncoder;
 
     @Nested
-    @DisplayName("Unique Email Tests")
-    class UniqueEmailTests {
-
-        @Nested
-        @Transactional
-        @SpringBootTest
-        @DisplayName("On Creating")
-        class OnCreate {
-            @Test
-            void uniqueEmailCreate(){
-                assertTrue(employeeRepository.isEmailUnique(0,"There is no such email test"));
-            }
-
-            @Test
-            void notUniqueEmailCreate(){
-                assertFalse(employeeRepository.isEmailUnique(0,"daniel.bayne@company.com"));
-            }
+    @DisplayName("Utility Tests")
+    @Transactional
+    @SpringBootTest
+    class UtilitiesTests
+    {
+        @Test
+        void uniqueEmailCreate(){
+            assertTrue(employeeRepository.isEmailUnique(0,"There is no such email test"));
         }
 
-        @Nested
-        @Transactional
-        @SpringBootTest
-        @DisplayName("On Updating")
-        class OnUpdate {
-            @Test
-            void uniqueEmailUpdate() {
-                assertTrue(employeeRepository.isEmailUnique(1,"daniel.bayne@company.com"));
-            }
-
-            @Test
-            void notUniqueEmailUpdate() {
-                assertFalse(employeeRepository.isEmailUnique(0,"daniel.bayne@company.com"));
-            }
-
+        @Test
+        void notUniqueEmailCreate(){
+            assertFalse(employeeRepository.isEmailUnique(0,"daniel.bayne@company.com"));
         }
 
-    }
-
-    @Nested
-    @DisplayName("Unique Username Tests")
-    class UniqueUsernameTests{
-
-        @Nested
-        @Transactional
-        @SpringBootTest
-        @DisplayName("On Creating")
-        class onCreate {
-            @Test
-            void uniqueUsernameCreate(){
-                assertTrue(employeeRepository.isUsernameUnique(0,"There is no such username test"));
-            }
-
-            @Test
-            void notUniqueUsernameCreate(){
-                assertFalse(employeeRepository.isUsernameUnique(0,"bonabi"));
-            }
-
+        @Test
+        void uniqueEmailUpdate() {
+            assertTrue(employeeRepository.isEmailUnique(1,"daniel.bayne@company.com"));
         }
 
-        @Nested
-        @Transactional
-        @SpringBootTest
-        @DisplayName("On Updating")
-        class onUpdate {
-            @Test
-            void uniqueUsernameUpdate(){
-                assertTrue(employeeRepository.isUsernameUnique(16,"bonabi"));
-            }
-
-            @Test
-            void notUniqueUsernameUpdate(){
-                assertFalse(employeeRepository.isUsernameUnique(0,"bonabi"));
-            }
+        @Test
+        void notUniqueEmailUpdate() {
+            assertFalse(employeeRepository.isEmailUnique(0,"daniel.bayne@company.com"));
         }
 
+        @Test
+        void uniqueUsernameCreate(){
+            assertTrue(employeeRepository.isUsernameUnique(0,"There is no such username test"));
+        }
+
+        @Test
+        void notUniqueUsernameCreate(){
+            assertFalse(employeeRepository.isUsernameUnique(0,"bonabi"));
+        }
+
+        @Test
+        void uniqueUsernameUpdate(){
+            assertTrue(employeeRepository.isUsernameUnique(16,"bonabi"));
+        }
+
+        @Test
+        void notUniqueUsernameUpdate(){
+            assertFalse(employeeRepository.isUsernameUnique(0,"bonabi"));
+        }
+
+        @Test
+        void changePassword(){
+            employeeRepository.changePassword(1, "Testing");
+            Employee employee = employeeRepository.get(1);
+            assertEquals("Testing", employee.getPassword());
+        }
     }
 
     @Nested
@@ -216,13 +192,13 @@ class EmployeeHibernateRepositoryTest {
     @DisplayName("Searching Repository Tests")
     class SearchingEmployee {
         @Test
-        void findByNameNoMatch(){
+        void searchByNameNoMatch(){
             List<Employee> list = employeeRepository.search("There is no such name", null, null, null, null, null);
             assertEquals(0, list.size());
         }
 
         @Test
-        void findByNameOneMatch(){
+        void searchByNameOneMatch(){
             List<Employee> list = employeeRepository.search("Chelsy", null, null, null, null, null);
             assertEquals(1, list.size());
 
@@ -235,7 +211,7 @@ class EmployeeHibernateRepositoryTest {
         }
 
         @Test
-        void findByNameMultiMatch(){
+        void searchByNameMultiMatch(){
             List<Employee> list = employeeRepository.search("Oliver", null, null, null, null, null);
             assertEquals(2, list.size());
 
@@ -255,13 +231,13 @@ class EmployeeHibernateRepositoryTest {
         }
 
         @Test
-        void findBySurnameNoMatch(){
+        void searchBySurnameNoMatch(){
             List<Employee> list = employeeRepository.search(null, "There is no such surname", null, null, null, null);
             assertEquals(list.size(), 0);
         }
 
         @Test
-        void findBySurnameOneMatch(){
+        void searchBySurnameOneMatch(){
             List<Employee> list = employeeRepository.search(null, "Salinas", null, null, null, null);
             assertEquals(list.size(), 1);
 
@@ -275,7 +251,7 @@ class EmployeeHibernateRepositoryTest {
         }
 
         @Test
-        void findBySurnameMultiMatch(){
+        void searchBySurnameMultiMatch(){
             List<Employee> list = employeeRepository.search(null, "Meyers", null, null, null, null);
             assertEquals(list.size(), 2);
 
@@ -294,13 +270,43 @@ class EmployeeHibernateRepositoryTest {
         }
 
         @Test
-        void findByNameAndSurnameNoMatch(){
+        void searchByUsernameNoMatch(){
+            List<Employee> list = employeeRepository.search(null, null, "No such username", null, null, null);
+            assertEquals(0, list.size());
+        }
+
+        @Test
+        void searchByUsernameMatch(){
+            List<Employee> list = employeeRepository.search(null, null, "lacche", null, null, null);
+            assertEquals(1, list.size());
+        }
+
+        @Test
+        void searchByEmailMatch(){
+            List<Employee> list = employeeRepository.search(null, null, null, "danica.landry@company.com", null, null);
+            assertEquals(1, list.size());
+        }
+
+
+
+
+
+
+
+        @Test
+        void searchByEmailNoMatch(){
+            List<Employee> list = employeeRepository.search(null, null, null, "There is no such email", null, null);
+            assertEquals(0, list.size());
+        }
+
+        @Test
+        void searchByNameAndSurnameNoMatch(){
             List<Employee> list = employeeRepository.search("No such name test", "There is no such surname", null, null, null, null);
             assertEquals(list.size(), 0);
         }
 
         @Test
-        void findByNameAndSurnameOneMatch(){
+        void searchByNameAndSurnameOneMatch(){
             List<Employee> list = employeeRepository.search("Hania", "Black", null, null, null, null);
             assertEquals(list.size(), 1);
 
@@ -310,11 +316,10 @@ class EmployeeHibernateRepositoryTest {
             assertEquals("blahan", employee.getUsername());
             assertTrue(passwordEncoder.matches("blahan", employee.getPassword()));
             assertEquals(0, employee.getAuthorities().size());
-
         }
 
         @Test
-        void findByNameAndSurnameMultiMatch(){
+        void searchByNameAndSurnameMultiMatch(){
             List<Employee> list = employeeRepository.search("Heather", "Paterson", null, null, null, null);
             assertEquals(list.size(), 2);
 
@@ -336,8 +341,18 @@ class EmployeeHibernateRepositoryTest {
         }
 
         //  TODO change to different employee
+
+
+
+
         @Test
-        void findByUsername(){
+        void getByUsernameNoMatch(){
+            Employee employee = employeeRepository.get("there is no such username test");
+            assertNull(employee);
+        }
+
+        @Test
+        void getByUsername(){
             Employee employee = employeeRepository.get("baydan");
             assertNotNull(employee);
 
@@ -350,38 +365,7 @@ class EmployeeHibernateRepositoryTest {
             assertEquals("MANAGEMENT", baydanAuth.get(0).getAuthority());
         }
 
-        @Test
-        void findByEmail(){
-            List<Employee> list = employeeRepository.search(null, null, null, "danica.landry@company.com", null, null);
-            Employee employee = list.get(0);
-            assertNotNull(employee);
-        }
 
-        @Test
-        void findByEmailNoMatch(){
-            List<Employee> list = employeeRepository.search(null, null, null, "There is no such email", null, null);
-            assertEquals(0, list.size());
-        }
-
-        @Test
-        void findByUsernameNoMatch(){
-            Employee employee = employeeRepository.get("there is no such username test");
-            assertNull(employee);
-        }
-
-
-
-    }
-
-
-
-
-
-    @Test
-    void changePassword(){
-        employeeRepository.changePassword(1, "Testing");
-        Employee employee = employeeRepository.get(1);
-        assertEquals("Testing", employee.getPassword());
     }
 
 }

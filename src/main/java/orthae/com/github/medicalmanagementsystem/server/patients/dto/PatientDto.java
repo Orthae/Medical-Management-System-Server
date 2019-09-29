@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class PatientDTO {
+public class PatientDto {
 
     private int id;
     private Date birthDate;

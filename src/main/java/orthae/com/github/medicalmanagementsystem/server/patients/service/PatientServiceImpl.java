@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.aspects.Utility;
+import orthae.com.github.medicalmanagementsystem.server.entity.Patient;
 import orthae.com.github.medicalmanagementsystem.server.patients.dto.CreatePatientDTO;
-import orthae.com.github.medicalmanagementsystem.server.patients.dto.PatientDTO;
+import orthae.com.github.medicalmanagementsystem.server.patients.dto.PatientDto;
 import orthae.com.github.medicalmanagementsystem.server.repository.PatientRepository;
 
 import java.util.List;
@@ -24,14 +25,15 @@ public class PatientServiceImpl implements PatientService {
 
     @Transactional
     @Override
-    public List<PatientDTO> findAll(){
-        return utility.mapAll(patientRepository.findAll(), PatientDTO.class);
+    public List<PatientDto> searchPatients(String name, String surname, String birthdate, String email, String socialSecurity){
+        List<Patient> list = patientRepository.search(name, surname, birthdate, email, socialSecurity);
+        return utility.mapAll(list, PatientDto.class);
     }
 
     @Transactional
     @Override
-    public PatientDTO findById(int id){
-        return utility.map(patientRepository.findById(id), PatientDTO.class);
+    public PatientDto findById(int id){
+        return utility.map(patientRepository.findById(id), PatientDto.class);
     }
 
     @Override

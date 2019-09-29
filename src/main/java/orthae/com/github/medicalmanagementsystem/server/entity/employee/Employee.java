@@ -8,7 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -50,21 +52,10 @@ public class Employee implements UserDetails {
     @JoinColumn(name = "employee_id")
     private List<Session> sessions;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "employee_id")
-    private Set<Workday> workdays;
-
     public void addAuthority(Authority authority){
         if(authorities == null)
             authorities = new ArrayList<>();
         authorities.add(authority);
-    }
-
-    public void addWorkday(Workday workday){
-        if(workdays == null)
-            workdays = new HashSet<>();
-        workdays.add(workday);
-
     }
 
     @Override

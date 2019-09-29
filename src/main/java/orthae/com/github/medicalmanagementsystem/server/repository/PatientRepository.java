@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PatientRepository {
 
-    List<Patient> findAll();
+    List<Patient> search(String name, String surname, String birthdate, String email, String socialSecurity);
     Patient findById(int id);
     void save(Patient patient);
 

@@ -38,6 +38,7 @@ CREATE TABLE employees_sessions
     session_expiry   DATETIME     NOT NULL
 ) ENGINE = InnoDB;
 
+
 CREATE TABLE patients
 (
     id              INT                NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
@@ -45,7 +46,8 @@ CREATE TABLE patients
     birth_date      DATE               NOT NULL,
     name            VARCHAR(16)        NOT NULL,
     surname         VARCHAR(16)        NOT NULL,
-    email           VARCHAR(16) DEFAULT NULL UNIQUE
+    email           VARCHAR(16) DEFAULT NULL,
+    phone           VARCHAR(12) DEFAULT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE patients_visits
