@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.WorkdayDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.WorkdayService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @SuppressWarnings("MVCPathVariableInspection")
@@ -23,7 +24,7 @@ public class WorkdaysRestController {
     }
 
     @PostMapping("${rest.endpoint.employees}/{employeeId}/${rest.endpoint.workdays}")
-    public void createWorkday(@PathVariable int employeeId, @RequestBody WorkdayDto dto){
+    public void createWorkday(@PathVariable int employeeId, @RequestBody @Valid WorkdayDto dto){
         workdayService.createWorkday(employeeId, dto);
     }
 }
