@@ -16,6 +16,4 @@ public interface EmployeeService {
     void delete(int id);
     void update(EmployeeDetailsDto updateEmployee);
 
-
-
 }

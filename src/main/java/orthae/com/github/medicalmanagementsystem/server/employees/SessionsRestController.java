@@ -24,6 +24,11 @@ public class SessionsRestController {
         return sessionService.getSessions(username, ipAddress, active, created, expiring);
     }
 
+    @GetMapping("${rest.endpoint.employees}/{employeeId}/sessions")
+    public List<SessionDto> getEmployeeSessions(@PathVariable int employeeId){
+        return sessionService.getSessions(employeeId);
+    }
+
     @DeleteMapping("${rest.endpoint.employees}/sessions/{sessionId}")
     public void invalidateSession(@PathVariable int sessionId){
         sessionService.invalidateSession(sessionId);

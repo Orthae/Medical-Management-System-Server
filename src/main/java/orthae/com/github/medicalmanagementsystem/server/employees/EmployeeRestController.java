@@ -5,9 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeChangePasswordDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
 import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
-import orthae.com.github.medicalmanagementsystem.server.employees.service.SessionService;
+import orthae.com.github.medicalmanagementsystem.server.employees.service.WorkdayService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,11 +17,11 @@ import java.util.List;
 public class EmployeeRestController {
 
     private EmployeeService employeeService;
-    private SessionService sessionService;
+    private WorkdayService workdayService;
 
-    public EmployeeRestController(EmployeeService employeeService, SessionService sessionService) {
+    public EmployeeRestController(EmployeeService employeeService, WorkdayService workdayService) {
         this.employeeService = employeeService;
-        this.sessionService = sessionService;
+        this.workdayService = workdayService;
     }
 
     @GetMapping(value = "${rest.endpoint.employees}")
@@ -72,9 +71,6 @@ public class EmployeeRestController {
         employeeService.changePassword(employeeId, dto);
     }
 
-    @GetMapping("${rest.endpoint.employees}/{employeeId}/sessions")
-    public List<SessionDto> getEmployeeSessions(@PathVariable int employeeId){
-        return sessionService.getSessions(employeeId);
-    }
+
 
 }

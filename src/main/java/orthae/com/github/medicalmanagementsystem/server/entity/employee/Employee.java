@@ -52,6 +52,16 @@ public class Employee implements UserDetails {
     @JoinColumn(name = "employee_id")
     private List<Session> sessions;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "employee_id")
+    private List<Workday> workdays;
+
+    public void addWorkday(Workday workday){
+        if(workdays == null)
+            workdays = new ArrayList<>();
+        workdays.add(workday);
+    }
+
     public void addAuthority(Authority authority){
         if(authorities == null)
             authorities = new ArrayList<>();
