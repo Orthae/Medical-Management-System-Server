@@ -3,12 +3,12 @@ package orthae.com.github.medicalmanagementsystem.server.aspects;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.SessionDto;
 import orthae.com.github.medicalmanagementsystem.server.entity.employee.Authority;
 import orthae.com.github.medicalmanagementsystem.server.entity.employee.Employee;
 import orthae.com.github.medicalmanagementsystem.server.entity.employee.Session;
+import orthae.com.github.medicalmanagementsystem.server.management.employees.dto.EmployeeDetailsDto;
+import orthae.com.github.medicalmanagementsystem.server.management.employees.dto.EmployeeDto;
+import orthae.com.github.medicalmanagementsystem.server.management.sessions.dto.SessionDto;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;

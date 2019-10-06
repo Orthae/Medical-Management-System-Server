@@ -3,9 +3,9 @@ package orthae.com.github.medicalmanagementsystem.server.login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.login.dto.LoginDTO;
 import orthae.com.github.medicalmanagementsystem.server.login.service.LoginService;
+import orthae.com.github.medicalmanagementsystem.server.management.employees.dto.EmployeeDetailsDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;

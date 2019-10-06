@@ -1,7 +1,7 @@
 package orthae.com.github.medicalmanagementsystem.server.login.service;
 
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
 import orthae.com.github.medicalmanagementsystem.server.login.dto.LoginDTO;
+import orthae.com.github.medicalmanagementsystem.server.management.employees.dto.EmployeeDetailsDto;
 
 import javax.servlet.http.HttpServletRequest;
 

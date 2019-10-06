@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDetailsDto;
-import orthae.com.github.medicalmanagementsystem.server.employees.dto.EmployeeDto;
-import orthae.com.github.medicalmanagementsystem.server.employees.service.EmployeeService;
+import orthae.com.github.medicalmanagementsystem.server.management.employees.dto.EmployeeDetailsDto;
+import orthae.com.github.medicalmanagementsystem.server.management.employees.dto.EmployeeDto;
+import orthae.com.github.medicalmanagementsystem.server.management.employees.service.EmployeeService;
 
 import java.util.List;
 
