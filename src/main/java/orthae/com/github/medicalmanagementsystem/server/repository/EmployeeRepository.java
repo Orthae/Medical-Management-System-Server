@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface EmployeeRepository {
     List<Employee> search(String name, String surname, String username, String email, Boolean active, Boolean enabled);
-    Employee get(int id);
-    Employee get(String username);
+    Employee getById(int id);
+    Employee getByUsername(String username);
     boolean isEmailUnique(int id, String email);
     boolean isUsernameUnique(int id, String username);
-    void activate(int id);
-    void deactivate(int id);
+    void enable(int id);
+    void disable(int id);
     void changePassword(int id, String password);
     void save(Employee employee);
     void delete(Employee employee);

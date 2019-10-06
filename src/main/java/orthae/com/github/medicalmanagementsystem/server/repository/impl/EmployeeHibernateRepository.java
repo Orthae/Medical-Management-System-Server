@@ -25,7 +25,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public Employee get(int id) {
+    public Employee getById(int id) {
         Session session = entityManager.unwrap(org.hibernate.Session.class);
         return session.get(Employee.class, id);
     }
@@ -98,7 +98,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public Employee get(String username) {
+    public Employee getByUsername(String username) {
         Session session = entityManager.unwrap(Session.class);
         Query<Employee> employeeQuery = session.createQuery("FROM Employee WHERE username = :username", Employee.class);
         employeeQuery.setParameter("username", username);
@@ -115,7 +115,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public void activate(int id) {
+    public void enable(int id) {
         Session session = entityManager.unwrap(Session.class);
         Query query = session.createQuery("UPDATE Employee SET enabled  = 1 WHERE id = :id ");
         query.setParameter("id", id);
@@ -123,7 +123,7 @@ public class EmployeeHibernateRepository implements EmployeeRepository {
     }
 
     @Override
-    public void deactivate(int id) {
+    public void disable(int id) {
         Session session = entityManager.unwrap(Session.class);
         Query query = session.createQuery("UPDATE Employee SET enabled = 0 WHERE id = :id ");
         query.setParameter("id", id);

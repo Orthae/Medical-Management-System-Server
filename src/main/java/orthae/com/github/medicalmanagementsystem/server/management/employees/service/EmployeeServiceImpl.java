@@ -31,7 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public EmployeeDetailsDto get(int id) {
-        return utility.map(employeeRepository.get(id), EmployeeDetailsDto.class);
+        return utility.map(employeeRepository.getById(id), EmployeeDetailsDto.class);
     }
 
 
@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void delete(int id) {
-        Employee employee = employeeRepository.get(id);
+        Employee employee = employeeRepository.getById(id);
         if(employee == null)
             throw new EmployeeNotFound("Couldn't find employee with id = " + id);
         employeeRepository.delete(employee);
@@ -62,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void update(EmployeeDetailsDto dto) {
-        Employee employee = employeeRepository.get(dto.getId());
+        Employee employee = employeeRepository.getById(dto.getId());
         utility.map(dto, employee);
         if(dto.getPassword() != null && !dto.getPassword().isEmpty()){
             employee.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -73,13 +73,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     @Override
     public void enable(int id) {
-        employeeRepository.activate(id);
+        employeeRepository.enable(id);
     }
 
     @Transactional
     @Override
     public void disable(int id) {
-        employeeRepository.deactivate(id);
+        employeeRepository.disable(id);
     }
 
     @Transactional

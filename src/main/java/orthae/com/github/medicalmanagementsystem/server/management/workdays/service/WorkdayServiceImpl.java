@@ -37,7 +37,7 @@ public class WorkdayServiceImpl implements WorkdayService {
     @Transactional
     @Override
     public void createWorkday(int employeeId, WorkdayDto dto) {
-        Employee employee = employeeRepository.get(employeeId);
+        Employee employee = employeeRepository.getById(employeeId);
         Workday workday = map(dto);
         workday.setEmployee(employee);
         workdayRepository.save(workday);

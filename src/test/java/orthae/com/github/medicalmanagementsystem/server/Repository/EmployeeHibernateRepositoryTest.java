@@ -1,4 +1,4 @@
-package orthae.com.github.medicalmanagementsystem.server;
+package orthae.com.github.medicalmanagementsystem.server.Repository;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -31,8 +31,7 @@ class EmployeeHibernateRepositoryTest {
     @DisplayName("Utility Tests")
     @Transactional
     @SpringBootTest
-    class UtilitiesTests
-    {
+    class UtilitiesTests {
         @Test
         void uniqueEmailCreate(){
             assertTrue(employeeRepository.isEmailUnique(0,"There is no such email test"));
@@ -76,8 +75,22 @@ class EmployeeHibernateRepositoryTest {
         @Test
         void changePassword(){
             employeeRepository.changePassword(1, "Testing");
-            Employee employee = employeeRepository.get(1);
+            Employee employee = employeeRepository.getById(1);
             assertEquals("Testing", employee.getPassword());
+        }
+
+        @Test
+        void enableEmployee(){
+            employeeRepository.enable(6);
+            Employee test = employeeRepository.getById(6);
+            assertTrue(test.isEnabled());
+        }
+
+        @Test
+        void disableEmployee(){
+            employeeRepository.disable(11);
+            Employee employee = employeeRepository.getById(11);
+            assertFalse(employee.isEnabled());
         }
     }
 
@@ -120,7 +133,7 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findEmployeeById() {
-            Employee employee = employeeRepository.get(1);
+            Employee employee = employeeRepository.getById(1);
             assertEquals("Daniel", employee.getName());
             assertEquals("Bayne", employee.getSurname());
             assertEquals("baydan", employee.getUsername());
@@ -132,7 +145,7 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findEmployeeByIdTwo() {
-            Employee employee = employeeRepository.get(2);
+            Employee employee = employeeRepository.getById(2);
             assertEquals("Richard", employee.getName());
             assertEquals("Morris", employee.getSurname());
             assertEquals("morric", employee.getUsername());
@@ -141,7 +154,7 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void findEmployeeByIdZero() {
-            Employee employee = employeeRepository.get(0);
+            Employee employee = employeeRepository.getById(0);
             assertNull(employee);
         }
 
@@ -168,7 +181,7 @@ class EmployeeHibernateRepositoryTest {
             employee.setUsername("TestUsername");
             employee.setPassword("TestPassword");
             employeeRepository.save(employee);
-            employee = employeeRepository.get(1);
+            employee = employeeRepository.getById(1);
             assertEquals(1,employee.getId());
             assertEquals("TestName", employee.getName());
             assertEquals("TestSurname", employee.getSurname());
@@ -178,7 +191,7 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void deleteEmployee(){
-            Employee employee = employeeRepository.get(1);
+            Employee employee = employeeRepository.getById(1);
             employeeRepository.delete(employee);
             List<Employee> list = employeeRepository.search(null, null, null, null, null, null);
             assertFalse(list.contains(employee));
@@ -347,13 +360,13 @@ class EmployeeHibernateRepositoryTest {
 
         @Test
         void getByUsernameNoMatch(){
-            Employee employee = employeeRepository.get("there is no such username test");
+            Employee employee = employeeRepository.getByUsername("there is no such username test");
             assertNull(employee);
         }
 
         @Test
         void getByUsername(){
-            Employee employee = employeeRepository.get("baydan");
+            Employee employee = employeeRepository.getByUsername("baydan");
             assertNotNull(employee);
 
             assertEquals("Daniel", employee.getName());
