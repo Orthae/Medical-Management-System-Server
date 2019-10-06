@@ -7,12 +7,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = MaxHourValidator.class)
-@Target( ElementType.FIELD )
+@Constraint(validatedBy = MinDurationValidator.class)
+@Target( ElementType.TYPE )
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MaxHour {
-    String message() default "Invalid hour";
-    int max();
+public @interface MinDuration {
+    String message() default "Duration not in range";
+    int min();
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

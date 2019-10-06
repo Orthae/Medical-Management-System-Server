@@ -7,12 +7,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = MinHourValidator.class)
+@Constraint(validatedBy = HourRangeValidator.class)
 @Target( ElementType.FIELD )
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MinHour {
-    String message() default "Invalid hour";
-    int min();
+public @interface HourRange {
+    String message() default "Hours not in range";
+    int open();
+    int closed();
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
