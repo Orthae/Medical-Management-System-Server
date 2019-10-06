@@ -40,11 +40,11 @@ CREATE TABLE employees_sessions
 
 CREATE TABLE employees_workdays
 (
-    id INT NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
-    employee_id INT REFERENCES employees(id) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    date DATE NOT NULL,
-    start_hour TIME NOT NULL,
-    end_hour TIME NOT NULL
+    id          INT  NOT NULL UNIQUE AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT REFERENCES employees (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    date        DATE NOT NULL,
+    start_hour  TIME NOT NULL,
+    end_hour    TIME NOT NULL
 ) ENGINE = InnoDB;
 
 CREATE TABLE patients
@@ -127,5 +127,14 @@ VALUES ('Oliver', 'Kunal', 'kunoli', 'oliver.kunal@company.com', '$2y$05$AyxkcHx
 INSERT INTO employees_roles (employee_id, role)
 VALUES (1, 'MANAGEMENT');
 
-INSERT INTO patients (social_security, birth_date, name, surname, email)
-VALUES ('SS16', '1990-01-01', 'TEST', 'TEST', 'email@com.com')
+# Sessions inserts
+
+INSERT INTO employees_sessions(employee_id, ip_address, session_token, session_creation, session_expiry)
+VALUES (2, '120.120.120.1', 'vHf2ugmrmvkZHZKCzWvK6r6UssZG8be6jZdxX9uzgMpsg72EufbCVeVtPAZwCtHxs8ZQ9X9vSXnUZcHQpqUFXqyykLZUsQJ2kWmPCNpPXGEZCzGT5sfCUQn3QyvbWaDe',
+        '2019-05-10 08:25:00', '2025-12-31');
+INSERT INTO employees_sessions(employee_id, ip_address, session_token, session_creation, session_expiry)
+VALUES (5, '120.120.120.1', 'x4sakccv628akY9ScwmyCnujNbyDXapSEyqLb6qUQDN9bAJYJh7FTFQZKhYZe8QrHXdKZchmTrdZeM9fyLKZ8DHzBPTcmc497vBkUsP97n2GeUFaxUGYn2yuZAFtdRkt',
+        '2019-05-10 08:25:00', '2025-12-31');
+INSERT INTO employees_sessions(employee_id, ip_address, session_token, session_creation, session_expiry)
+VALUES (15, '120.120.120.1', 'Kz9b9a5QPcSzZNTJANchpL388GsB62KHcNLmfM9SqFCGbaJmX4wpk28qzKqgCBCbsnB8AazvnsRfHaPKHgv9BXFBZdK3Trg3bQbzqSgEBbKKtsSv84BJTBKVfTE87SZj',
+        '2019-05-10 08:25:00', '2025-12-31');
