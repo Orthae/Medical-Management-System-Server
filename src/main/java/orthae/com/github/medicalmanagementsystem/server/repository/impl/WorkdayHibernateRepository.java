@@ -7,6 +7,7 @@ import orthae.com.github.medicalmanagementsystem.server.entity.employee.Workday;
 import orthae.com.github.medicalmanagementsystem.server.repository.WorkdayRepository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -30,6 +31,15 @@ public class WorkdayHibernateRepository implements WorkdayRepository {
         Session session = entityManager.unwrap(Session.class);
         Query<Workday> query = session.createQuery("FROM Workday w WHERE w.employee.id = :id", Workday.class);
         query.setParameter("id", employeeId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Workday> getByEmployeeIdAndDate(int employeeId, LocalDate date) {
+        Session session = entityManager.unwrap(Session.class);
+        Query<Workday> query = session.createQuery("FROM Workday w WHERE w.employee.id = :id AND w.date = :date", Workday.class);
+        query.setParameter("id", employeeId);
+        query.setParameter("date", date);
         return query.getResultList();
     }
 

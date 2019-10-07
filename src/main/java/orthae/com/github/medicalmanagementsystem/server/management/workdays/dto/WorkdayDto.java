@@ -19,9 +19,9 @@ public class WorkdayDto {
     @NotNull(message = "Date can't be empty.")
     private LocalDate date;
 
-    @HourRange(open = 10, closed = 20, message = "Start hour not in range of 10 to 20")
+    @HourRange(open = 8, closed = 20, message = "Start hour not in range of 8 to 20")
     private LocalTime startHour;
 
-    @HourRange(open = 10, closed = 20, message = "End hour not in range of 10 to 20")
+    @HourRange(open = 8, closed = 20, message = "End hour not in range of 8 to 20")
     private LocalTime endHour;
 }
