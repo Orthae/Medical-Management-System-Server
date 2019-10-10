@@ -8,10 +8,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @SuppressWarnings("unused")
-@Constraint(validatedBy = PasswordCheckValidator.class)
+@Constraint(validatedBy = PasswordFieldValidator.class)
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PasswordCheck  {
+public @interface PasswordField {
     String message() default "Password field can't be empty";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import orthae.com.github.medicalmanagementsystem.server.entity.employee.Authority;
-import orthae.com.github.medicalmanagementsystem.server.management.employees.validator.PasswordCheck;
+import orthae.com.github.medicalmanagementsystem.server.management.employees.validator.PasswordField;
 import orthae.com.github.medicalmanagementsystem.server.management.employees.validator.UniqueEmail;
 import orthae.com.github.medicalmanagementsystem.server.management.employees.validator.UniqueUsername;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @UniqueEmail
 @UniqueUsername
-@PasswordCheck
+@PasswordField
 public class EmployeeDetailsDto {
 
     private int id;

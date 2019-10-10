@@ -4,10 +4,12 @@ package orthae.com.github.medicalmanagementsystem.server.management.employees.dt
 
 import lombok.Getter;
 import lombok.Setter;
+import orthae.com.github.medicalmanagementsystem.server.management.employees.validator.PasswordChange;
 
 @Getter
 @Setter
+@PasswordChange
 public class EmployeeChangePasswordDto {
     private String password;
-    private String passwordCheck;
+    private String rePassword;
 }

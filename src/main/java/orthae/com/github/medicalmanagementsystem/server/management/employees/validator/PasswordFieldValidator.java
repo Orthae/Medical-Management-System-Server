@@ -5,7 +5,7 @@ import orthae.com.github.medicalmanagementsystem.server.management.employees.dto
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class PasswordCheckValidator implements ConstraintValidator<PasswordCheck, EmployeeDetailsDto> {
+public class PasswordFieldValidator implements ConstraintValidator<PasswordField, EmployeeDetailsDto> {
     @Override
     public boolean isValid(EmployeeDetailsDto value, ConstraintValidatorContext context) {
         return value.getId() != 0 || !value.getPassword().isEmpty();
