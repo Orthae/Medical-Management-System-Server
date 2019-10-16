@@ -9,5 +9,6 @@ public interface WorkdayService {
     List<WorkdayDto> getAll();
     List<WorkdayDto> getByEmployeeId(int employeeId);
     void createWorkday(int employeeId, WorkdayDto dto);
+    void updateWorkday(WorkdayDto dto);
 
 }

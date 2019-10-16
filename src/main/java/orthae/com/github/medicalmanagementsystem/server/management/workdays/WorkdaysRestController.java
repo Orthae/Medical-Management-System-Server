@@ -24,7 +24,12 @@ public class WorkdaysRestController {
     }
 
     @PostMapping("${rest.endpoint.employees}/{employeeId}/${rest.endpoint.workdays}")
-    public void createWorkday(@PathVariable int employeeId, @RequestBody @Valid WorkdayDto dto){
+    public void createWorkday(@PathVariable int employeeId, @Valid @RequestBody WorkdayDto dto){
         workdayService.createWorkday(employeeId, dto);
+    }
+
+    @PutMapping("${rest.endpoint.employees}/${rest.endpoint.workdays}")
+    public void updateWorkday(@Valid @RequestBody WorkdayDto dto){
+
     }
 }

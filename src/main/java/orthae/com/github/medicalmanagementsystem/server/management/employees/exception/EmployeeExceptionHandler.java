@@ -13,7 +13,6 @@ import java.util.Date;
 @ControllerAdvice
 public class EmployeeExceptionHandler {
 
-//  TODO Rewrite to utilize ExceptionResponse class
     @ExceptionHandler
     public ResponseEntity<ExceptionResponse> handleException(EmployeeNotFound e, HttpServletRequest request){
      ExceptionResponse response = new ExceptionResponse();

@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import orthae.com.github.medicalmanagementsystem.server.entity.employee.Employee;
 import orthae.com.github.medicalmanagementsystem.server.entity.employee.Workday;
 import orthae.com.github.medicalmanagementsystem.server.management.workdays.dto.WorkdayDto;
+import orthae.com.github.medicalmanagementsystem.server.management.workdays.exception.WorkdayHourCollision;
 import orthae.com.github.medicalmanagementsystem.server.management.workdays.utility.WorkdayUtility;
 import orthae.com.github.medicalmanagementsystem.server.repository.EmployeeRepository;
 import orthae.com.github.medicalmanagementsystem.server.repository.WorkdayRepository;
@@ -48,16 +49,14 @@ public class WorkdayServiceImpl implements WorkdayService {
 //  TODO Make proper exception
         for(Workday wday : list){
             if(workdayUtility.hourCollision(wday, dto))
-                throw new RuntimeException("Hour collision");
+                throw new WorkdayHourCollision("Hour collision");
         }
         workday.setEmployee(employee);
         workdayRepository.save(workday);
     }
 
-//  TODO Make utility class
+    @Override
+    public void updateWorkday(WorkdayDto dto) {
 
-
-
-
-    
+    }
 }
