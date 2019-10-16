@@ -25,12 +25,6 @@ public class SessionHibernateRepository implements SessionRepository {
     }
 
     @Override
-    public Session find(int id) {
-        org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
-        return hSession.get(Session.class, id);
-    }
-
-    @Override
     public List<Session> findEmployeeSessions(int employeeId) {
         org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
         Query<Session> query = hSession.createQuery("FROM Session s WHERE s.employee.id = :employeeId", Session.class);
@@ -93,11 +87,5 @@ public class SessionHibernateRepository implements SessionRepository {
     public void save(Session session) {
         org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
         hSession.saveOrUpdate(session);
-    }
-
-    @Override
-    public void delete(Session session) {
-        org.hibernate.Session hSession = entityManager.unwrap(org.hibernate.Session.class);
-        hSession.delete(session);
     }
 }
