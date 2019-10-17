@@ -138,3 +138,18 @@ VALUES (5, '120.120.120.1', 'x4sakccv628akY9ScwmyCnujNbyDXapSEyqLb6qUQDN9bAJYJh7
 INSERT INTO employees_sessions(employee_id, ip_address, session_token, session_creation, session_expiry)
 VALUES (15, '120.120.120.1', 'Kz9b9a5QPcSzZNTJANchpL388GsB62KHcNLmfM9SqFCGbaJmX4wpk28qzKqgCBCbsnB8AazvnsRfHaPKHgv9BXFBZdK3Trg3bQbzqSgEBbKKtsSv84BJTBKVfTE87SZj',
         '2019-05-10 08:25:00', '2025-12-31');
+INSERT INTO employees_sessions(employee_id, ip_address, session_token, session_creation, session_expiry)
+VALUES (1, '10.10.10.1', '3Y6vjaPSUPbnxbU46D6p33zZLhqgug6nZar2S7YkVfX6LedNY9m3rzLzCHPX6zTvSZ3jDXvhw6tyCzn6LZLPJvw2mVf5zfavKdhe9XF7vPe78jpzGrFucPYnpycJR67C',
+        '2019-01-01 08:00:00', '2019-01-01 15:00:00');
+INSERT INTO employees_sessions(employee_id, ip_address, session_token, session_creation, session_expiry)
+VALUES (1, '10.10.10.2', 'yFrb59xqR3WLHwzpcfLeVmUbddefBQLcWVRQLYcZ8TXeeu9jrSxZzDQ5c5krjy2XeCqZX7BNUpwVunmRKHAGPZFJqYpCCQzGKUXLPRN8nGrCbwjNENENayJvjp584j4H',
+        '2019-01-02 08:15:07', '2019-01-02 17:24:03');
+INSERT INTO employees_sessions(employee_id, ip_address, session_token, session_creation, session_expiry)
+VALUES (1, '10.10.10.3', '3sdsxbXYFyDQLaDGUmxmu6GdrVsBVWMmVAytqezPNR8NNwTqqWgFkXQ7kkmxPEh4MFeeemvGYxYc4Z9QbNj75Ba6kGLhT48nJAZaWFdgpVAEes6r5JVXdjWdhMCFYCXK',
+        '2019-01-03 07:47:55', '2019-01-03 13:11:03');
+INSERT INTO employees_sessions(employee_id, ip_address, session_token, session_creation, session_expiry)
+VALUES (1, '10.10.10.4', 'takZ8J8djHx4zZtxmTYXECMx4NZbxtQyAJXpqqdYXUJ6L4n73L2GUmXCRp8sEfdZYajScTU9K3hcSQMz8yKG6rBYcSeXSaveVPgyer9HqtfP4ZGHEFbNmkSHM7XYUDd8',
+        '2019-01-04 12:07:44', '2019-01-04 20:23:48');
+INSERT INTO employees_sessions(employee_id, ip_address, session_token, session_creation, session_expiry)
+VALUES (1, '10.10.10.5', '7WeTuf4mhLQx3K2DRFvGgtrpPLmyqjghJG9c5Xgu25NBQ7E8NxdS9zzTS58DSrFMrEA7dHpwG7vGsPZBzCe8QVww6DBa2a9NkjXLVuC6rEycSkBpFZwNmXMfzFQ2grGp',
+        '2019-01-05 07:10:38', '2019-01-05 14:27:11');
