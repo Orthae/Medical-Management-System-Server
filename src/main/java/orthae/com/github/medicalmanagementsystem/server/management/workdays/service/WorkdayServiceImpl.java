@@ -35,9 +35,14 @@ public class WorkdayServiceImpl implements WorkdayService {
 
     @Transactional
     @Override
-    public List<WorkdayDto> getByEmployeeId(int employeeId) {
-        List<Workday> list = workdayRepository.getByEmployeeId(employeeId);
+    public List<WorkdayDto> getByEmployeeIdAndMonth(int employeeId, int month, int year) {
+        List<Workday> list = workdayRepository. getByEmployeeIdAndMonth(employeeId, month, year);
         return list.stream().map(workdayUtility::map).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Workday> getByParams(String username, String fromDate, String toDate) {
+        return null;
     }
 
     @Transactional
@@ -46,6 +51,7 @@ public class WorkdayServiceImpl implements WorkdayService {
         Employee employee = employeeRepository.getById(employeeId);
         Workday workday = workdayUtility.map(dto);
         List<Workday> list = workdayRepository.getByEmployeeIdAndDate(employeeId, dto.getDate());
+        System.out.println(dto.getDate().toString());
 //  TODO Make proper exception
         for(Workday wday : list){
             if(workdayUtility.hourCollision(wday, dto))

@@ -58,6 +58,19 @@ class SessionHibernateRepositoryTest {
             assertTrue(session.getSessionExpiry().after(new Date()));
         }
 
+        @Test
+        void saveSession(){
+            Date test = new Date();
+
+            Session session = new Session();
+            session.setId(0);
+            session.setIpAddress("IP Test");
+            session.setSessionToken("Test token");
+            session.setSessionCreation(test);
+            session.setSessionExpiry(test);
+            sessionRepository.save(session);
+        }
+
     }
 
     @Nested
