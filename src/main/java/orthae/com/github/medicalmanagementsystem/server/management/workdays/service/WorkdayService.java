@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface WorkdayService {
 
-    List<WorkdayDto> getAll();
     List<WorkdayDto> getByEmployeeIdAndMonth(int employeeId, int month, int year);
     List<Workday> getByParams(String username, String fromDate, String toDate);
     void createWorkday(int employeeId, WorkdayDto dto);
     void updateWorkday(WorkdayDto dto);
+    void deleteWorkday(int workdayId);
 }

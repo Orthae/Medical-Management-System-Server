@@ -38,4 +38,9 @@ public class WorkdaysRestController {
     public void updateWorkday(@Valid @RequestBody WorkdayDto dto){
 
     }
+
+    @DeleteMapping("${rest.endpoint.employees}/${rest.endpoint.workdays}/{workdayId}")
+    public void deleteWorkday(@PathVariable int workdayId){
+        workdayService.deleteWorkday(workdayId);
+    }
 }

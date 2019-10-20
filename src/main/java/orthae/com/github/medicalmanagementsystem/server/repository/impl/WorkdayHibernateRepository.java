@@ -24,10 +24,9 @@ public class WorkdayHibernateRepository implements WorkdayRepository {
     }
 
     @Override
-    public List<Workday> getAll() {
+    public Workday getById(int workdayId) {
         Session session = entityManager.unwrap(Session.class);
-        Query<Workday> query = session.createQuery("FROM Workday", Workday.class);
-        return query.getResultList();
+        return session.get(Workday.class, workdayId);
     }
 
     @Override
@@ -75,5 +74,11 @@ public class WorkdayHibernateRepository implements WorkdayRepository {
     public void save(Workday workday) {
         Session session = entityManager.unwrap(Session.class);
         session.saveOrUpdate(workday);
+    }
+
+    @Override
+    public void delete(Workday workday) {
+        Session session = entityManager.unwrap(Session.class);
+        session.delete(workday);
     }
 }
